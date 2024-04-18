@@ -40,7 +40,7 @@ async openApp() {
     // const exandedState = await element.getAttribute('data-polaris-unstyled');
 
 
-    if (await element) {
+    if (await element.isVisible()) {
 
         await this.page.frameLocator("iframe[title='Selector - Staging']")
         .locator(':text("Showing")').nth(1).click();
@@ -52,8 +52,6 @@ async openApp() {
             .locator('.Polaris-Button__Text', { hasText: 'Delete' }).click();  
 
     }
-
-
    
     await this.page.frameLocator("iframe[title='Selector - Staging']")
     .locator('.Polaris-Button__Content', {hasText: 'Create selector'}).click();
@@ -62,10 +60,6 @@ async openApp() {
     await this.page.frameLocator("iframe[title='Selector - Staging']")
     .locator('.positionCheckboxContainer__b0c9e7e54d9e4684f2ff').nth(1).click();
 };
-
-
-
-
 
 
 async selTypes(type: String) {
@@ -81,7 +75,7 @@ async selTypes(type: String) {
     
       };
 };
-
+  
 
 async createSelector(resourse: String, type: String, theme: String, color: String, positionType: String, position: String) {
 
