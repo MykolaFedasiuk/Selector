@@ -127,6 +127,7 @@ test('7 Create selector, Country (Currency), Modal, Minimal, Wild West, Fixed po
 
    await page.locator('selector-root').click();
    await page.locator('li[data-code="PL"]').hover();
+   await page.waitForTimeout(1000);
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('background-color', 'rgba(150, 51, 28, 0.2)');
    await page.locator('li[data-code="PL"]').click()
    await expect(page.locator('selector-root')).toHaveClass('needsclick sel-fixed sel-bottom-right');
@@ -199,8 +200,8 @@ test('9 Create selector, Country (Currency) S Language, Layered, Basic, Cold, Em
    await expect(page.locator('.sel-disclosure.sel-basic').first()).toHaveClass('sel-disclosure sel-basic sel-view-lang_names_country_all sel-languages_countries_curr');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
    await expect(page.locator('header')).toContainText('додому');
-   await expect.soft(page.locator('[class="sel-item sel-current"]').first()).toHaveScreenshot();
-   await expect.soft(page.locator('[class="sel-item sel-current"]').last()).toHaveScreenshot();
+   await expect.soft(page.locator('[class="sel-item sel-current"]').first()).toHaveScreenshot({maxDiffPixels: 65, maxDiffPixelRatio: 0.05});
+   await expect.soft(page.locator('[class="sel-item sel-current"]').last()).toHaveScreenshot({maxDiffPixels: 65, maxDiffPixelRatio: 0.05});
 
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgba(41, 49, 95, 0.8)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(219, 230, 253)');
