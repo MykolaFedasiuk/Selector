@@ -199,7 +199,8 @@ test('9 Create selector, Country (Currency) S Language, Layered, Basic, Cold, Em
    await expect(page.locator('.sel-disclosure.sel-basic').first()).toHaveClass('sel-disclosure sel-basic sel-view-lang_names_country_all sel-languages_countries_curr');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
    await expect(page.locator('header')).toContainText('додому');
-   await expect.soft(page.locator('selector-root')).toHaveScreenshot();
+   await expect.soft(page.locator('[class="sel-item sel-current"]').first()).toHaveScreenshot();
+   await expect.soft(page.locator('[class="sel-item sel-current"]').last()).toHaveScreenshot();
 
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgba(41, 49, 95, 0.8)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(219, 230, 253)');
@@ -331,7 +332,7 @@ test('14 Create selector, Country, Tape-Line, North, Embedded position, Position
    await selectorPage.selectType('Tape-line');
    await selectorPage.selectColor('North');
    await selectorPage.selectPosition('Embedded position', 'Position - footer center');
-   await selectorPage.display1(1);
+   await selectorPage.display1(0);
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
