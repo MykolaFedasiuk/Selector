@@ -1,41 +1,28 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/fixturePages'
 
-test('1 Selector types', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
+test('1 Selector types', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selTypes('Type');
    expect(await page.frameLocator(process.env.Frame)
    .locator('.custom-drop-down', {hasText: 'Type'}).textContent()).toEqual('TypeTape-line Info★ Pro');
 
 });
 
-test('2 Selector Resources', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.selTypes('Resource');
+test('2 Selector Resources', async ({page, selectorPage, openSelector}) => {
+  await selectorPage.selTypes('Resource');
   expect(await page.frameLocator(process.env.Frame)
   .locator('.custom-drop-down', {hasText: 'Resource'}).textContent()).toEqual('ResourceMarket Domains');
 
 });
 
-test('3 Selector Themes', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
+test('3 Selector Themes', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selTypes('Theme');
   expect(await page.frameLocator(process.env.Frame)
   .locator('.custom-drop-down', {hasText: 'Theme'}).textContent()).toEqual('ThemeMinimal');
 
 });
 
-test('4 Selector Color schemes', async ({page}) => {
-
-await page.goto(process.env.AppUrl);
-await page.waitForLoadState('networkidle');
-await page.waitForTimeout(10000);
-await page.frameLocator(process.env.Frame)
-.locator('.Polaris-Button__Content', {hasText: 'Create selector'}).click();
-await page.frameLocator(process.env.Frame)
-.locator('[class="container__aa6ed1916c93fc44b35f drop-down"]').locator('.header__c9ffa2ffd1581821c7eb').first().click();
-await page.frameLocator(process.env.Frame)
-.locator('.positionCheckboxContainer__b0c9e7e54d9e4684f2ff').nth(1).click();
+test('4 Selector Color schemes', async ({page, openSelector}) => {
   await page.frameLocator(process.env.Frame)
   .locator('.SelectColorsSchemes', {hasText: 'Color scheme'}).locator('.Polaris-Connected').click();
   const allSelectorColorScheme = page.frameLocator(process.env.Frame)
@@ -51,9 +38,7 @@ await page.frameLocator(process.env.Frame)
 });
 
 
-test('5 Currency, Dropdown, Fixed position, Position - top left', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('5 Currency, Dropdown, Fixed position, Position - top left', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Currency');
    await selectorPage.selectPosition('Fixed position', 'Position - top left');
    await selectorPage.changeSizeSlider(); 
@@ -66,9 +51,7 @@ test('5 Currency, Dropdown, Fixed position, Position - top left', async ({page, 
    await page.locator('[class="sel-disclosure sel-basic sel-view-all sel-currencies"]').click();
    await page.locator('li[data-code="USD"]').hover({timeout: 5000});
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(32, 34, 35)');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '7.92px');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-weight', '400');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Arial');
+   await selectorPage.checkFontSettings('7.92px', '400', 'Arial', "\"Arial\""); 
    await page.locator('li[data-code="USD"]').click();
    expect(await page.locator('[class="sel-title sel-uppercase"]').first().getAttribute('data-code')).toEqual('USD');
    await expect(page.locator('[class="sel-title sel-uppercase"]').first()).toHaveText('USD ($)');
@@ -85,9 +68,7 @@ test('5 Currency, Dropdown, Fixed position, Position - top left', async ({page, 
 
 
 
-test('6 Currency, Wheel, Cute, Arctic, Fixed position, Position - top right', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('6 Currency, Wheel, Cute, Arctic, Fixed position, Position - top right', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Currency');
    await selectorPage.selectType('Wheel');
    await selectorPage.selectTheme('Cute')
@@ -116,9 +97,7 @@ test('6 Currency, Wheel, Cute, Arctic, Fixed position, Position - top right', as
 
 
 
-test('7 Country (Currency), Modal, Minimal, Wild West, Fixed position, Position - bottom right', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('7 Country (Currency), Modal, Minimal, Wild West, Fixed position, Position - bottom right', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Country (Currency)');
    await selectorPage.selectType('Modal');
    await selectorPage.selectTheme('Minimal')
@@ -135,10 +114,7 @@ test('7 Country (Currency), Modal, Minimal, Wild West, Fixed position, Position 
    await page.locator('selector-root').click();
    await page.locator('li[data-code="PL"]').hover();
    await page.waitForTimeout(1000);
-   await expect(page.locator('.sel-item:hover').first()).toHaveCSS('background-color', 'rgba(150, 51, 28, 0.2)');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '21px');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-weight', '700');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Arial Black');
+   await selectorPage.checkFontSettings('21px', '700', 'Arial Black', "\"Arial Black\""); 
    await page.locator('li[data-code="PL"]').click()
    await expect(page.locator('selector-root')).toHaveClass('needsclick sel-fixed sel-bottom-right');
    expect(await page.locator('selector-root').getAttribute('data-type')).toEqual('modal');
@@ -156,9 +132,7 @@ test('7 Country (Currency), Modal, Minimal, Wild West, Fixed position, Position 
 });
 
 
-test('8 Country (Currency), Inline, Material, Winter, Fixed position, Position - bottom left', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('8 Country (Currency), Inline, Material, Winter, Fixed position, Position - bottom left', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Country (Currency)');
    await selectorPage.selectType('Inline');
    await selectorPage.selectTheme('Material')
@@ -173,9 +147,8 @@ test('8 Country (Currency), Inline, Material, Winter, Fixed position, Position -
  
    await page.locator('span[data-code="PL"]').hover();
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(26, 55, 77)');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '31.59px');
    await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-style', 'italic');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Comic Sans');
+   await selectorPage.checkFontSettings('31.59px', '400', 'Comic Sans', "\"Comic Sans\""); 
    await page.locator('span[data-code="PL"]').click();
    await expect(page.locator('selector-root')).toHaveClass('needsclick sel-fixed sel-bottom-left');
    expect(await page.locator('[class="sel-item sel-current"]').getAttribute('data-code')).toEqual('PL');
@@ -191,9 +164,7 @@ test('8 Country (Currency), Inline, Material, Winter, Fixed position, Position -
 });
 
 
-test('9 Country (Currency) S Language, Layered, Basic, Cold, Embedded position, Position - header right', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('9 Country (Currency) S Language, Layered, Basic, Cold, Embedded position, Position - header right', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Country (Currency) & Language');
    await selectorPage.selectType('Layered');
    await selectorPage.selectColor('Cold')
@@ -225,9 +196,7 @@ test('9 Country (Currency) S Language, Layered, Basic, Cold, Embedded position, 
 
 
 
-test('10 Language S Currency, Popup, Dark Indigo, Embedded position, Position - header left', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('10 Language S Currency, Popup, Dark Indigo, Embedded position, Position - header left', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Language & Currency');
    await selectorPage.selectType('Popup');
    await selectorPage.selectColor('Dark Indigo')
@@ -245,10 +214,8 @@ test('10 Language S Currency, Popup, Dark Indigo, Embedded position, Position - 
    await page.locator('[class="sel-secondChild sel-bothChild sel-currencies"]').click()
    await page.locator('span[data-code="PLN"]').hover()
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(236, 205, 164)');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '19px');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-weight', '700');
    await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-style', 'italic');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Courier New');
+   await selectorPage.checkFontSettings('19px', '700', 'Courier New', "\"Courier New\""); 
    await page.locator('span[data-code="PLN"]').click();
    await expect(page.locator('header')).toContainText('додому');
    expect(await page.locator('selector-root').getAttribute('data-type')).toEqual('popup');
@@ -264,9 +231,7 @@ test('10 Language S Currency, Popup, Dark Indigo, Embedded position, Position - 
 });
 
 
-test('11 Country S Language, Cascade, Black & white, Embedded position, Position - header center', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('11 Country S Language, Cascade, Black & white, Embedded position, Position - header center', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Country & Language');
    await selectorPage.selectType('Cascade');
    await selectorPage.selectColor('Black & white')
@@ -281,10 +246,8 @@ test('11 Country S Language, Cascade, Black & white, Embedded position, Position
    await page.locator('[class="sel-disclosure-btn sel-view-names sel-top"]').click()
    await page.locator('span[data-code="uk"]').hover()
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(255, 255, 255)');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '17px');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-weight', '700');
    await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-style', 'italic');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Charcoal');
+   await selectorPage.checkFontSettings('17px', '700', 'Charcoal', "\"Charcoal\""); 
    await page.locator('span[data-code="uk"]').click()
    await expect(page.locator('header')).toContainText('додому')
    await page.locator('[class="sel-disclosure-btn sel-view-icons sel-iconsOnly sel-top"]').click()
@@ -301,9 +264,7 @@ test('11 Country S Language, Cascade, Black & white, Embedded position, Position
 });
 
 
-test('12 Currency, Sidebar, Jungle, Embedded position, Position - footer right', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('12 Currency, Sidebar, Jungle, Embedded position, Position - footer right', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Currency');
    await selectorPage.selectType('Sidebar');
    await selectorPage.selectColor('Jungle')
@@ -316,9 +277,7 @@ test('12 Currency, Sidebar, Jungle, Embedded position, Position - footer right',
 
    await page.locator('[class="sel-disclosure sel-basic sel-view-all sel-currencies"]').click();
    await page.locator('span[data-code="USD"]').hover();
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '16px');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-weight', '700');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Times');
+   await selectorPage.checkFontSettings('16px', '700', 'Times', "\"Times\""); 
    await page.locator('span[data-code="USD"]').click();
    await page.getByRole('button', { name: 'Apply' }).last().click();
    expect(await page.locator('[class="sel-item sel-current"]').getAttribute('data-code')).toEqual('USD');
@@ -335,9 +294,7 @@ test('12 Currency, Sidebar, Jungle, Embedded position, Position - footer right',
 
 });
 
-test('13 Language, Scale, Desert, Embedded position, Position - footer left', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('13 Language, Scale, Desert, Embedded position, Position - footer left', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Language');
    await selectorPage.selectType('Scale');
    await selectorPage.selectColor('Desert')
@@ -359,9 +316,7 @@ test('13 Language, Scale, Desert, Embedded position, Position - footer left', as
 
 });
 
-test('14 Country, Tape-Line, North, Embedded position, Position - footer center', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('14 Country, Tape-Line, North, Embedded position, Position - footer center', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Country');
    await selectorPage.selectType('Tape-line');
    await selectorPage.selectColor('North');
@@ -378,7 +333,6 @@ test('14 Country, Tape-Line, North, Embedded position, Position - footer center'
    expect(await page.locator('[class="sel-item sel-current"]').getAttribute('data-code')).toEqual('US');
    expect(await page.locator('selector-root').getAttribute('data-type')).toEqual('meter');
    await expect.soft(page.locator('selector-root')).toHaveScreenshot();
-
    await expect(page.locator('li.sel-item').first()).toHaveCSS('color', 'rgba(54, 106, 135, 0.8)');
    await expect(page.locator('li.sel-item').first()).toHaveCSS('font-size', '15px');
    await expect(page.locator('li.sel-item').first()).toHaveCSS('font-weight', '700');
@@ -388,9 +342,7 @@ test('14 Country, Tape-Line, North, Embedded position, Position - footer center'
 });
 
 
-test('15 Country & Language, dropdown, Sunny, search', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('15 Country & Language, dropdown, Sunny, search', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Country & Language');
    await selectorPage.selectColor('Sunny');
    await selectorPage.display1(0);
@@ -407,9 +359,7 @@ test('15 Country & Language, dropdown, Sunny, search', async ({page, selectorPag
    await expect.soft(page.locator('.sel-itemsList').first()).toHaveScreenshot();
    await page.locator('.sel-itemsList .sel-item').first().hover();
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(74, 69, 108)');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '14px');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-weight', '400');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Helvetica');
+   await selectorPage.checkFontSettings('14px', '400', 'Helvetica', "\"Helvetica\""); 
    await page.locator('.sel-itemsList .sel-item').first().click();
    await page.locator('.sel-secondChild.sel-languages').click();
    await page.locator('.sel-secondChild').locator('.sel-search-input').fill('укр');
@@ -426,9 +376,7 @@ test('15 Country & Language, dropdown, Sunny, search', async ({page, selectorPag
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(255, 225, 98)');
 })
 
-test('16 Country, Wheel, Beet, search', async ({page, selectorPage}) => {
-await selectorPage.openApp();
-await selectorPage.createSelector();
+test('16 Country, Wheel, Beet, search', async ({page, selectorPage, openSelector}) => {
 await selectorPage.selectResourse('Country');
 await selectorPage.selectType('Wheel');
 await selectorPage.selectColor('Beet')
@@ -454,9 +402,7 @@ await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(255
 await expect(page.locator('.sel-wheel-actionsWrapper')).toHaveCSS('background-color', 'rgb(120, 28, 104)');
 });
 
-test('17 Currency, Modal, Chocolate, search', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('17 Currency, Modal, Chocolate, search', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Currency');
    await selectorPage.selectType('Modal');
    await selectorPage.selectColor('Chocolate');
@@ -473,9 +419,7 @@ test('17 Currency, Modal, Chocolate, search', async ({page, selectorPage}) => {
    await expect.soft(page.locator('ul.sel-itemsList')).toHaveScreenshot();
    await page.locator('.sel-itemsList .sel-item').hover();
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(109, 113, 117)');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '8.58px');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-weight', '400');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Lucida Console');
+   await selectorPage.checkFontSettings('8.58px', '400', 'Lucida Console', "\"Lucida Console\""); 
    await page.locator('.sel-itemsList .sel-item').click();
    await expect(page.locator('selector-root')).toHaveClass('needsclick sel-fixed sel-top-right');
    expect(await page.locator('selector-root').getAttribute('data-type')).toEqual('modal');
@@ -490,9 +434,7 @@ test('17 Currency, Modal, Chocolate, search', async ({page, selectorPage}) => {
 
 });
 
-test('18 Currency, Cascade, Turquoise, search', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('18 Currency, Cascade, Turquoise, search', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Currency');
    await selectorPage.selectType('Cascade');
    await selectorPage.selectColor('Turquoise')
@@ -510,9 +452,7 @@ test('18 Currency, Cascade, Turquoise, search', async ({page, selectorPage}) => 
    await expect.soft(page.locator('ul.sel-itemsList')).toHaveScreenshot();
    await page.locator('.sel-itemsList .sel-item').hover();
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(10, 88, 88)');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '30.42px');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-weight', '700');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Lucida Grande');
+   await selectorPage.checkFontSettings('30.42px', '700', 'Lucida Grande', "\"Lucida Grande\""); 
    await page.locator('.sel-itemsList .sel-item').click();
    expect(await page.locator('selector-root').getAttribute('data-type')).toEqual('cascade')
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
@@ -522,9 +462,7 @@ test('18 Currency, Cascade, Turquoise, search', async ({page, selectorPage}) => 
 });
 
 
-test('19 Country (Currency), Sidebar, Search', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('19 Country (Currency), Sidebar, Search', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Country (Currency)');
    await selectorPage.selectType('Sidebar');
    await selectorPage.changeSizeSlider(-30); 
@@ -544,10 +482,8 @@ test('19 Country (Currency), Sidebar, Search', async ({page, selectorPage}) => {
 });
 
 
-test('20 Change selector color by paste', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
-   await selectorPage.setColorPaste();
+test('20 Change selector color by paste', async ({page, selectorPage, openSelector}) => {
+   await selectorPage.setColorPaste('Text', 'Accent', 'Background');
    await selectorPage.fontSettings(0, 'Palatino Linotype', 'italic', 20);
    await selectorPage.fontSettings(1, 'Palatino Linotype', 'italic', 30);
    await selectorPage.saveSelector();
@@ -556,20 +492,19 @@ test('20 Change selector color by paste', async ({page, selectorPage}) => {
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().hover();
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(40, 47, 255)');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '19px');
    await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-style', 'italic');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Palatino Linotype');
+   await selectorPage.checkFontSettings('19px', '400', 'Palatino Linotype', "\"Palatino Linotype\""); 
    await page.locator('.sel-itemsList .sel-item').first().click();
    await expect(page.locator('.sel-title').first()).toHaveCSS('color', 'rgb(255, 40, 47)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(108, 255, 40)');
 });
 
 
-test('21 Change selector color by sliders', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('21 Change selector color by sliders', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectColor('Winter')
-   await selectorPage.setColorSliders();
+   await selectorPage.setColorSliders('Text');
+   await selectorPage.setColorSliders2('Accent');
+   await selectorPage.setColorSliders3('Background');
    await selectorPage.fontSettings(0, ' Lucida Sans Unicode', 'bold', 30);
    await selectorPage.fontSettings(1, ' Lucida Sans Unicode', 'bold', 40);
    await selectorPage.saveSelector();
@@ -577,26 +512,22 @@ test('21 Change selector color by sliders', async ({page, selectorPage}) => {
 
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().hover();
-   await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(158, 78, 34)');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '18px');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-weight', '700');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Lucida Sans Unicode');
+   await expect.soft(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(158, 78, 34)');
+   await selectorPage.checkFontSettings('18px', '700', 'Lucida Sans Unicode', "\"Lucida Sans Unicode\""); 
    await page.locator('.sel-itemsList .sel-item').first().click();
    await expect(page.locator('.sel-title').first()).toHaveCSS('color', 'rgb(174, 210, 38)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(222, 65, 65)');
 });
 
 
-test('22 Visibility - Include Custom urls', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('22 Visibility - Include Custom urls', async ({page, selectorPage, openSelector}) => {
    await selectorPage.setVisibilityParams('Custom urls', 'include', '/pages/contact');
    await selectorPage.fontSettings(0, 'Georgia', 'normal', 40);
    await selectorPage.fontSettings(1, 'Georgia', 'normal', 50)
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.waitForLoadState('domcontentloaded')
+   await page.waitForLoadState('load');
 
 //    let isSelectorVisible = false;
 // try {
@@ -613,48 +544,70 @@ test('22 Visibility - Include Custom urls', async ({page, selectorPage}) => {
    await page.goto('https://qafm30-11.myshopify.com/pages/contact');
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().hover();
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '17px');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-weight', '400');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Georgia');
+   await selectorPage.checkFontSettings('17px', '400', 'Georgia', "\"Georgia\""); 
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
 
 
+test('23 Visibility - Include Custom urls', async ({page, selectorPage, openSelector}) => {
+   await selectorPage.setVisibilityParams('Custom urls', 'include', 'https://qafm30-11.myshopify.com');
+   await selectorPage.saveSelector();
+   await selectorPage.openStore();
 
-test('23 Visibility - exclude Custom urls', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+   await page.locator('selector-root').click();
+   await page.locator('.sel-itemsList .sel-item').first().click();
+   await page.goto('https://qafm30-11.myshopify.com/pages/contact');
+   await page.waitForLoadState('load');
+   await page.waitForTimeout(500);
+   await expect(page.locator('selector-root')).not.toBeVisible();
+
+});
+
+
+
+test('24 Visibility - exclude Custom urls', async ({page, selectorPage, openSelector}) => {
    await selectorPage.setVisibilityParams('Custom urls', 'exclude', '/pages/contact');
-   await selectorPage.fontSettings(0, 'Impact', 'normal', -20, null);
-   await selectorPage.fontSettings(1, 'Impact', 'normal', -30, null);
+   await selectorPage.fontSettings(0, 'Impact', 'normal', -20);
+   await selectorPage.fontSettings(1, 'Impact', 'normal', -30);
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().hover();
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '24px');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-weight', '400');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Impact');
+   await selectorPage.checkFontSettings('24px', '400', 'Impact', "\"Impact\""); 
    await page.locator('.sel-itemsList .sel-item').first().click();
 
    await page.goto('https://qafm30-11.myshopify.com/pages/contact');
-   await page.waitForLoadState('domcontentloaded');
+   await page.waitForLoadState('load');
    const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 
 });
 
 
-test('24 Visibility - Include Params', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('25 Visibility - exclude Custom urls', async ({page, selectorPage, openSelector}) => {
+   await selectorPage.setVisibilityParams('Custom urls', 'exclude', 'https://qafm30-11.myshopify.com');
+   await selectorPage.saveSelector();
+   await selectorPage.openStore();
+
+   await page.waitForLoadState('load');
+   await page.waitForTimeout(500);
+   await expect(page.locator('selector-root')).not.toBeVisible();
+   await page.goto('https://qafm30-11.myshopify.com/pages/contact');
+   await page.locator('selector-root').click();
+   await page.locator('.sel-itemsList .sel-item').first().click();
+
+});
+
+
+test('26 Visibility - Include Params', async ({page, selectorPage, openSelector}) => {
    await selectorPage.setVisibilityParams('Params', 'include', 'sort_by=price-ascending');
    await selectorPage.fontSettings(0, 'Custom', 'normal', -30, 'Garamond');
    await selectorPage.fontSettings(1, 'Custom', 'normal', -40, 'Garamond', )
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.waitForLoadState('domcontentloaded');
+   await page.waitForLoadState('load');
 
    const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
@@ -662,62 +615,50 @@ test('24 Visibility - Include Params', async ({page, selectorPage}) => {
    await page.goto('https://qafm30-11.myshopify.com/collections/all?filter.v.price.gte=&filter.v.price.lte=&sort_by=price-ascending');
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().hover();
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-size', '25px');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-weight', '400');
-   await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-family', 'Garamond');
+   await selectorPage.checkFontSettings('25px', '400', 'Garamond', "\"Garamond\""); 
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
 
 
-test('25 Visibility - exclude Params', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('26 Visibility - exclude Params', async ({page, selectorPage, openSelector}) => {
    await selectorPage.setVisibilityParams('Params', 'exclude', 'sort_by=price-ascending');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
-
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
-
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    await page.goto('https://qafm30-11.myshopify.com/collections/all?filter.v.price.gte=&filter.v.price.lte=&sort_by=price-ascending');
-   await page.waitForLoadState('domcontentloaded')
+   await page.waitForLoadState('load');
+   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 });
 
 
-test('26 Visibility - Include Languages', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('28 Visibility - Include Languages', async ({page, selectorPage, openSelector}) => {
    await selectorPage.setVisibilityParams('Languages', 'include', 'english');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
-   await page.waitForLoadState('domcontentloaded')
+   await page.waitForLoadState('load');
    const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 });
 
-test('27 Visibility - exclude Languages', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('29 Visibility - exclude Languages', async ({page, selectorPage, openSelector}) => {
    await selectorPage.setVisibilityParams('Languages', 'exclude', 'ukrainian');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
    await page.locator('selector-root').click();
    await page.locator('span[data-code="uk"]').click()
-   await page.waitForLoadState('domcontentloaded')
+   await page.waitForLoadState('load');
    const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 });
 
 
-test('28 Visibility - Include Countries', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('30 Visibility - Include Countries', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Country');
    await selectorPage.setVisibilityParams('Countries', 'include', 'ukraine');
    await selectorPage.saveSelector();
@@ -725,14 +666,12 @@ test('28 Visibility - Include Countries', async ({page, selectorPage}) => {
 
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
-   await page.waitForLoadState('domcontentloaded')
+   await page.waitForLoadState('load');
    const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 });
 
-test('29 Visibility - exclude Countries', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('31 Visibility - exclude Countries', async ({page, selectorPage, openSelector}) => {
    await selectorPage.selectResourse('Country');
    await selectorPage.setVisibilityParams('Countries', 'exclude', 'poland');
    await selectorPage.saveSelector();
@@ -740,20 +679,18 @@ test('29 Visibility - exclude Countries', async ({page, selectorPage}) => {
 
    await page.locator('selector-root').click();
    await page.locator('span[data-code="PL"]').click()
-   await page.waitForLoadState('domcontentloaded')
+   await page.waitForLoadState('load');
    const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 });
 
 
 
-test('30 Visibility - Extra small  (0 - 489px)', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('32 Visibility - Extra small  (0 - 489px)', async ({page, selectorPage, openSelector}) => {
    await selectorPage.setVisibilitySize('Extra small  (0 - 489px)');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
-   await page.waitForLoadState('domcontentloaded')
+   await page.waitForLoadState('load');
    const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
    await page.setViewportSize({ width: 490, height: 800 }); 
@@ -765,13 +702,11 @@ test('30 Visibility - Extra small  (0 - 489px)', async ({page, selectorPage}) =>
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
 
-test('31 Visibility - Small (490 - 767px)', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('33 Visibility - Small (490 - 767px)', async ({page, selectorPage, openSelector}) => {
    await selectorPage.setVisibilitySize('Small (490 - 767px)');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
-   await page.waitForLoadState('domcontentloaded')
+   await page.waitForLoadState('load');
    const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 
@@ -783,13 +718,11 @@ test('31 Visibility - Small (490 - 767px)', async ({page, selectorPage}) => {
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
 
-test('32 Visibility - Medium (768 - 1039px)', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('34 Visibility - Medium (768 - 1039px)', async ({page, selectorPage, openSelector}) => {
    await selectorPage.setVisibilitySize('Medium (768 - 1039px)');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
-   await page.waitForLoadState('domcontentloaded')
+   await page.waitForLoadState('load');
    const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 
@@ -801,9 +734,7 @@ test('32 Visibility - Medium (768 - 1039px)', async ({page, selectorPage}) => {
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
 
-test('33 Visibility - Large (1040 - 1439px)', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('35 Visibility - Large (1040 - 1439px)', async ({page, selectorPage, openSelector}) => {
    await selectorPage.setVisibilitySize('Large (1040 - 1439px)');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
@@ -819,13 +750,11 @@ test('33 Visibility - Large (1040 - 1439px)', async ({page, selectorPage}) => {
 });
 
 
-test('34 Visibility - Extra large (1440 - ∞px)', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('36 Visibility - Extra large (1440 - ∞px)', async ({page, selectorPage, openSelector}) => {
    await selectorPage.setVisibilitySize('Extra large (1440 - ∞px)');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
-   await page.waitForLoadState('domcontentloaded')
+   await page.waitForLoadState('load');
 
    await page.setViewportSize({ width: 1439, height: 1039 }); 
    await page.waitForTimeout(500);
@@ -837,9 +766,7 @@ test('34 Visibility - Extra large (1440 - ∞px)', async ({page, selectorPage}) 
 });
 
 
-test('35 Custom CSS, Disable styles isolation', async ({page, selectorPage}) => {
-   await selectorPage.openApp();
-   await selectorPage.createSelector();
+test('37 Custom CSS, Disable styles isolation', async ({page, selectorPage, openSelector}) => {
    await selectorPage.CustomCSSDisableStylesIsolation();
    await selectorPage.saveSelector();
    await selectorPage.openStore();

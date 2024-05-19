@@ -13,7 +13,25 @@ export const test = base.extend<{selectorPage: SelectorPage, bannerPage: BannerP
     bannerPage: ({page}, use) => {
       const bannerPage = new BannerPage(page)
        use(bannerPage);    
-     }
+     },
 
-})
+     openSelector: async({selectorPage}, use) => {
+      await selectorPage.openApp();
+      await selectorPage.createSelector();
+      await use('');    
+     },
+
+     openBanner: async({selectorPage, bannerPage}, use) => {
+      await selectorPage.openApp();
+      await bannerPage.openBanner();
+      await use('');    
+     },
+
+     redirects: async({selectorPage}, use) => {
+      await selectorPage.openApp();
+      await selectorPage.disableBannerIfNeeded();
+      await use('');    
+     },
+
+});
 
