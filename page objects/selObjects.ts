@@ -490,7 +490,6 @@ export class SelectorPage {
 
     async disableBannerIfNeeded() {
 
-
         if (await this.page.frameLocator(process.env.Frame)
             .locator('.page-header__badge-wrapper', { hasText: 'Success' }).isVisible({ timeout: 2000 })) {
 
@@ -503,9 +502,7 @@ export class SelectorPage {
             await this.page.locator('button', { hasText: 'Save' }).click();
             await this.page.waitForTimeout(2500);
             await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Back' }).click();
-
         }
-
     };
 
 

@@ -12,14 +12,14 @@ export class BannerPage {
     async openBanner() {
         await this.page.frameLocator(process.env.Frame)
             .locator('.Polaris-Button__Content', { hasText: 'Customize' }).click();
-    
+
         await this.page.waitForLoadState('domcontentloaded');
-    
+
         const frame = this.page.frameLocator(process.env.Frame);
         const hideBtnLocator = frame.locator('.hideBtn_open__dd36e26d80addc198ce1');
         const resetBtnLocator = frame.locator('.resetToDefaultButton__a9d82c160c79be3104d4.desktopElement__e138e2fbb89590a1fbe7');
         const showBtnLocator = frame.locator('.hideBtn_show__a43223fb34807e38db38');
-    
+
         try {
             await hideBtnLocator.waitFor({ state: 'visible', timeout: 1000 });
             await hideBtnLocator.click();
@@ -29,11 +29,11 @@ export class BannerPage {
             await resetBtnLocator.click();
         }
     }
-    
+
 
     async displayOption(dOption: string) {
         await this.page.frameLocator(process.env.Frame)
-        .getByRole('tab', { name: 'Settings' }).click();
+            .getByRole('tab', { name: 'Settings' }).click();
 
         await this.page.frameLocator(process.env.Frame)
             .locator('.Polaris-BlockStack').locator('.Polaris-BlockStack', { hasText: 'Display' })
@@ -46,8 +46,8 @@ export class BannerPage {
 
     async selectPosition(position: String) {
         await this.page.frameLocator(process.env.Frame)
-            .locator('.Polaris-Choice', { hasText: `${position}` }).click({force: true});
-            
+            .locator('.Polaris-Choice', { hasText: `${position}` }).click({ force: true });
+
     };
 
     async selectAnimationStyle(anstyle: string) {
@@ -146,7 +146,7 @@ export class BannerPage {
         // .locator('.resource_picker_wrapper resource_picker_wrapper-empty').nth(imageNummer).getByRole('button').click();
 
         await this.page.frameLocator(process.env.Frame).locator('.Polaris-Modal-Dialog__Container')
-            .locator('.grid_file_item ', {hasText: 'sample-normal-wax'}).click();
+            .locator('.grid_file_item ', { hasText: 'sample-normal-wax' }).click();
 
         await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Done' }).click()
 
@@ -162,10 +162,10 @@ export class BannerPage {
 
 
     async changeGrayscaleBlur(slider: string, minusPlusnumb: number) {
-         
+
         const SliderBox = this.page.frameLocator(process.env.Frame).locator('.Polaris-Modal-Dialog__Container')
-        .locator('.Polaris-BlockStack', { hasText: slider })
-        .locator('div', { hasText: slider }).locator('.Polaris-RangeSlider-SingleThumb__Input');
+            .locator('.Polaris-BlockStack', { hasText: slider })
+            .locator('div', { hasText: slider }).locator('.Polaris-RangeSlider-SingleThumb__Input');
 
         await SliderBox.scrollIntoViewIfNeeded();
         const box = await SliderBox.boundingBox();
@@ -178,8 +178,8 @@ export class BannerPage {
 
     };
 
-  
-    async focalPoint () {
+
+    async focalPoint() {
 
         await this.page.frameLocator(process.env.Frame).locator('.focal-point-button').click();
         const SliderBox = this.page.frameLocator(process.env.Frame).locator('.focal-pointer')
@@ -196,151 +196,151 @@ export class BannerPage {
     };
 
 
-   async closeImageEditor() {
+    async closeImageEditor() {
 
-    await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Done' }).click()
+        await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Done' }).click()
 
-   };
-
-
-   async replaceImage(image: string) {
-
-    await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack', { hasText: image })
-        .locator('div', { hasText: image }).getByRole('button', { name: 'Change' }).click();
-
-     await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Change image' }).click();
-     
-     await this.page.frameLocator(process.env.Frame).locator('.Polaris-Modal-Dialog__Container')
-     .locator('.grid_file_item ', {hasText: 'wax-special'}).click();
-
-     await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Done' }).click()
-
-};
-
-async removeImage(image: string) {
-
-    await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack', { hasText: image })
-        .locator('div', { hasText: image }).getByRole('button', { name: 'Change' }).click();
-
-     await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Remove image' }).click()  
-
-};
-
-async changeSIdeImagePosition (pos: string) {
-    await this.page.frameLocator(process.env.Frame).locator('button', { hasText: pos }).click()  
-
-};
+    };
 
 
-async CustomCSS() {
-    await this.page.frameLocator(process.env.Frame)
-        .getByRole('tab', { name: 'Theme' }).click();
+    async replaceImage(image: string) {
 
-    const castomCSSfiled = this.page.frameLocator(process.env.Frame)
-        .locator('.Polaris-Collapsible', { hasText: 'Custom CSS' })
-    await castomCSSfiled.getByRole('button', { name: 'Add CSS selector' }).click();
+        await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack', { hasText: image })
+            .locator('div', { hasText: image }).getByRole('button', { name: 'Change' }).click();
 
-    await this.page.frameLocator(process.env.Frame).locator('.customStylesStack__d2536628ef862a17186a', { hasText: 'Countries' })
-    .locator('.selectorWrapper__be61bf86ff0dcf8cfaf3', { hasText: 'Title of certain resource' }).hover();
+        await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Change image' }).click();
 
-    await this.page.frameLocator(process.env.Frame).locator('.customStylesStack__d2536628ef862a17186a', { hasText: 'Countries' })
-    .locator('.selectorWrapper__be61bf86ff0dcf8cfaf3', { hasText: 'Title of certain resource' })
-    .getByRole('button', { name: 'Add' }).click();
+        await this.page.frameLocator(process.env.Frame).locator('.Polaris-Modal-Dialog__Container')
+            .locator('.grid_file_item ', { hasText: 'wax-special' }).click();
 
-    await this.page.frameLocator(process.env.Frame).locator('.Polaris-Modal-Dialog__Container')
-        .getByRole('button', { name: 'Apply' }).click();
-    await this.page.waitForTimeout(500);
+        await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Done' }).click()
 
-    await castomCSSfiled.locator('textarea').fill(`.adt-countries .adt-disclosure-btn .adt-disclosure-btnText {
+    };
+
+    async removeImage(image: string) {
+
+        await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack', { hasText: image })
+            .locator('div', { hasText: image }).getByRole('button', { name: 'Change' }).click();
+
+        await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Remove image' }).click()
+
+    };
+
+    async changeSIdeImagePosition(pos: string) {
+        await this.page.frameLocator(process.env.Frame).locator('button', { hasText: pos }).click()
+
+    };
+
+
+    async CustomCSS() {
+        await this.page.frameLocator(process.env.Frame)
+            .getByRole('tab', { name: 'Theme' }).click();
+
+        const castomCSSfiled = this.page.frameLocator(process.env.Frame)
+            .locator('.Polaris-Collapsible', { hasText: 'Custom CSS' })
+        await castomCSSfiled.getByRole('button', { name: 'Add CSS selector' }).click();
+
+        await this.page.frameLocator(process.env.Frame).locator('.customStylesStack__d2536628ef862a17186a', { hasText: 'Countries' })
+            .locator('.selectorWrapper__be61bf86ff0dcf8cfaf3', { hasText: 'Title of certain resource' }).hover();
+
+        await this.page.frameLocator(process.env.Frame).locator('.customStylesStack__d2536628ef862a17186a', { hasText: 'Countries' })
+            .locator('.selectorWrapper__be61bf86ff0dcf8cfaf3', { hasText: 'Title of certain resource' })
+            .getByRole('button', { name: 'Add' }).click();
+
+        await this.page.frameLocator(process.env.Frame).locator('.Polaris-Modal-Dialog__Container')
+            .getByRole('button', { name: 'Apply' }).click();
+        await this.page.waitForTimeout(500);
+
+        await castomCSSfiled.locator('textarea').fill(`.adt-countries .adt-disclosure-btn .adt-disclosure-btnText {
         box-sizing: border-box;
         color: green;
         font-size: 33px;
      }
  `);
 
-    await this.page.waitForTimeout(500);
-    await expect.soft(castomCSSfiled).toHaveScreenshot();
+        await this.page.waitForTimeout(500);
+        await expect.soft(castomCSSfiled).toHaveScreenshot();
 
-};
-
-
-async themeCheckbox(checkBox: string, ariaChecked: string) {
-    const checkbox = this.page.frameLocator(process.env.Frame).locator('.Polaris-Checkbox__ChoiceLabel', {hasText: checkBox})
-    .getByRole('checkbox')
-
-    await this.page.frameLocator(process.env.Frame)
-    .getByRole('tab', { name: 'Theme' }).click();
-
-    await checkbox.scrollIntoViewIfNeeded();
-    await checkbox.click({ force: true });
-    await expect(checkbox).toHaveAttribute('aria-checked', ariaChecked);
-};
+    };
 
 
+    async themeCheckbox(checkBox: string, ariaChecked: string) {
+        const checkbox = this.page.frameLocator(process.env.Frame).locator('.Polaris-Checkbox__ChoiceLabel', { hasText: checkBox })
+            .getByRole('checkbox')
 
-async checkFontSettings (fontSize: string, fontWeight: string, firefox: string, chrome: string) {
+        await this.page.frameLocator(process.env.Frame)
+            .getByRole('tab', { name: 'Theme' }).click();
 
-    await expect(this.page.locator('.adt-item:hover .adt-itemText')).toHaveCSS('font-size', fontSize);
-    await expect(this.page.locator('.adt-item:hover .adt-itemText')).toHaveCSS('font-weight', fontWeight);
-    const element = this.page.locator('.adt-item:hover .adt-itemText');
-    const style = await (element).evaluate(element => {
-        const style = window.getComputedStyle(element);
-        return {
-            fontFamily: style.fontFamily,
-        };
-    });
-    
-    expect(style.fontFamily === firefox || style.fontFamily === chrome).toBeTruthy();
-
-};
+        await checkbox.scrollIntoViewIfNeeded();
+        await checkbox.click({ force: true });
+        await expect(checkbox).toHaveAttribute('aria-checked', ariaChecked);
+    };
 
 
-async checkMainBorderSettings (localor: string ,style: string, color: string, left: string, right: 
-    string, tleft: string, tright: string, width: string, width2: string, width3: string) {
 
-    await expect(this.page.locator(localor)).toHaveCSS('border-bottom-left-radius', left);
-    await expect(this.page.locator(localor)).toHaveCSS('border-bottom-right-radius', right);
-    await expect(this.page.locator(localor)).toHaveCSS('border-top-left-radius', tleft);
-    await expect(this.page.locator(localor)).toHaveCSS('border-top-right-radius', tright);
-    await expect(this.page.locator(localor)).toHaveCSS('border-left-width', width);
-    await expect(this.page.locator(localor)).toHaveCSS('border-right-width', width2);
-    await expect(this.page.locator(localor)).toHaveCSS('border-color', color);
-    await expect(this.page.locator(localor)).toHaveCSS('border-style', style);
-    await expect(this.page.locator(localor)).toHaveCSS('border-width', width3);
+    async checkFontSettings(fontSize: string, fontWeight: string, firefox: string, chrome: string) {
 
-};
+        await expect(this.page.locator('.adt-item:hover .adt-itemText')).toHaveCSS('font-size', fontSize);
+        await expect(this.page.locator('.adt-item:hover .adt-itemText')).toHaveCSS('font-weight', fontWeight);
+        const element = this.page.locator('.adt-item:hover .adt-itemText');
+        const style = await (element).evaluate(element => {
+            const style = window.getComputedStyle(element);
+            return {
+                fontFamily: style.fontFamily,
+            };
+        });
 
-async checkPrimaryButtonBorderSettings (style: string, color: string, left: string, right: string, tleft: string,
-     tright: string, width: string, width2: string, width3: string, width4: string, width5: string) {
-    await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-bottom-left-radius', left);
-    await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-bottom-right-radius', right);
-    await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-top-left-radius', tleft);
-    await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-top-right-radius', tright);
-    await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-left-width', width);
-    await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-right-width', width2);
-    await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-top-width', width3);
-    await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-bottom-width', width4);
-    await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-color', color);
-    await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-style', style);
-    await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-width', width5);
+        expect(style.fontFamily === firefox || style.fontFamily === chrome).toBeTruthy();
 
-};
+    };
 
-async checkSecondaryButtonBorderSettings (style: string, color: string, left: string, right: string, tleft: string,
-    tright: string, width: string, width2: string, width3: string, width4: string, width5: string)  {
-    await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-top-left-radius', left);
-    await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-top-right-radius', right);
-    await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-bottom-left-radius', tleft);
-    await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-bottom-right-radius', tright);
-    await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-top-width', width);
-    await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-right-width', width2);
-    await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-bottom-width', width3);
-    await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-left-width', width4);
-    await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-color', color);
-    await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-style', style);
-    await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-width', width5);
 
-};
+    async checkMainBorderSettings(localor: string, style: string, color: string, left: string, right:
+        string, tleft: string, tright: string, width: string, width2: string, width3: string) {
+
+        await expect(this.page.locator(localor)).toHaveCSS('border-bottom-left-radius', left);
+        await expect(this.page.locator(localor)).toHaveCSS('border-bottom-right-radius', right);
+        await expect(this.page.locator(localor)).toHaveCSS('border-top-left-radius', tleft);
+        await expect(this.page.locator(localor)).toHaveCSS('border-top-right-radius', tright);
+        await expect(this.page.locator(localor)).toHaveCSS('border-left-width', width);
+        await expect(this.page.locator(localor)).toHaveCSS('border-right-width', width2);
+        await expect(this.page.locator(localor)).toHaveCSS('border-color', color);
+        await expect(this.page.locator(localor)).toHaveCSS('border-style', style);
+        await expect(this.page.locator(localor)).toHaveCSS('border-width', width3);
+
+    };
+
+    async checkPrimaryButtonBorderSettings(style: string, color: string, left: string, right: string, tleft: string,
+        tright: string, width: string, width2: string, width3: string, width4: string, width5: string) {
+        await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-bottom-left-radius', left);
+        await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-bottom-right-radius', right);
+        await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-top-left-radius', tleft);
+        await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-top-right-radius', tright);
+        await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-left-width', width);
+        await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-right-width', width2);
+        await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-top-width', width3);
+        await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-bottom-width', width4);
+        await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-color', color);
+        await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-style', style);
+        await expect(this.page.locator('.adt-disclosure-btn').first()).toHaveCSS('border-width', width5);
+
+    };
+
+    async checkSecondaryButtonBorderSettings(style: string, color: string, left: string, right: string, tleft: string,
+        tright: string, width: string, width2: string, width3: string, width4: string, width5: string) {
+        await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-top-left-radius', left);
+        await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-top-right-radius', right);
+        await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-bottom-left-radius', tleft);
+        await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-bottom-right-radius', tright);
+        await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-top-width', width);
+        await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-right-width', width2);
+        await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-bottom-width', width3);
+        await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-left-width', width4);
+        await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-color', color);
+        await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-style', style);
+        await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-width', width5);
+
+    };
 
 
 
