@@ -26,7 +26,9 @@ export class BannerPage {
             await resetBtnLocator.click();
             await showBtnLocator.click();
         } catch {
-            await resetBtnLocator.click();
+            await expect(async () => {
+                await resetBtnLocator.click();
+            }).toPass();
         }
     }
 
@@ -152,14 +154,12 @@ export class BannerPage {
 
     };
 
-
     async editImage(image: string) {
 
         await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack', { hasText: image })
             .locator('div', { hasText: image }).getByRole('button', { name: 'Edit' }).click();
 
     };
-
 
     async changeGrayscaleBlur(slider: string, minusPlusnumb: number) {
 
@@ -178,13 +178,14 @@ export class BannerPage {
 
     };
 
-
     async focalPoint() {
 
         await this.page.frameLocator(process.env.Frame).locator('.focal-point-button').click();
         const SliderBox = this.page.frameLocator(process.env.Frame).locator('.focal-pointer')
 
-        await SliderBox.scrollIntoViewIfNeeded();
+        await expect(async () => {
+            await SliderBox.scrollIntoViewIfNeeded();
+        }).toPass();
         const box = await SliderBox.boundingBox();
         const x = box.x + box.width / 2;
         const y = box.y + box.height / 2;
@@ -195,13 +196,10 @@ export class BannerPage {
 
     };
 
-
     async closeImageEditor() {
 
         await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Done' }).click()
-
     };
-
 
     async replaceImage(image: string) {
 
@@ -230,7 +228,6 @@ export class BannerPage {
         await this.page.frameLocator(process.env.Frame).locator('button', { hasText: pos }).click()
 
     };
-
 
     async CustomCSS() {
         await this.page.frameLocator(process.env.Frame)
@@ -263,7 +260,6 @@ export class BannerPage {
 
     };
 
-
     async themeCheckbox(checkBox: string, ariaChecked: string) {
         const checkbox = this.page.frameLocator(process.env.Frame).locator('.Polaris-Checkbox__ChoiceLabel', { hasText: checkBox })
             .getByRole('checkbox')
@@ -275,7 +271,6 @@ export class BannerPage {
         await checkbox.click({ force: true });
         await expect(checkbox).toHaveAttribute('aria-checked', ariaChecked);
     };
-
 
 
     async checkFontSettings(fontSize: string, fontWeight: string, firefox: string, chrome: string) {
@@ -293,7 +288,6 @@ export class BannerPage {
         expect(style.fontFamily === firefox || style.fontFamily === chrome).toBeTruthy();
 
     };
-
 
     async checkMainBorderSettings(localor: string, style: string, color: string, left: string, right:
         string, tleft: string, tright: string, width: string, width2: string, width3: string) {
@@ -341,20 +335,6 @@ export class BannerPage {
         await expect(this.page.locator('.adt-changeBtn')).toHaveCSS('border-width', width5);
 
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

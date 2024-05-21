@@ -9,8 +9,6 @@ export class SelectorPage {
         this.page = page
     }
 
-
-
     async openApp() {
 
         let url = process.env.AppUrl
@@ -23,28 +21,29 @@ export class SelectorPage {
         const suportChat = this.page.frameLocator(process.env.Frame)
             .locator('.cc-xzla')
 
-        // await element.scrollIntoViewIfNeeded();  
-        await this.page.frameLocator(process.env.Frame)
+        await expect(async () => {
+            await this.page.frameLocator(process.env.Frame)
             .locator('.Polaris-Button__Content', { hasText: 'Customize' }).scrollIntoViewIfNeeded();
-        await this.page.waitForTimeout(1000);
+        }).toPass();
 
+        try {
+            await element.waitFor({ state: 'visible', timeout: 1000 });
+            await this.page.frameLocator(process.env.Frame)
+            .locator(':text("Showing")').nth(1).click();
+        await this.page.frameLocator(process.env.Frame)
+            .getByRole('button', { name: 'Actions' }).click();
+
+        await this.page.frameLocator(process.env.Frame)
+            .locator('.Polaris-ActionList__Text', { hasText: 'Delete' }).click({ force: true });
+
+        await this.page.frameLocator(process.env.Frame)
+            .locator('.Polaris-Button__Text', { hasText: 'Delete' }).click({ force: true });
+        } catch {
+            await this.page.waitForTimeout(100);
+        }
         if (await suportChat.isVisible({ timeout: 5000 })) {
             await suportChat.locator('[class="cc-1rzf cc-yx2c"]').click();
         };
-
-        if (await element.isVisible({ timeout: 5000 })) {
-            await this.page.frameLocator(process.env.Frame)
-                .locator(':text("Showing")').nth(1).click();
-            await this.page.frameLocator(process.env.Frame)
-                .getByRole('button', { name: 'Actions' }).click();
-
-            await this.page.frameLocator(process.env.Frame)
-                .locator('.Polaris-ActionList__Text', { hasText: 'Delete' }).click({ force: true });
-
-            await this.page.frameLocator(process.env.Frame)
-                .locator('.Polaris-Button__Text', { hasText: 'Delete' }).click({ force: true });
-        }
-
     };
 
     async selTypes(type: string) {
@@ -86,8 +85,6 @@ export class SelectorPage {
             .locator('.Polaris-Box button').filter({ has: this.page.frameLocator(process.env.Frame).locator(`:text-is("${resourse}")`) })
             .click();
     };
-
-
 
     async selectType(type: string) {
         await this.page.frameLocator(process.env.Frame)
@@ -447,10 +444,13 @@ export class SelectorPage {
     };
 
     async includeExcludeCountry(exclude: string, textInput: string) {
-        await this.page.frameLocator(process.env.Frame)
-            .locator('.Polaris-BlockStack', { hasText: 'Countries' })
-            .locator('select')
-            .selectOption({ value: exclude });
+  
+            await expect(async () => {
+                await this.page.frameLocator(process.env.Frame)
+                .locator('.Polaris-BlockStack', { hasText: 'Countries' })
+                .locator('select')
+                .selectOption({ value: exclude });
+            }).toPass();
 
         await this.page.frameLocator(process.env.Frame)
             .locator('.Polaris-TextField__Input').fill(textInput);
@@ -506,6 +506,24 @@ export class SelectorPage {
     };
 
 
+   async disableRedirect() {
+
+    const checkboxes = this.page.frameLocator(process.env.Frame)
+            .locator('.Polaris-ShadowBevel', { hasText: 'Redirect behavior' })
+            .getByRole('checkbox')
+        for (const checkbox of await checkboxes.all()) {
+            try {
+                await checkbox.waitFor({ state: 'visible', timeout: 500 });
+                await checkbox.uncheck({ force: true });
+                await this.page.waitForLoadState('load');
+                await this.page.waitForTimeout(500);
+            } catch {
+                await this.page.waitForTimeout(100);
+            }
+   }
+
+   await this.page.locator('button', { hasText: 'Save' }).click();
+};
 
 
 

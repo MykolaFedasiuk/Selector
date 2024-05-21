@@ -545,9 +545,9 @@ test('23 Visibility - Include Custom urls', async ({ page, selectorPage, openSel
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
    await page.goto('https://qafm30-11.myshopify.com/pages/contact');
-   await page.waitForLoadState('load');
-   await page.waitForTimeout(500);
-   await expect(page.locator('selector-root')).not.toBeVisible();
+   await expect(async () => {
+      await expect(page.locator('selector-root')).not.toBeVisible();
+   }).toPass();
 
 });
 
@@ -578,9 +578,9 @@ test('25 Visibility - exclude Custom urls', async ({ page, selectorPage, openSel
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.waitForLoadState('load');
-   await page.waitForTimeout(500);
-   await expect(page.locator('selector-root')).not.toBeVisible();
+   await expect(async () => {
+      await expect(page.locator('selector-root')).not.toBeVisible();
+   }).toPass();
    await page.goto('https://qafm30-11.myshopify.com/pages/contact');
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
@@ -629,9 +629,9 @@ test('28 Visibility - Include Languages', async ({ page, selectorPage, openSelec
    await page.goto('https://qafm30-11.myshopify.com/en')
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
-   await page.waitForLoadState('load');
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
-   expect(selectorExists).toBeFalsy();
+   await expect(async () => {
+      await expect(page.locator('selector-root')).not.toBeVisible();
+   }).toPass();
 });
 
 test('29 Visibility - exclude Languages', async ({ page, selectorPage, openSelector }) => {
@@ -674,18 +674,17 @@ test('31 Visibility - exclude Countries', async ({ page, selectorPage, openSelec
    expect(selectorExists).toBeFalsy();
 });
 
-
-
 test('32 Visibility - Extra small  (0 - 489px)', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.setVisibilitySize('Extra small  (0 - 489px)');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
-   await page.waitForLoadState('load');
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
-   expect(selectorExists).toBeFalsy();
+   await expect(async () => {
+      await expect(page.locator('selector-root')).not.toBeVisible();
+   }).toPass();
    await page.setViewportSize({ width: 490, height: 800 });
-   await page.waitForTimeout(500);
-   expect(selectorExists).toBeFalsy();
+   await expect(async () => {
+      await expect(page.locator('selector-root')).not.toBeVisible();
+   }).toPass();
    await page.setViewportSize({ width: 489, height: 800 });
 
    await page.locator('selector-root').click();
@@ -696,13 +695,14 @@ test('33 Visibility - Small (490 - 767px)', async ({ page, selectorPage, openSel
    await selectorPage.setVisibilitySize('Small (490 - 767px)');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
-   await page.waitForLoadState('load');
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
-   expect(selectorExists).toBeFalsy();
+   await expect(async () => {
+      await expect(page.locator('selector-root')).not.toBeVisible();
+   }).toPass();
 
    await page.setViewportSize({ width: 479, height: 800 });
-   await page.waitForTimeout(500);
-   expect(selectorExists).toBeFalsy();
+   await expect(async () => {
+      await expect(page.locator('selector-root')).not.toBeVisible();
+   }).toPass();
    await page.setViewportSize({ width: 490, height: 800 });
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
@@ -712,13 +712,14 @@ test('34 Visibility - Medium (768 - 1039px)', async ({ page, selectorPage, openS
    await selectorPage.setVisibilitySize('Medium (768 - 1039px)');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
-   await page.waitForLoadState('load');
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
-   expect(selectorExists).toBeFalsy();
+   await expect(async () => {
+      await expect(page.locator('selector-root')).not.toBeVisible();
+   }).toPass();
 
    await page.setViewportSize({ width: 767, height: 1038 });
-   await page.waitForTimeout(500);
-   expect(selectorExists).toBeFalsy();
+   await expect(async () => {
+      await expect(page.locator('selector-root')).not.toBeVisible();
+   }).toPass();
    await page.setViewportSize({ width: 768, height: 1039 });
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().click();

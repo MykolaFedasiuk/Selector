@@ -17,6 +17,7 @@ export const test = base.extend<{selectorPage: SelectorPage, bannerPage: BannerP
 
      openSelector: async({selectorPage}, use) => {
       await selectorPage.openApp();
+      await selectorPage.disableBannerIfNeeded();
       await selectorPage.createSelector();
       await use('');    
      },

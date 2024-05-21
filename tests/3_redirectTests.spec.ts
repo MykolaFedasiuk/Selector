@@ -37,21 +37,20 @@ test('74 Redirect markets, Forced redirect', async ({ page, selectorPage, redire
     await selectorPage.openStore();
 
     await page.goto('https://qafm30-11.myshopify.com/es-en');
-    await page.waitForLoadState('load');
-    await page.waitForTimeout(500);
-    await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
-    await expect(page.locator('header')).toContainText('Hogar');
+    await expect(async () => {
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
+        await expect(page.locator('header')).toContainText('Hogar');
+        expect(page.url()).toContain('?22=33');
+    }).toPass();
     await page.locator('[aria-describedby="HeaderCountryLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'PLN' }).nth(1).click();
     await page.locator('[aria-describedby="HeaderLanguageLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'English' }).nth(1).click();
     await page.waitForLoadState('load');
-    await page.reload();
-
     await expect(async () => {
+        await page.reload();
         await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
         await expect(page.locator('header')).toContainText('Home');
-        expect(page.url()).toContain('?22=33');
     }).toPass();
 
 });
@@ -120,17 +119,17 @@ test('77 Redirect language, Forced redirect', async ({ page, selectorPage, redir
     await selectorPage.openStore();
 
     await page.goto('https://qafm30-11.myshopify.com/es-en');
-    await page.waitForLoadState('load');
-    await page.waitForTimeout(500);
-    await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
-    await expect(page.locator('header')).toContainText('Home');
+    await expect(async () => {
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
+        await expect(page.locator('header')).toContainText('Home');
+    }).toPass();
     await page.locator('[aria-describedby="HeaderCountryLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'PLN' }).nth(1).click();
     await page.locator('[aria-describedby="HeaderLanguageLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'Українська' }).nth(1).click();
     await page.waitForLoadState('load');
-    await page.reload();
     await expect(async () => {
+        await page.reload();
         await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
         await expect(page.locator('header')).toContainText('Home');
     }).toPass();
@@ -144,21 +143,20 @@ test('78 Redirect language, Redirect once', async ({ page, selectorPage, redirec
     await selectorPage.openStore();
 
     await page.goto('https://qafm30-11.myshopify.com/es-en');
-    await page.waitForLoadState('load');
-    await page.waitForTimeout(500);
-    await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
-    await expect(page.locator('header')).toContainText('Home');
+      await expect(async () => {
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
+        await expect(page.locator('header')).toContainText('Home');
+    }).toPass();
     await page.locator('[aria-describedby="HeaderCountryLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'PLN' }).nth(1).click();
     await page.locator('[aria-describedby="HeaderLanguageLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'Українська' }).nth(1).click();
     await page.waitForLoadState('load');
-    await page.reload();
     await expect(async () => {
+        await page.reload();
         await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
         await expect(page.locator('header')).toContainText('додому');
     }).toPass();
-
 
 });
 
@@ -201,17 +199,17 @@ test('80 Redirect both, Forced redirect', async ({ page, selectorPage, redirects
     await selectorPage.openStore();
 
     await page.goto('https://qafm30-11.myshopify.com/es-en');
-    await page.waitForLoadState('load');
-    await page.waitForTimeout(500);
-    await expect(page.locator('header')).toContainText('Home');
-    await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
+    await expect(async () => {
+        await expect(page.locator('header')).toContainText('Home');
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
+    }).toPass();
     await page.locator('[aria-describedby="HeaderCountryLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'PLN' }).nth(1).click();
     await page.locator('[aria-describedby="HeaderLanguageLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'Українська' }).nth(1).click();
     await page.waitForLoadState('load');
-    await page.reload();
     await expect(async () => {
+        await page.reload();
         await expect(page.locator('header')).toContainText('Home');
         await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
     }).toPass();
@@ -227,8 +225,11 @@ test('81 Redirect both, Redirect once', async ({ page, selectorPage, redirects }
     await selectorPage.openStore();
 
     await page.goto('https://qafm30-11.myshopify.com/es-en');
-    await page.waitForLoadState('load');
-    await page.waitForTimeout(500);
+    await expect(async () => {
+        await expect(page.locator('header')).toContainText('Home');
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
+        expect(page.url()).toContain('?22=33');
+    }).toPass();
     await expect(page.locator('header')).toContainText('Home');
     await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
     expect(page.url()).toContain('?22=33');
@@ -249,16 +250,18 @@ test('82 Redirect markets, Redirect when necessary, Include Ukraine', async ({ p
     await selectorPage.openStore();
 
     await page.goto('https://qafm30-11.myshopify.com/es-en');
-    await page.waitForLoadState('load');
-    await page.waitForTimeout(500);
-    await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
-    await expect(page.locator('header')).toContainText('Hogar');
+    await expect(async () => {
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
+        await expect(page.locator('header')).toContainText('Hogar');
+    }).toPass();
     await page.locator('[aria-describedby="HeaderCountryLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'PLN' }).nth(1).click();
     await page.locator('[aria-describedby="HeaderLanguageLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'Українська' }).nth(1).click();
-    await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
-    await expect(page.locator('header')).toContainText('додому');
+    await expect(async () => {
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
+        await expect(page.locator('header')).toContainText('додому');
+    }).toPass();
     await page.goto('https://qafm30-11.myshopify.com/es-ja');
     await expect(async () => {
         await expect(page.locator('header')).toContainText('Hogar');
@@ -276,10 +279,10 @@ test('83 Redirect markets + default language, Forced redirect, Include Ukraine',
     await selectorPage.openStore();
 
     await page.goto('https://qafm30-11.myshopify.com/es-en');
-    await page.waitForLoadState('load');
-    await page.waitForTimeout(500);
-    await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
-    await expect(page.locator('header')).toContainText('додому');
+    await expect(async () => {
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
+        await expect(page.locator('header')).toContainText('додому');
+    }).toPass();
     await page.locator('[aria-describedby="HeaderCountryLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'PLN' }).nth(1).click();
     await page.locator('[aria-describedby="HeaderLanguageLabel"]').click()
@@ -304,11 +307,11 @@ test('84 Redirect both, Redirect once, Include Ukraine', async ({ page, selector
     await selectorPage.openStore();
 
     await page.goto('https://qafm30-11.myshopify.com/es-en');
-    await page.waitForLoadState('load');
-    await page.waitForTimeout(500);
-    await expect(page.locator('header')).toContainText('Home');
-    await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
-    expect(page.url()).toMatch(/\?22=33/);
+    await expect(async () => {
+        await expect(page.locator('header')).toContainText('Home');
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
+        expect(page.url()).toMatch(/\?22=33/);
+    }).toPass();
     await page.goto('https://qafm30-11.myshopify.com/es-en');
     await expect(async () => {
         await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
@@ -369,11 +372,10 @@ test('88 Redirect markets, Redirect when necessary, Exclude Ukraine', async ({ p
     await selectorPage.openStore();
 
     await page.goto('https://qafm30-11.myshopify.com/es-en');
-    await page.waitForLoadState('load');
-    await page.waitForTimeout(1000);
-    await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
-    await expect(page.locator('header')).toContainText('Hogar');
-
+    await expect(async () => {
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
+        await expect(page.locator('header')).toContainText('Hogar');
+    }).toPass();
 
 });
 
@@ -415,10 +417,10 @@ test('91 Redirect markets, Redirect when necessary, Exclude Poland', async ({ pa
     await selectorPage.openStore();
 
     await page.goto('https://qafm30-11.myshopify.com/es-en');
-    await page.waitForLoadState('load');
-    await page.waitForTimeout(500);
-    await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
-    await expect(page.locator('header')).toContainText('Hogar');
+    await expect(async () => {
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
+        await expect(page.locator('header')).toContainText('Hogar');
+    }).toPass();
     await page.locator('[aria-describedby="HeaderCountryLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'PLN' }).nth(1).click();
     await page.locator('[aria-describedby="HeaderLanguageLabel"]').click()
@@ -446,21 +448,20 @@ test('92 Redirect markets, Forced redirect, Exclude Poland', async ({ page, sele
     await selectorPage.openStore();
 
     await page.goto('https://qafm30-11.myshopify.com/es-en');
-    await page.waitForLoadState('load');
-    await page.waitForTimeout(500);
-    await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
-    await expect(page.locator('header')).toContainText('Hogar');
+    await expect(async () => {
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
+        await expect(page.locator('header')).toContainText('Hogar');
+    }).toPass();
     await page.locator('[aria-describedby="HeaderCountryLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'PLN' }).nth(1).click();
     await page.locator('[aria-describedby="HeaderLanguageLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'Українська' }).nth(1).click();
     await page.waitForLoadState('load');
-    await page.reload();
     await expect(async () => {
+        await page.reload();
         await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
         await expect(page.locator('header')).toContainText('додому');
     }).toPass();
-
 
 });
 
@@ -473,17 +474,17 @@ test('93 Redirect markets, Redirect once, Exclude Poland', async ({ page, select
     await selectorPage.openStore();
 
     await page.goto('https://qafm30-11.myshopify.com/es-en');
-    await page.waitForLoadState('load');
-    await page.waitForTimeout(500);
-    await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
-    await expect(page.locator('header')).toContainText('додому');
+    await expect(async () => {
+        await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');
+        await expect(page.locator('header')).toContainText('додому');
+    }).toPass();
     await page.locator('[aria-describedby="HeaderCountryLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'PLN' }).nth(1).click();
     await page.locator('[aria-describedby="HeaderLanguageLabel"]').click()
     await page.locator('.disclosure__item', { hasText: 'English' }).nth(1).click();
     await page.waitForLoadState('load');
-    await page.reload();
     await expect(async () => {
+        await page.reload();
         await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
         await expect(page.locator('header')).toContainText('Home');
     }).toPass();
