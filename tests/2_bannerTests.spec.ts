@@ -62,7 +62,6 @@ test('39 Remember choice, Currency, Banner, Arctic, Position - bottom center', a
    await page.waitForTimeout(500)
    await expect(page.locator('.adt-item:hover').first()).toHaveCSS('color', 'rgb(1, 125, 125)');
    await bannerPage.checkFontSettings('9.24px', '700', 'Arial Black', "\"Arial Black\"");
-
    await page.locator('li[data-code="PLN"]').click();
    await page.waitForTimeout(500)
    await page.locator('.adt-changeBtn').click();
@@ -99,7 +98,6 @@ test('40 Display once, Language & Currency, Popup, Wild West, Position - top lef
    await expect(page.locator('.adt-description')).toHaveCSS('color', 'rgb(56, 58, 21)');
    await expect(page.locator('.adt-main')).toHaveCSS('background-color', 'rgb(255, 239, 215)');
    await expect(page.locator('.adt-disclosure-btn[data-resource="languages"]')).toHaveAttribute('data-code', 'en');
-
    // await expect(page.locator('.adt-modal-content')).toHaveClass('adt-modal-content sel-fixed adt-top-static');
    await page.locator('.adt-disclosure-btn[data-resource="languages"]').click();
    await page.waitForTimeout(500);
