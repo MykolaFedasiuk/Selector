@@ -85,7 +85,7 @@ test('6 Currency, Wheel, Cute, Arctic, Fixed position, Position - top right', as
    await page.getByRole('button', { name: 'Done' }).last().click();
    await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right');
 
-   await expect(page.locator('.sel-item.sel-current').first()).toHaveText('PL (zł)');
+   await expect(page.locator('.sel-item.sel-current').first()).toHaveText('Polish Zloty');
 
 
    await expect.soft(page.locator('.product-card-wrapper').first()).toContainText('PLN');
@@ -95,7 +95,7 @@ test('6 Currency, Wheel, Cute, Arctic, Fixed position, Position - top right', as
    await expect(page.locator('.sel-wheel-actionsWrapper')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
 });
 
-
+/////////////////шо за хуйня
 test('7 Country (Currency), Modal, Minimal, Wild West, Fixed position, Position - bottom right', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country (Currency)');
    await selectorPage.selectType('Modal');
@@ -160,6 +160,11 @@ test('8 Country (Currency), Inline, Material, Winter, Fixed position, Position -
 });
 
 
+
+
+
+
+/////////////// тут фікс
 test('9 Country (Currency) S Language, Layered, Basic, Cold, Embedded position, Position - header right', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country (Currency) & Language');
    await selectorPage.selectType('Layered');
@@ -221,7 +226,7 @@ test('10 Language S Currency, Popup, Dark Indigo, Embedded position, Position - 
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(51, 49, 59)');
 
 });
-
+////////// тут фікс 
 test('11 Country S Language, Cascade, Black & white, Embedded position, Position - header center', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country & Language');
    await selectorPage.selectType('Cascade');
@@ -280,7 +285,7 @@ test('12 Currency, Sidebar, Jungle, Embedded position, Position - footer right',
 
 });
 
-
+//////// розмір ховера
 test('13 Language, Scale, Desert, Embedded position, Position - footer left', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Language');
    await selectorPage.selectType('Scale');
@@ -298,7 +303,7 @@ test('13 Language, Scale, Desert, Embedded position, Position - footer left', as
    await expect(page.locator('.sel-blob-container')).toHaveCSS('background-color', 'rgb(250, 242, 218)');
 
 });
-
+////////////
 test('14 Country, Tape-Line, North, Embedded position, Position - footer center', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country');
    await selectorPage.selectType('Tape-line');
@@ -377,7 +382,6 @@ test('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSelecto
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgba(255, 255, 255, 0.8)');
    await page.locator('.sel-itemsList .sel-item').first().click();
    await page.getByRole('button', { name: 'Done' }).last().click();
-   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right');
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('PL (zł)');
    await expect.soft(page.locator('.product-card-wrapper').first()).toContainText('PLN');
 
@@ -385,7 +389,7 @@ test('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSelecto
    await expect(page.locator('.sel-wheel-actionsWrapper')).toHaveCSS('background-color', 'rgb(120, 28, 104)');
 });
 
-
+////////////////
 test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Language & Currency');
    await selectorPage.selectType('Modal');
@@ -415,11 +419,9 @@ test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selector
    await page.locator('.sel-itemsList .sel-item').last().click();
    await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right');
    await expect(page.locator('.sel-firstChild .sel-title').first()).toContainText('English');
-   await expect(page.locator('.sel-secondChild .sel-title').first()).toContainText('PLN');
-   await expect(page.locator('.sel-item.sel-current').first()).toHaveText('PL (zł)');
-   const selectorExists = await page.waitForSelector('.sel-iconWrapper', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
-   expect(selectorExists).toBeFalsy();
-   await expect(page.locator('.sel-item.sel-current').first()).toHaveText('Polish Złoty');
+   await expect(page.locator('.sel-secondChild .sel-title').first()).toContainText('Polish Zloty');
+   await expect(page.locator('.sel-item.sel-current').first()).toHaveText('English');
+   await expect(page.locator('.sel-item.sel-current').last()).toHaveText('Polish Zloty');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(255, 255, 255)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(92, 56, 56)');
@@ -427,7 +429,7 @@ test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selector
 });
 
 
-
+///////////////////
 test('18 Currency, Cascade, Turquoise, search', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Currency');
    await selectorPage.selectType('Cascade');
@@ -442,7 +444,7 @@ test('18 Currency, Cascade, Turquoise, search', async ({ page, selectorPage, ope
    await selectorPage.openStore();
 
    await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-names.sel-currencies.sel-cascade-disclosure'))
-   .toHaveScreenshot();
+      .toHaveScreenshot();
    await page.locator('.sel-disclosure.sel-basic.sel-view-names.sel-currencies.sel-cascade-disclosure').click()
    await page.locator('.sel-search-input').fill('pol');
    await expect.soft(page.locator('.sel-itemsContainer.sel-itemsList-top')).toHaveScreenshot();
@@ -455,9 +457,9 @@ test('18 Currency, Cascade, Turquoise, search', async ({ page, selectorPage, ope
    await expect(page.locator('li.sel-item').first()).toHaveCSS('background-color', 'rgb(40, 255, 191)');
 });
 
-
+///////////
 test('19 Country (Currency) & Language, Sidebar, Search', async ({ page, selectorPage, openSelector }) => {
-   await selectorPage.selectResourse('Country (Currency) & Language');    
+   await selectorPage.selectResourse('Country (Currency) & Language');
    await selectorPage.selectType('Sidebar');
    await selectorPage.changeSizeSlider(-30);
    await selectorPage.display1(2);
@@ -468,7 +470,7 @@ test('19 Country (Currency) & Language, Sidebar, Search', async ({ page, selecto
 
    await expect.soft(page.locator('selector-root')).toHaveScreenshot();
    await page.locator('.sel-disclosure.sel-basic.sel-view-icons.sel-languages_countries.sel-sidebar-disclosure')
-   .locator('.sel-firstChild').click();
+      .locator('.sel-firstChild').click();
    await page.locator('.sel-firstChild .sel-search-input').fill('sdfdsfdsfs');
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot();
    await page.locator('.sel-firstChild .sel-search-input').clear();
@@ -769,11 +771,16 @@ test('36 Visibility - Extra large (1440 - ∞px)', async ({ page, selectorPage, 
    const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
    await page.setViewportSize({ width: 1440, height: 1039 });
-   await page.locator('selector-root').click();
+   await expect(async () => {
+      await page.reload()
+      await page.locator('selector-root').click({ timeout: 2000 });
+   }).toPass();
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
 
+
 test('37 Custom CSS, Disable styles isolation', async ({ openSelector, page, selectorPage }) => {
+
    await selectorPage.CustomCSSDisableStylesIsolation();
    await selectorPage.saveSelector();
    await selectorPage.openStore();

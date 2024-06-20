@@ -377,8 +377,8 @@ export class SelectorPage {
 
         await this.page.waitForTimeout(500);
 
-        await castomCSSfiled.getByRole('checkbox').check({ force: true });
-        await expect(castomCSSfiled.getByRole('checkbox')).toHaveAttribute('aria-checked', 'true');
+        await castomCSSfiled.getByRole('checkbox', {name: 'Disable styles isolation'}).check({ force: true });
+        await expect(castomCSSfiled.getByRole('checkbox', {name: 'Disable styles isolation'})).toHaveAttribute('aria-checked', 'true');
         await expect.soft(castomCSSfiled).toHaveScreenshot();
 
     };
