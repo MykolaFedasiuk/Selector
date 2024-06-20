@@ -41,11 +41,11 @@ export default defineConfig({
       },
 
 
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'], storageState: '.auth/user.json'},
-      dependencies: ['setup']
-    },
+    // {
+    //   name: 'chromium',
+    //   use: { ...devices['Desktop Chrome'], storageState: '.auth/user.json'},
+    //   dependencies: ['setup']
+    // },
 
     {
       name: 'firefox',

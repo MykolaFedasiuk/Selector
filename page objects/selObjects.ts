@@ -15,28 +15,28 @@ export class SelectorPage {
         await this.page.goto(url);
         // await this.page.waitForLoadState('networkidle');
         await this.page.waitForTimeout(5000);
-        const element = this.page.frameLocator(process.env.Frame)
+        const element = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ResourceItem__ItemWrapper a').first();
 
-        const suportChat = this.page.frameLocator(process.env.Frame)
+        const suportChat = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.cc-xzla')
 
         await expect(async () => {
-            await this.page.frameLocator(process.env.Frame)
+            await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Button__Content', { hasText: 'Customize' }).scrollIntoViewIfNeeded();
         }).toPass();
 
         try {
             await element.waitFor({ state: 'visible', timeout: 1000 });
-            await this.page.frameLocator(process.env.Frame)
+            await this.page.frameLocator("#AppFrameMain iframe")
             .locator(':text("Showing")').nth(1).click();
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('button', { name: 'Actions' }).click();
 
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text', { hasText: 'Delete' }).click({ force: true });
 
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Button__Text', { hasText: 'Delete' }).click({ force: true });
         } catch {
             await this.page.waitForTimeout(100);
@@ -47,11 +47,11 @@ export class SelectorPage {
     };
 
     async selTypes(type: string) {
-        const suportChat = this.page.frameLocator(process.env.Frame)
+        const suportChat = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.cc-xzla')
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: type }).getByRole('button').click();
-        const allSelectorTyes = this.page.frameLocator(process.env.Frame)
+        const allSelectorTyes = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text');
         for (const selType of await allSelectorTyes.all()) {
             if (await suportChat.isVisible()) {
@@ -59,7 +59,7 @@ export class SelectorPage {
             };
             await selType.click()
 
-            await this.page.frameLocator(process.env.Frame)
+            await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.custom-drop-down', { hasText: type }).getByRole('button').click();
 
         }
@@ -68,65 +68,65 @@ export class SelectorPage {
 
 
     async createSelector() {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Button__Content', { hasText: 'Create selector' }).click();
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('[class="container__aa6ed1916c93fc44b35f drop-down"]').locator('.header__c9ffa2ffd1581821c7eb').first().click();
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.positionCheckboxContainer__b0c9e7e54d9e4684f2ff').nth(1).click();
 
     };
 
     async selectResourse(resourse: String) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: 'Resource' }).locator('button').click();
 
-        await this.page.frameLocator(process.env.Frame)
-            .locator('.Polaris-Box button').filter({ has: this.page.frameLocator(process.env.Frame).locator(`:text-is("${resourse}")`) })
+        await this.page.frameLocator("#AppFrameMain iframe")
+            .locator('.Polaris-Box button').filter({ has: this.page.frameLocator("#AppFrameMain iframe").locator(`:text-is("${resourse}")`) })
             .click();
     };
 
     async selectType(type: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: 'Type' }).getByRole('button').click();
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text', { hasText: type }).click();
     };
 
 
     async selectTheme(theme: string) {
-        const suportChat = this.page.frameLocator(process.env.Frame)
+        const suportChat = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.cc-xzla')
         if (await suportChat.isVisible({ timeout: 10000 })) {
             await suportChat.scrollIntoViewIfNeeded();
             await suportChat.locator('[class="cc-1rzf cc-yx2c"]').click();
         };
 
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: 'Theme' }).getByRole('button').click();
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text', { hasText: theme }).click();
     };
 
 
     async selectColor(color: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.SelectColorsSchemes', { hasText: 'Color scheme' }).locator('.Polaris-Connected').click();
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Listbox-Option', { hasText: color }).click();
     };
 
 
     async selectPosition(positionType: string, position: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Choice', { hasText: positionType }).click()
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.positionCheckboxContainer__b0c9e7e54d9e4684f2ff', { hasText: position }).click();
 
     };
 
     async changeSizeSlider(minusPlusnumb = 100) {
-        const SliderBox = this.page.frameLocator(process.env.Frame)
+        const SliderBox = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-RangeSlider-SingleThumb__Input');
         await SliderBox.scrollIntoViewIfNeeded();
         const box = await SliderBox.boundingBox();
@@ -137,56 +137,63 @@ export class SelectorPage {
         await this.page.mouse.move(x - minusPlusnumb, y);
         await this.page.mouse.up();
 
-        // await expect.soft(this.page.frameLocator(process.env.Frame)
+        // await expect.soft(this.page.frameLocator("#AppFrameMain iframe")
         // .locator('.Polaris-RangeSlider-SingleThumb__OutputBubble')).toHaveText('66')
 
     };
 
 
     async display1(display1: number) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: 'Display' }).scrollIntoViewIfNeeded();
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: 'Display' }).getByRole('button').first().click();
-        await this.page.frameLocator(process.env.Frame)
-            .locator('.Polaris-ActionList__Text', { has: this.page.frameLocator(process.env.Frame).locator('[role="button"]') }).nth(display1).click();
+        await this.page.frameLocator("#AppFrameMain iframe")
+            .locator('.Polaris-ActionList__Text', { has: this.page.frameLocator("#AppFrameMain iframe").locator('[role="button"]') }).nth(display1).click();
     };
 
     async display2(display2: number) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down').nth(4).getByRole('button').first().click();
-        await this.page.frameLocator(process.env.Frame)
-            .locator('.Polaris-ActionList__Text', { has: this.page.frameLocator(process.env.Frame).locator('[role="button"]') }).nth(display2).click();
+        await this.page.frameLocator("#AppFrameMain iframe")
+            .locator('.Polaris-ActionList__Text', { has: this.page.frameLocator("#AppFrameMain iframe").locator('[role="button"]') }).nth(display2).click();
 
     };
 
     async displayCurrencyIcon(display3: number) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: 'Currency icon' }).getByRole('button').first().click();
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text').nth(display3).click();
 
     };
 
     async displayCurrencyFormat(display4: number) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: 'Currency format' }).getByRole('button').first().click();
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text').nth(display4).click();
 
     };
 
     async saveSelector() {
 
-        if (await this.page.frameLocator(process.env.Frame).locator('.hideBtn__a9223e3607238208f77c')
+        if (await this.page.frameLocator("#AppFrameMain iframe").locator('.hideBtn__a9223e3607238208f77c')
             .isVisible({ timeout: 10000 })) {
-            await this.page.frameLocator(process.env.Frame).locator('.hideBtn__a9223e3607238208f77c').click();
+            await this.page.frameLocator("#AppFrameMain iframe").locator('.hideBtn__a9223e3607238208f77c').click();
         };
 
-        if (await this.page.frameLocator(process.env.Frame)
-            .locator('button', { hasText: 'Publish' }).first().isVisible({ timeout: 10000 })) {
-            await this.page.frameLocator(process.env.Frame)
-                .getByRole('button', { name: 'Publish' }).first().click();
+        await expect(
+            this.page.frameLocator("#AppFrameMain iframe")
+              .getByRole('button', { name: 'Publish' })
+              .or(this.page.frameLocator("#AppFrameMain iframe")
+                  .getByRole('button', { name: 'Disable' })
+              )).toBeVisible();
+
+        if (await this.page.frameLocator("#AppFrameMain iframe")
+        .getByRole('button', { name: 'Publish' }).isVisible({ timeout: 1000 })) {
+            await this.page.frameLocator("#AppFrameMain iframe")
+                .getByRole('button', { name: 'Publish' }).click();
         };
 
         try {
@@ -206,25 +213,25 @@ export class SelectorPage {
     };
 
     async searchCheckbox(checkbox: String) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Checkbox__ChoiceLabel', { hasText: `${checkbox}` }).getByRole('checkbox').check({ force: true });
     };
 
 
     async openColorPicker(field: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-InlineStack').filter({
-                has: this.page.frameLocator(process.env.Frame)
+                has: this.page.frameLocator("#AppFrameMain iframe")
                     .locator('.Polaris-BlockStack', { hasText: field })
             })
             .locator('.ColorActivator__bb26e7abcb1baf605b58').click()
     };
 
     async openColorFieldAndPaste(field: string, colorCode: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
         await this.openColorPicker(field);
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Box').locator('input.Polaris-TextField__Input').fill(colorCode);
     };
 
@@ -232,12 +239,12 @@ export class SelectorPage {
         await this.openColorFieldAndPaste(color1, 'ff282f')
         await this.openColorFieldAndPaste(color2, '282fff')
         await this.openColorFieldAndPaste(color3, '6cff28')
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
     };
 
     async changeColorSlider(sliderbox: string, X: number, Y: number) {
-        const Slider = this.page.frameLocator(process.env.Frame)
+        const Slider = this.page.frameLocator("#AppFrameMain iframe")
             .locator(`${sliderbox} .Polaris-ColorPicker__Dragger`);
         await Slider.scrollIntoViewIfNeeded();
         const box = await Slider.boundingBox();
@@ -250,7 +257,7 @@ export class SelectorPage {
     };
 
     async setColorSliders(colorfield: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
         await this.openColorPicker(colorfield);
         await this.changeColorSlider('.Polaris-ColorPicker__MainColor', 50, 50);
@@ -260,7 +267,7 @@ export class SelectorPage {
     };
 
     async setColorSliders2(colorfield: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
         await this.openColorPicker(colorfield);
         await this.changeColorSlider('.Polaris-ColorPicker__MainColor', 20, 50);
@@ -270,7 +277,7 @@ export class SelectorPage {
     };
 
     async setColorSliders3(colorfield: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
         await this.openColorPicker(colorfield);
         await this.changeColorSlider('.Polaris-ColorPicker__MainColor', 80, 0);
@@ -280,39 +287,39 @@ export class SelectorPage {
     };
 
     async setVisibilityParams(visParam: string, includeExclude: string, textInput: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Visibility' }).click();
 
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-BlockStack', { hasText: visParam })
             .locator('select')
             .selectOption({ value: includeExclude });
 
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-BlockStack', { hasText: visParam }).locator('.Polaris-TextField__Input').fill(textInput);
         await this.page.keyboard.press('Enter');
 
     };
 
     async setVisibilitySize(checkboxText: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Visibility' }).click();
 
-        const allCheckboxes = this.page.frameLocator(process.env.Frame)
+        const allCheckboxes = this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('checkbox');
         for (const checkBox of await allCheckboxes.all()) {
             await checkBox.uncheck({ force: true })
         }
 
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Bleed', { hasText: checkboxText }).getByRole('checkbox').check({ force: true });
     };
 
     async fontSettings(n: number, font: string, fontStyle: string, minusPlusnumb: number, customForm?: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
 
-        const fontfield = this.page.frameLocator(process.env.Frame)
+        const fontfield = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.topographyItem__af4a66ad959905e53481').nth(n)
         await fontfield
             .locator('select').first()
@@ -343,21 +350,21 @@ export class SelectorPage {
 
 
     async CustomCSSDisableStylesIsolation() {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
 
-        const castomCSSfiled = this.page.frameLocator(process.env.Frame)
+        const castomCSSfiled = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Collapsible', { hasText: 'Custom CSS' })
         await castomCSSfiled.getByRole('button', { name: 'Add CSS selector' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('.customStylesStack__d2536628ef862a17186a', { hasText: 'Content' })
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.customStylesStack__d2536628ef862a17186a', { hasText: 'Content' })
             .locator('.selectorWrapper__be61bf86ff0dcf8cfaf3', { hasText: 'Title of certain resource' }).hover();
 
-        await this.page.frameLocator(process.env.Frame).locator('.customStylesStack__d2536628ef862a17186a', { hasText: 'Content' })
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.customStylesStack__d2536628ef862a17186a', { hasText: 'Content' })
             .locator('.selectorWrapper__be61bf86ff0dcf8cfaf3', { hasText: 'Title of certain resource' })
             .getByRole('button', { name: 'Add' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-Modal-Dialog__Container')
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-Modal-Dialog__Container')
             .getByRole('button', { name: 'Apply' }).click();
         await this.page.waitForTimeout(500);
 
@@ -395,13 +402,13 @@ export class SelectorPage {
 
 
     async redirectBehavior(Behavier: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-RadioButton__ChoiceLabel', { hasText: Behavier })
             .click()
 
         await this.page.waitForTimeout(500);
 
-        const checkboxes = this.page.frameLocator(process.env.Frame)
+        const checkboxes = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ShadowBevel', { hasText: 'Redirect behavior' })
             .getByRole('checkbox')
         for (const checkbox of await checkboxes.all()) {
@@ -428,7 +435,7 @@ export class SelectorPage {
 
     async enableRedirection(redirectType: string) {
         await this.page.waitForTimeout(500);
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Checkbox__ChoiceLabel', { hasText: redirectType })
             .click()
         await this.page.waitForTimeout(500);
@@ -443,16 +450,50 @@ export class SelectorPage {
 
     };
 
+    async filterByPaths(exclude: string, textInput: string) {
+
+        await expect(async () => {
+            await this.page.frameLocator("#AppFrameMain iframe")
+            .locator('.Polaris-Checkbox__ChoiceLabel', { hasText: 'Filter by urls or paths' })
+            .scrollIntoViewIfNeeded();
+            await this.page.frameLocator("#AppFrameMain iframe")
+            .locator('.Polaris-Checkbox__ChoiceLabel', { hasText: 'Filter by urls or paths' })
+            .click()
+        }).toPass();
+        
+            await this.page.waitForTimeout(500);
+            await expect(async () => {
+                await this.page.frameLocator("#AppFrameMain iframe")
+                .locator('.Polaris-BlockStack', { hasText: 'Custom urls' })
+                .locator('select')
+                .selectOption({ value: exclude });
+            }).toPass();
+
+        await this.page.frameLocator("#AppFrameMain iframe")
+        .locator('form', {hasText: 'Custom urls'})
+        .locator('.Polaris-TextField__Input').fill(textInput);
+        await this.page.waitForTimeout(500);
+        await this.page.keyboard.press('Enter');
+        try {
+            await this.page.locator('button', { hasText: 'Save' }).waitFor({ state: 'visible', timeout: 500 });
+            await this.page.locator('button', { hasText: 'Save' }).click();
+            await this.page.waitForTimeout(500);
+        } catch {
+            await this.page.waitForTimeout(500);
+        }
+    };
+
+
     async includeExcludeCountry(exclude: string, textInput: string) {
   
             await expect(async () => {
-                await this.page.frameLocator(process.env.Frame)
+                await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.Polaris-BlockStack', { hasText: 'Countries' })
                 .locator('select')
                 .selectOption({ value: exclude });
             }).toPass();
 
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-TextField__Input').fill(textInput);
         await this.page.waitForTimeout(500);
         await this.page.keyboard.press('Enter');
@@ -468,15 +509,15 @@ export class SelectorPage {
 
     async addQueryParam(Key: string, Value: string) {
         await this.page.waitForTimeout(500);
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Checkbox__ChoiceLabel', { hasText: 'Add query parameters during the redirect' })
             .click()
         await this.page.waitForTimeout(500);
 
-        await this.page.frameLocator(process.env.Frame).getByPlaceholder('Key')
+        await this.page.frameLocator("#AppFrameMain iframe").getByPlaceholder('Key')
             .waitFor({ state: 'visible' });
-        await this.page.frameLocator(process.env.Frame).getByPlaceholder('Key').fill(Key);
-        await this.page.frameLocator(process.env.Frame).getByPlaceholder('Value').fill(Value);
+        await this.page.frameLocator("#AppFrameMain iframe").getByPlaceholder('Key').fill(Key);
+        await this.page.frameLocator("#AppFrameMain iframe").getByPlaceholder('Value').fill(Value);
         try {
             await this.page.locator('button', { hasText: 'Save' }).waitFor({ state: 'visible', timeout: 1000 });
             await this.page.locator('button', { hasText: 'Save' }).click();
@@ -490,25 +531,25 @@ export class SelectorPage {
 
     async disableBannerIfNeeded() {
 
-        if (await this.page.frameLocator(process.env.Frame)
+        if (await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.page-header__badge-wrapper', { hasText: 'Success' }).isVisible({ timeout: 2000 })) {
 
-            await this.page.frameLocator(process.env.Frame)
+            await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.Polaris-Button__Content', { hasText: 'Customize' }).click();
 
-            await this.page.frameLocator(process.env.Frame)
+            await this.page.frameLocator("#AppFrameMain iframe")
                 .getByRole('button', { name: 'Disable' }).first().click();
 
             await this.page.locator('button', { hasText: 'Save' }).click();
             await this.page.waitForTimeout(2500);
-            await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Back' }).click();
+            await this.page.frameLocator("#AppFrameMain iframe").locator('button', { hasText: 'Back' }).click();
         }
     };
 
 
    async disableRedirect() {
 
-    const checkboxes = this.page.frameLocator(process.env.Frame)
+    const checkboxes = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ShadowBevel', { hasText: 'Redirect behavior' })
             .getByRole('checkbox')
         for (const checkbox of await checkboxes.all()) {

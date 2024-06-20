@@ -10,12 +10,12 @@ export class BannerPage {
 
 
     async openBanner() {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Button__Content', { hasText: 'Customize' }).click();
 
         await this.page.waitForLoadState('domcontentloaded');
 
-        const frame = this.page.frameLocator(process.env.Frame);
+        const frame = this.page.frameLocator("#AppFrameMain iframe");
         const hideBtnLocator = frame.locator('.hideBtn_open__dd36e26d80addc198ce1');
         const resetBtnLocator = frame.locator('.resetToDefaultButton__a9d82c160c79be3104d4.desktopElement__e138e2fbb89590a1fbe7');
         const showBtnLocator = frame.locator('.hideBtn_show__a43223fb34807e38db38');
@@ -34,26 +34,26 @@ export class BannerPage {
 
 
     async displayOption(dOption: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Settings' }).click();
 
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-BlockStack').locator('.Polaris-BlockStack', { hasText: 'Display' })
             .getByRole('button').click();
 
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text', { hasText: dOption }).click();
 
     };
 
     async selectPosition(position: String) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Choice', { hasText: `${position}` }).click({ force: true });
 
     };
 
     async selectAnimationStyle(anstyle: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Select')
             .locator('select')
             .selectOption({ value: anstyle });
@@ -61,12 +61,12 @@ export class BannerPage {
     };
 
     async borderradius(border: string, input: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack')
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-BlockStack')
             .filter({
-                has: this.page.frameLocator(process.env.Frame)
+                has: this.page.frameLocator("#AppFrameMain iframe")
                     .locator('.Polaris-BlockStack', { hasText: border })
             })
             .locator('.Polaris-BlockStack', { hasText: border }).locator('input').fill(input)
@@ -74,46 +74,46 @@ export class BannerPage {
     };
 
     async borderradiusMixed(border: string, topLeft: string, topRight: string, bottomLeft: string, bottomRight: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack')
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-BlockStack')
             .filter({
-                has: this.page.frameLocator(process.env.Frame)
+                has: this.page.frameLocator("#AppFrameMain iframe")
                     .locator('.Polaris-BlockStack', { hasText: border })
             })
             .locator('.Polaris-BlockStack', { hasText: border }).getByRole('button').click();
-        await this.page.frameLocator(process.env.Frame).locator('#topLeft').fill(topLeft);
-        await this.page.frameLocator(process.env.Frame).locator('#topRight').fill(topRight);
-        await this.page.frameLocator(process.env.Frame).locator('#bottomLeft').fill(bottomLeft);
-        await this.page.frameLocator(process.env.Frame).locator('#bottomRight').fill(bottomRight);
+        await this.page.frameLocator("#AppFrameMain iframe").locator('#topLeft').fill(topLeft);
+        await this.page.frameLocator("#AppFrameMain iframe").locator('#topRight').fill(topRight);
+        await this.page.frameLocator("#AppFrameMain iframe").locator('#bottomLeft').fill(bottomLeft);
+        await this.page.frameLocator("#AppFrameMain iframe").locator('#bottomRight').fill(bottomRight);
 
     };
 
 
     async borderStyle(borderStyleField: string, borderStyle: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack')
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-BlockStack')
             .filter({
-                has: this.page.frameLocator(process.env.Frame)
+                has: this.page.frameLocator("#AppFrameMain iframe")
                     .locator('.Polaris-BlockStack', { hasText: borderStyleField })
             })
             .locator('.Polaris-BlockStack', { hasText: borderStyleField }).getByRole('button').click();
 
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-OptionList-Option', { hasText: borderStyle }).click();
 
     };
 
     async borderWidth(borderWidthField: string, input: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack')
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-BlockStack')
             .filter({
-                has: this.page.frameLocator(process.env.Frame)
+                has: this.page.frameLocator("#AppFrameMain iframe")
                     .locator('.Polaris-BlockStack', { hasText: borderWidthField })
             })
             .locator('.Polaris-BlockStack', { hasText: borderWidthField }).locator('input').fill(input)
@@ -122,48 +122,48 @@ export class BannerPage {
 
 
     async borderWidthMixed(borderWidthField: string, topLeft: string, topRight: string, bottomLeft: string, bottomRight: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack')
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-BlockStack')
             .filter({
-                has: this.page.frameLocator(process.env.Frame)
+                has: this.page.frameLocator("#AppFrameMain iframe")
                     .locator('.Polaris-BlockStack', { hasText: borderWidthField })
             })
             .locator('.Polaris-BlockStack', { hasText: borderWidthField }).getByRole('button').click();
-        await this.page.frameLocator(process.env.Frame).locator('#top').fill(topLeft);
-        await this.page.frameLocator(process.env.Frame).locator('#right').fill(topRight);
-        await this.page.frameLocator(process.env.Frame).locator('#left').fill(bottomLeft);
-        await this.page.frameLocator(process.env.Frame).locator('#bottom').fill(bottomRight);
+        await this.page.frameLocator("#AppFrameMain iframe").locator('#top').fill(topLeft);
+        await this.page.frameLocator("#AppFrameMain iframe").locator('#right').fill(topRight);
+        await this.page.frameLocator("#AppFrameMain iframe").locator('#left').fill(bottomLeft);
+        await this.page.frameLocator("#AppFrameMain iframe").locator('#bottom').fill(bottomRight);
 
     };
 
     async cnangeImage(image: string) {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack', { hasText: image })
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-BlockStack', { hasText: image })
             .locator('div', { hasText: image }).getByRole('button').click();
 
         // .locator('.resource_picker_wrapper resource_picker_wrapper-empty').nth(imageNummer).getByRole('button').click();
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-Modal-Dialog__Container')
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-Modal-Dialog__Container')
             .locator('.grid_file_item ', { hasText: 'sample-normal-wax' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Done' }).click()
+        await this.page.frameLocator("#AppFrameMain iframe").locator('button', { hasText: 'Done' }).click()
 
     };
 
     async editImage(image: string) {
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack', { hasText: image })
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-BlockStack', { hasText: image })
             .locator('div', { hasText: image }).getByRole('button', { name: 'Edit' }).click();
 
     };
 
     async changeGrayscaleBlur(slider: string, minusPlusnumb: number) {
 
-        const SliderBox = this.page.frameLocator(process.env.Frame).locator('.Polaris-Modal-Dialog__Container')
+        const SliderBox = this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-Modal-Dialog__Container')
             .locator('.Polaris-BlockStack', { hasText: slider })
             .locator('div', { hasText: slider }).locator('.Polaris-RangeSlider-SingleThumb__Input');
 
@@ -180,8 +180,8 @@ export class BannerPage {
 
     async focalPoint() {
 
-        await this.page.frameLocator(process.env.Frame).locator('.focal-point-button').click();
-        const SliderBox = this.page.frameLocator(process.env.Frame).locator('.focal-pointer')
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.focal-point-button').click();
+        const SliderBox = this.page.frameLocator("#AppFrameMain iframe").locator('.focal-pointer')
 
         await expect(async () => {
             await SliderBox.scrollIntoViewIfNeeded();
@@ -198,53 +198,53 @@ export class BannerPage {
 
     async closeImageEditor() {
 
-        await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Done' }).click()
+        await this.page.frameLocator("#AppFrameMain iframe").locator('button', { hasText: 'Done' }).click()
     };
 
     async replaceImage(image: string) {
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack', { hasText: image })
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-BlockStack', { hasText: image })
             .locator('div', { hasText: image }).getByRole('button', { name: 'Change' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Change image' }).click();
+        await this.page.frameLocator("#AppFrameMain iframe").locator('button', { hasText: 'Change image' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-Modal-Dialog__Container')
-            .locator('.grid_file_item ', { hasText: 'wax-special' }).click();
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-Modal-Dialog__Container')
+            .locator('.grid_file_item ', { hasText: '25' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Done' }).click()
+        await this.page.frameLocator("#AppFrameMain iframe").locator('button', { hasText: 'Done' }).click()
 
     };
 
     async removeImage(image: string) {
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-BlockStack', { hasText: image })
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-BlockStack', { hasText: image })
             .locator('div', { hasText: image }).getByRole('button', { name: 'Change' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('button', { hasText: 'Remove image' }).click()
+        await this.page.frameLocator("#AppFrameMain iframe").locator('button', { hasText: 'Remove image' }).click()
 
     };
 
     async changeSIdeImagePosition(pos: string) {
-        await this.page.frameLocator(process.env.Frame).locator('button', { hasText: pos }).click()
+        await this.page.frameLocator("#AppFrameMain iframe").locator('button', { hasText: pos }).click()
 
     };
 
     async CustomCSS() {
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
 
-        const castomCSSfiled = this.page.frameLocator(process.env.Frame)
+        const castomCSSfiled = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Collapsible', { hasText: 'Custom CSS' })
         await castomCSSfiled.getByRole('button', { name: 'Add CSS selector' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('.customStylesStack__d2536628ef862a17186a', { hasText: 'Countries' })
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.customStylesStack__d2536628ef862a17186a', { hasText: 'Countries' })
             .locator('.selectorWrapper__be61bf86ff0dcf8cfaf3', { hasText: 'Title of certain resource' }).hover();
 
-        await this.page.frameLocator(process.env.Frame).locator('.customStylesStack__d2536628ef862a17186a', { hasText: 'Countries' })
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.customStylesStack__d2536628ef862a17186a', { hasText: 'Countries' })
             .locator('.selectorWrapper__be61bf86ff0dcf8cfaf3', { hasText: 'Title of certain resource' })
             .getByRole('button', { name: 'Add' }).click();
 
-        await this.page.frameLocator(process.env.Frame).locator('.Polaris-Modal-Dialog__Container')
+        await this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-Modal-Dialog__Container')
             .getByRole('button', { name: 'Apply' }).click();
         await this.page.waitForTimeout(500);
 
@@ -261,10 +261,10 @@ export class BannerPage {
     };
 
     async themeCheckbox(checkBox: string, ariaChecked: string) {
-        const checkbox = this.page.frameLocator(process.env.Frame).locator('.Polaris-Checkbox__ChoiceLabel', { hasText: checkBox })
+        const checkbox = this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-Checkbox__ChoiceLabel', { hasText: checkBox })
             .getByRole('checkbox')
 
-        await this.page.frameLocator(process.env.Frame)
+        await this.page.frameLocator("#AppFrameMain iframe")
             .getByRole('tab', { name: 'Theme' }).click();
 
         await checkbox.scrollIntoViewIfNeeded();
