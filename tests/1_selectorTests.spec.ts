@@ -57,15 +57,12 @@ test('5 Currency, Dropdown, Fixed position, Position - top left', async ({ page,
    await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-left');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
    await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-currencies')).toHaveScreenshot();
-
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(32, 34, 35)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(255, 255, 255)');
 
 });
 
 
-
-/// потім
 test('6 Currency, Wheel, Cute, Arctic, Fixed position, Position - top right', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Currency');
    await selectorPage.selectType('Wheel');
@@ -76,26 +73,22 @@ test('6 Currency, Wheel, Cute, Arctic, Fixed position, Position - top right', as
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
+   await expect(page.locator('.sel-item.sel-current').first()).toHaveText('Ukrainian Hryvnia');
    await page.locator('selector-root').click();
    await page.waitForTimeout(1000);
    await page.locator('li[data-code="PLN"]').click();
    await page.waitForTimeout(1000);
-
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot();
    await page.getByRole('button', { name: 'Done' }).last().click();
    await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right');
-
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('Polish Zloty');
-
-
    await expect.soft(page.locator('.product-card-wrapper').first()).toContainText('PLN');
-   await expect.soft(page.locator('.sel-disclosure sel-material sel-view-all sel-countries sel-firstChild sel-inline-disclosure')).toHaveScreenshot();
-
+   await expect.soft(page.locator('.sel-cute.sel-currencies.sel-wheel-disclosure')).toHaveScreenshot();
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(65, 0, 1)');
    await expect(page.locator('.sel-wheel-actionsWrapper')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+
 });
 
-/////////////////шо за хуйня
 test('7 Country (Currency), Modal, Minimal, Wild West, Fixed position, Position - bottom right', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country (Currency)');
    await selectorPage.selectType('Modal');
@@ -110,6 +103,7 @@ test('7 Country (Currency), Modal, Minimal, Wild West, Fixed position, Position 
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
+   await expect(page.locator('.sel-item.sel-current').first()).toHaveText('UA (₴)');
    await page.locator('.sel-disclosure.sel-minimal.sel-view-names.sel-countries.sel-modal-disclosure').click();
    await page.locator('li[data-code="PL"]').hover();
    await page.waitForTimeout(1000);
@@ -117,7 +111,6 @@ test('7 Country (Currency), Modal, Minimal, Wild West, Fixed position, Position 
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot();
    await page.locator('li[data-code="PL"]').click()
    await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-bottom-right');
-   await expect(page.locator('.sel-item.sel-current').first()).toHaveText('PL (zł)');
    const selectorExists = await page.waitForSelector('.sel-iconWrapper', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('PL (zł)');
@@ -125,9 +118,6 @@ test('7 Country (Currency), Modal, Minimal, Wild West, Fixed position, Position 
    await expect.soft(page.locator('.sel-disclosure.sel-minimal.sel-view-names.sel-countries.sel-modal-disclosure')).toHaveScreenshot();
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(56, 58, 21)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(255, 239, 215)');
-   await expect.soft(page.locator('.sel-disclosure.sel-minimal.sel-view-names.sel-countries.sel-modal-disclosure')).toHaveScreenshot();
-
-
 
 });
 
@@ -160,11 +150,6 @@ test('8 Country (Currency), Inline, Material, Winter, Fixed position, Position -
 });
 
 
-
-
-
-
-/////////////// тут фікс
 test('9 Country (Currency) S Language, Layered, Basic, Cold, Embedded position, Position - header right', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country (Currency) & Language');
    await selectorPage.selectType('Layered');
@@ -226,7 +211,10 @@ test('10 Language S Currency, Popup, Dark Indigo, Embedded position, Position - 
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(51, 49, 59)');
 
 });
-////////// тут фікс 
+
+
+
+///   тут фікс 
 test('11 Country S Language, Cascade, Black & white, Embedded position, Position - header center', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country & Language');
    await selectorPage.selectType('Cascade');
@@ -285,7 +273,7 @@ test('12 Currency, Sidebar, Jungle, Embedded position, Position - footer right',
 
 });
 
-//////// розмір ховера
+/// розмір ховера
 test('13 Language, Scale, Desert, Embedded position, Position - footer left', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Language');
    await selectorPage.selectType('Scale');
@@ -303,7 +291,7 @@ test('13 Language, Scale, Desert, Embedded position, Position - footer left', as
    await expect(page.locator('.sel-blob-container')).toHaveCSS('background-color', 'rgb(250, 242, 218)');
 
 });
-////////////
+///     
 test('14 Country, Tape-Line, North, Embedded position, Position - footer center', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country');
    await selectorPage.selectType('Tape-line');
@@ -389,7 +377,7 @@ test('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSelecto
    await expect(page.locator('.sel-wheel-actionsWrapper')).toHaveCSS('background-color', 'rgb(120, 28, 104)');
 });
 
-////////////////
+///           
 test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Language & Currency');
    await selectorPage.selectType('Modal');
@@ -429,7 +417,7 @@ test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selector
 });
 
 
-///////////////////
+///
 test('18 Currency, Cascade, Turquoise, search', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Currency');
    await selectorPage.selectType('Cascade');
@@ -457,7 +445,7 @@ test('18 Currency, Cascade, Turquoise, search', async ({ page, selectorPage, ope
    await expect(page.locator('li.sel-item').first()).toHaveCSS('background-color', 'rgb(40, 255, 191)');
 });
 
-///////////
+///
 test('19 Country (Currency) & Language, Sidebar, Search', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country (Currency) & Language');
    await selectorPage.selectType('Sidebar');
