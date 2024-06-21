@@ -567,5 +567,44 @@ export class SelectorPage {
 };
 
 
+async disableBanneAndRedirect() {
+    await this.page.frameLocator("#AppFrameMain iframe")
+        .locator('.Polaris-RadioButton__ChoiceLabel', { hasText: 'Redirect once' })
+        .click()
+
+    await this.page.waitForTimeout(500);
+
+    const checkboxes = this.page.frameLocator("#AppFrameMain iframe")
+        .locator('.Polaris-ShadowBevel', { hasText: 'Redirect behavior' })
+        .getByRole('checkbox')
+    for (const checkbox of await checkboxes.all()) {
+        try {
+            await checkbox.waitFor({ state: 'visible', timeout: 500 });
+            await checkbox.uncheck({ force: true });
+            await this.page.waitForLoadState('load');
+            await this.page.waitForTimeout(500);
+        } catch {
+            await this.page.waitForTimeout(500);
+        }
+    };
+
+    try {
+        await this.page.locator('button', { hasText: 'Save' }).waitFor({ state: 'visible', timeout: 1000 });
+        await this.page.locator('button', { hasText: 'Save' }).click();
+        await this.page.waitForTimeout(500);
+    } catch {
+        await this.page.waitForTimeout(500);
+    }
+
+
+};
+
+
+
+
+
+
+
+
 
 }

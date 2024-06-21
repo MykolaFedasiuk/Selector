@@ -1,6 +1,5 @@
 import { Page, expect } from "@playwright/test";
 
-
 export class BannerPage {
     readonly page: Page
 

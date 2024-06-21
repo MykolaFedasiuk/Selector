@@ -485,7 +485,6 @@ test('49 Display for everyone, Language, Page, Beet, Position - bottom left', as
 });
 
 
-
 test('50 Remember choice, Currency, Popup, Chocolate, Position - bottom right', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.selectType('Popup');
@@ -939,6 +938,7 @@ test('62 Visibility - exclude Custom urls', async ({ openBanner, page, selectorP
    }).toPass();
 
 });
+
 
 test('63 Visibility - exclude Custom urls', async ({ openBanner, page, selectorPage, bannerPage }) => {
    await selectorPage.setVisibilityParams('Custom urls', 'exclude', 'https://qafm30-11.myshopify.com');

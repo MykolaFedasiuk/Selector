@@ -444,7 +444,7 @@ test('18 Currency, Cascade, Turquoise, search', async ({ page, selectorPage, ope
    await expect(page.locator('li.sel-item').first()).toHaveCSS('background-color', 'rgb(40, 255, 191)');
 });
 
-///
+
 test('19 Country (Currency) & Language, Sidebar, Search', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country (Currency) & Language');
    await selectorPage.selectType('Sidebar');
@@ -730,6 +730,7 @@ test('34 Visibility - Medium (768 - 1039px)', async ({ page, selectorPage, openS
    await page.locator('selector-root').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
+
 
 test('35 Visibility - Large (1040 - 1439px)', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.setVisibilitySize('Large (1040 - 1439px)');
