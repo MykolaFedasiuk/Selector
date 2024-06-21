@@ -180,12 +180,13 @@ export class BannerPage {
 
     async focalPoint() {
 
-        await this.page.frameLocator("#AppFrameMain iframe").locator('.focal-point-button').click();
         const SliderBox = this.page.frameLocator("#AppFrameMain iframe").locator('.focal-pointer')
-
         await expect(async () => {
-            await SliderBox.scrollIntoViewIfNeeded();
+            await this.page.frameLocator("#AppFrameMain iframe")
+            .locator('.focal-point-button').click({timeout: 5000});
+            await SliderBox.scrollIntoViewIfNeeded({timeout: 5000});
         }).toPass();
+
         const box = await SliderBox.boundingBox();
         const x = box.x + box.width / 2;
         const y = box.y + box.height / 2;

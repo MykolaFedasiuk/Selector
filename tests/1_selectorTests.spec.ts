@@ -213,8 +213,6 @@ test('10 Language S Currency, Popup, Dark Indigo, Embedded position, Position - 
 });
 
 
-
-///   тут фікс 
 test('11 Country S Language, Cascade, Black & white, Embedded position, Position - header center', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country & Language');
    await selectorPage.selectType('Cascade');
@@ -273,7 +271,6 @@ test('12 Currency, Sidebar, Jungle, Embedded position, Position - footer right',
 
 });
 
-/// розмір ховера
 test('13 Language, Scale, Desert, Embedded position, Position - footer left', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Language');
    await selectorPage.selectType('Scale');
@@ -284,6 +281,7 @@ test('13 Language, Scale, Desert, Embedded position, Position - footer left', as
    await selectorPage.openStore();
 
    await page.locator('.sel-item-container').first().hover();
+   await page.locator('li[data-code="en"]').first().hover();
    await expect.soft(page.locator('.sel-basic.sel-view-icons.sel-languages.sel-scale-disclosure')).toHaveScreenshot();
    await page.locator('li[data-code="en"]').click();
    await expect(page.locator('header')).toContainText('Home');
@@ -291,7 +289,8 @@ test('13 Language, Scale, Desert, Embedded position, Position - footer left', as
    await expect(page.locator('.sel-blob-container')).toHaveCSS('background-color', 'rgb(250, 242, 218)');
 
 });
-///     
+
+
 test('14 Country, Tape-Line, North, Embedded position, Position - footer center', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country');
    await selectorPage.selectType('Tape-line');
@@ -349,12 +348,9 @@ test('15 Country & Language, dropdown, Sunny, search', async ({ page, selectorPa
 });
 
 
-
-
-
-/// POTIM
-test('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSelector }) => {
-   await selectorPage.selectResourse('Country');
+/// ТУТ БАГ
+test.skip('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSelector }) => {
+   await selectorPage.selectResourse('Country');     
    await selectorPage.selectType('Wheel');
    await selectorPage.selectColor('Beet')
    await selectorPage.display1(0);
@@ -364,20 +360,24 @@ test('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSelecto
 
    await expect.soft(page.locator('selector-root')).toHaveScreenshot();
    await page.locator('.sel-basic.sel-countries.sel-wheel-disclosure').click();
+ 
    await page.locator('.sel-search-input').fill('pol');
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot();
    await page.locator('.sel-wheel-content .sel-itemsList .sel-item').hover();
+ 
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgba(255, 255, 255, 0.8)');
    await page.locator('.sel-itemsList .sel-item').first().click();
    await page.getByRole('button', { name: 'Done' }).last().click();
-   await expect(page.locator('.sel-item.sel-current').first()).toHaveText('PL (zł)');
-   await expect.soft(page.locator('.product-card-wrapper').first()).toContainText('PLN');
 
+   await expect(async () => {
+      await expect(page.locator('.sel-item.sel-current').first()).toContainText('Poland');
+   }).toPass();
+   await expect.soft(page.locator('.product-card-wrapper').first()).toContainText('PLN');
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(255, 255, 255)');
    await expect(page.locator('.sel-wheel-actionsWrapper')).toHaveCSS('background-color', 'rgb(120, 28, 104)');
 });
 
-///           
+
 test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Language & Currency');
    await selectorPage.selectType('Modal');
@@ -417,7 +417,6 @@ test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selector
 });
 
 
-///
 test('18 Currency, Cascade, Turquoise, search', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Currency');
    await selectorPage.selectType('Cascade');

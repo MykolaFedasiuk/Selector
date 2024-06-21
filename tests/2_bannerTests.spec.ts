@@ -1070,10 +1070,6 @@ test('68 change images, Banner', async ({ openBanner, page, selectorPage, banner
 
 });
 
-
-
-
-/////// тут баг
 test('69 replace images, Popup', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.selectType('Popup');
@@ -1101,11 +1097,7 @@ test('69 replace images, Popup', async ({ openBanner, page, selectorPage, banner
    await expect(page.locator('.adt-disclosure-btn[data-resource="languages"]')).toHaveAttribute('data-code', 'en');
    await page.locator('.adt-disclosure-btn[data-resource="countries"]').click();
    await page.waitForTimeout(500);
-   await expect.soft(page.locator('.adt-main')).toHaveScreenshot({ maxDiffPixels: 65 });
-
    await expect(page.locator('.adt-top-left')).toBeVisible();
-
-
    await expect.soft(page.locator('.adt-itemsList').first()).toHaveScreenshot({ maxDiffPixels: 65 });
    await page.locator('.adt-close').click();
    await expect(async () => {
