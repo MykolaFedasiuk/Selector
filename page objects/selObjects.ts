@@ -1,5 +1,6 @@
 import { Page, expect } from "@playwright/test";
 import { truncate } from "fs";
+import { Context } from "vm";
 
 
 export class SelectorPage {
@@ -15,36 +16,40 @@ export class SelectorPage {
         await this.page.goto(url);
         // await this.page.waitForLoadState('networkidle');
         await this.page.waitForTimeout(5000);
-        const element = this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.Polaris-ResourceItem__ItemWrapper a').first();
-
-        const suportChat = this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.cc-xzla')
 
         await expect(async () => {
             await this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.Polaris-Button__Content', { hasText: 'Customize' }).scrollIntoViewIfNeeded();
+                .locator('.Polaris-Button__Content', { hasText: 'Customize' }).scrollIntoViewIfNeeded();
         }).toPass();
 
+    };
+
+    async deleteSelectors() {
+        const element = this.page.frameLocator("#AppFrameMain iframe")
+            .locator('.Polaris-ResourceItem__ItemWrapper a').first();
+        const suportChat = this.page.frameLocator("#AppFrameMain iframe")
+            .locator('.cc-xzla')
         try {
             await element.waitFor({ state: 'visible', timeout: 1000 });
             await this.page.frameLocator("#AppFrameMain iframe")
-            .locator(':text("Showing")').nth(1).click();
-        await this.page.frameLocator("#AppFrameMain iframe")
-            .getByRole('button', { name: 'Actions' }).click();
+                .locator(':text("Showing")').nth(1).click();
+            await this.page.frameLocator("#AppFrameMain iframe")
+                .getByRole('button', { name: 'Actions' }).click();
 
-        await this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.Polaris-ActionList__Text', { hasText: 'Delete' }).click({ force: true });
+            await this.page.frameLocator("#AppFrameMain iframe")
+                .locator('.Polaris-ActionList__Text', { hasText: 'Delete' }).click({ force: true });
 
-        await this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.Polaris-Button__Text', { hasText: 'Delete' }).click({ force: true });
+            await this.page.frameLocator("#AppFrameMain iframe")
+                .locator('.Polaris-Button__Text', { hasText: 'Delete' }).click({ force: true });
         } catch {
             await this.page.waitForTimeout(100);
         }
         if (await suportChat.isVisible({ timeout: 5000 })) {
             await suportChat.locator('[class="cc-1rzf cc-yx2c"]').click();
         };
+
     };
+
 
     async selTypes(type: string) {
         const suportChat = this.page.frameLocator("#AppFrameMain iframe")
@@ -62,6 +67,34 @@ export class SelectorPage {
             await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.custom-drop-down', { hasText: type }).getByRole('button').click();
 
+        }
+
+    };
+
+    async activateEmbeds() {
+
+        try {
+
+            const [newPage] = await Promise.all([
+                this.page.context().waitForEvent('page'),
+                this.page.frameLocator("#AppFrameMain iframe")
+                    .locator('.Polaris-Button', { hasText: 'Activate embeds' }).click({ timeout: 10000 })
+            ]);
+
+            await newPage.waitForLoadState();
+            await newPage.frameLocator("iframe[title='Online Store']")
+                .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selectors' })
+                .getByRole('button').nth(1).click();
+            await newPage.frameLocator("iframe[title='Online Store']")
+                .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selector - Staging' })
+                .getByRole('button').nth(1).click();
+            await newPage.frameLocator("iframe[title='Online Store']").getByRole('button', { name: 'Save' }).click();
+            await newPage.waitForTimeout(5000)
+            await this.page.bringToFront()
+            await newPage.close()
+
+        } catch {
+            await this.page.waitForTimeout(100);
         }
 
     };
@@ -185,13 +218,13 @@ export class SelectorPage {
 
         await expect(
             this.page.frameLocator("#AppFrameMain iframe")
-              .getByRole('button', { name: 'Publish' })
-              .or(this.page.frameLocator("#AppFrameMain iframe")
-                  .getByRole('button', { name: 'Disable' })
-              )).toBeVisible();
+                .getByRole('button', { name: 'Publish' })
+                .or(this.page.frameLocator("#AppFrameMain iframe")
+                    .getByRole('button', { name: 'Disable' })
+                )).toBeVisible();
 
         if (await this.page.frameLocator("#AppFrameMain iframe")
-        .getByRole('button', { name: 'Publish' }).isVisible({ timeout: 1000 })) {
+            .getByRole('button', { name: 'Publish' }).isVisible({ timeout: 1000 })) {
             await this.page.frameLocator("#AppFrameMain iframe")
                 .getByRole('button', { name: 'Publish' }).click();
         };
@@ -377,8 +410,8 @@ export class SelectorPage {
 
         await this.page.waitForTimeout(500);
 
-        await castomCSSfiled.getByRole('checkbox', {name: 'Disable styles isolation'}).check({ force: true });
-        await expect(castomCSSfiled.getByRole('checkbox', {name: 'Disable styles isolation'})).toHaveAttribute('aria-checked', 'true');
+        await castomCSSfiled.getByRole('checkbox', { name: 'Disable styles isolation' }).check({ force: true });
+        await expect(castomCSSfiled.getByRole('checkbox', { name: 'Disable styles isolation' })).toHaveAttribute('aria-checked', 'true');
         await expect.soft(castomCSSfiled).toHaveScreenshot();
 
     };
@@ -454,24 +487,24 @@ export class SelectorPage {
 
         await expect(async () => {
             await this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.Polaris-Checkbox__ChoiceLabel', { hasText: 'Filter by urls or paths' })
-            .scrollIntoViewIfNeeded();
+                .locator('.Polaris-Checkbox__ChoiceLabel', { hasText: 'Filter by urls or paths' })
+                .scrollIntoViewIfNeeded();
             await this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.Polaris-Checkbox__ChoiceLabel', { hasText: 'Filter by urls or paths' })
-            .click()
+                .locator('.Polaris-Checkbox__ChoiceLabel', { hasText: 'Filter by urls or paths' })
+                .click()
         }).toPass();
-        
-            await this.page.waitForTimeout(500);
-            await expect(async () => {
-                await this.page.frameLocator("#AppFrameMain iframe")
+
+        await this.page.waitForTimeout(500);
+        await expect(async () => {
+            await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.Polaris-BlockStack', { hasText: 'Custom urls' })
                 .locator('select')
                 .selectOption({ value: exclude });
-            }).toPass();
+        }).toPass();
 
         await this.page.frameLocator("#AppFrameMain iframe")
-        .locator('form', {hasText: 'Custom urls'})
-        .locator('.Polaris-TextField__Input').fill(textInput);
+            .locator('form', { hasText: 'Custom urls' })
+            .locator('.Polaris-TextField__Input').fill(textInput);
         await this.page.waitForTimeout(500);
         await this.page.keyboard.press('Enter');
         try {
@@ -485,13 +518,13 @@ export class SelectorPage {
 
 
     async includeExcludeCountry(exclude: string, textInput: string) {
-  
-            await expect(async () => {
-                await this.page.frameLocator("#AppFrameMain iframe")
+
+        await expect(async () => {
+            await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.Polaris-BlockStack', { hasText: 'Countries' })
                 .locator('select')
                 .selectOption({ value: exclude });
-            }).toPass();
+        }).toPass();
 
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-TextField__Input').fill(textInput);
@@ -547,9 +580,9 @@ export class SelectorPage {
     };
 
 
-   async disableRedirect() {
+    async disableRedirect() {
 
-    const checkboxes = this.page.frameLocator("#AppFrameMain iframe")
+        const checkboxes = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ShadowBevel', { hasText: 'Redirect behavior' })
             .getByRole('checkbox')
         for (const checkbox of await checkboxes.all()) {
@@ -561,43 +594,43 @@ export class SelectorPage {
             } catch {
                 await this.page.waitForTimeout(100);
             }
-   }
+        }
 
-   await this.page.locator('button', { hasText: 'Save' }).click();
-};
+        await this.page.locator('button', { hasText: 'Save' }).click();
+    };
 
 
-async disableBanneAndRedirect() {
-    await this.page.frameLocator("#AppFrameMain iframe")
-        .locator('.Polaris-RadioButton__ChoiceLabel', { hasText: 'Redirect once' })
-        .click()
+    async disableBanneAndRedirect() {
+        await this.page.frameLocator("#AppFrameMain iframe")
+            .locator('.Polaris-RadioButton__ChoiceLabel', { hasText: 'Redirect once' })
+            .click()
 
-    await this.page.waitForTimeout(500);
+        await this.page.waitForTimeout(500);
 
-    const checkboxes = this.page.frameLocator("#AppFrameMain iframe")
-        .locator('.Polaris-ShadowBevel', { hasText: 'Redirect behavior' })
-        .getByRole('checkbox')
-    for (const checkbox of await checkboxes.all()) {
+        const checkboxes = this.page.frameLocator("#AppFrameMain iframe")
+            .locator('.Polaris-ShadowBevel', { hasText: 'Redirect behavior' })
+            .getByRole('checkbox')
+        for (const checkbox of await checkboxes.all()) {
+            try {
+                await checkbox.waitFor({ state: 'visible', timeout: 500 });
+                await checkbox.uncheck({ force: true });
+                await this.page.waitForLoadState('load');
+                await this.page.waitForTimeout(500);
+            } catch {
+                await this.page.waitForTimeout(500);
+            }
+        };
+
         try {
-            await checkbox.waitFor({ state: 'visible', timeout: 500 });
-            await checkbox.uncheck({ force: true });
-            await this.page.waitForLoadState('load');
+            await this.page.locator('button', { hasText: 'Save' }).waitFor({ state: 'visible', timeout: 1000 });
+            await this.page.locator('button', { hasText: 'Save' }).click();
             await this.page.waitForTimeout(500);
         } catch {
             await this.page.waitForTimeout(500);
         }
+
+
     };
-
-    try {
-        await this.page.locator('button', { hasText: 'Save' }).waitFor({ state: 'visible', timeout: 1000 });
-        await this.page.locator('button', { hasText: 'Save' }).click();
-        await this.page.waitForTimeout(500);
-    } catch {
-        await this.page.waitForTimeout(500);
-    }
-
-
-};
 
 
 

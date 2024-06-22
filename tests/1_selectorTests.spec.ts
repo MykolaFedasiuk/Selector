@@ -1,21 +1,22 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/fixturePages'
 
-test('1 Selector types', async ({ page, selectorPage, openSelector }) => {
+test('1 Selector types', async ({ page, selectorPage, ActivateEmbadeOpenSelector }) => {
+
    await selectorPage.selTypes('Type');
    expect(await page.frameLocator("#AppFrameMain iframe")
       .locator('.custom-drop-down', { hasText: 'Type' }).textContent()).toEqual('TypeTape-line Info★ Pro');
 
 });
 
-test('2 Selector Resources', async ({ page, selectorPage, openSelector }) => {
+test('2 Selector Resources', async ({ page, selectorPage, ActivateEmbadeOpenSelector }) => {
    await selectorPage.selTypes('Resource');
    expect(await page.frameLocator("#AppFrameMain iframe")
       .locator('.custom-drop-down', { hasText: 'Resource' }).textContent()).toEqual('ResourceMarket Domains');
 
 });
 
-test('3 Selector Themes', async ({ page, selectorPage, openSelector }) => {
+test('3 Selector Themes', async ({ page, selectorPage, ActivateEmbadeOpenSelector }) => {
    await selectorPage.selTypes('Theme');
    expect(await page.frameLocator("#AppFrameMain iframe")
       .locator('.custom-drop-down', { hasText: 'Theme' }).textContent()).toEqual('ThemeMinimal');
@@ -350,7 +351,7 @@ test('15 Country & Language, dropdown, Sunny, search', async ({ page, selectorPa
 
 /// ТУТ БАГ
 test.skip('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSelector }) => {
-   await selectorPage.selectResourse('Country');     
+   await selectorPage.selectResourse('Country');
    await selectorPage.selectType('Wheel');
    await selectorPage.selectColor('Beet')
    await selectorPage.display1(0);
@@ -360,11 +361,11 @@ test.skip('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSe
 
    await expect.soft(page.locator('selector-root')).toHaveScreenshot();
    await page.locator('.sel-basic.sel-countries.sel-wheel-disclosure').click();
- 
+
    await page.locator('.sel-search-input').fill('pol');
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot();
    await page.locator('.sel-wheel-content .sel-itemsList .sel-item').hover();
- 
+
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgba(255, 255, 255, 0.8)');
    await page.locator('.sel-itemsList .sel-item').first().click();
    await page.getByRole('button', { name: 'Done' }).last().click();
