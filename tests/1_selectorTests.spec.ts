@@ -49,13 +49,12 @@ test('5 Currency, Dropdown, Fixed position, Position - top left', async ({ page,
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-currencies.sel-drop-down-disclosure').click();
+   await page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-currencies.sel-drop-down-disclosure.sel-fixed.sel-top-left').click();
    await page.locator('li[data-code="USD"]').hover({ timeout: 5000 });
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(32, 34, 35)');
    await selectorPage.checkFontSettings('7.92px', '400', 'Arial', "\"Arial\"");
    await page.locator('li[data-code="USD"]').click();
    await expect(page.locator('.sel-title').first()).toHaveText('USD ($)');
-   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-left');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
    await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-currencies')).toHaveScreenshot();
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(32, 34, 35)');
@@ -75,16 +74,15 @@ test('6 Currency, Wheel, Cute, Arctic, Fixed position, Position - top right', as
    await selectorPage.openStore();
 
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('Ukrainian Hryvnia');
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.waitForTimeout(1000);
    await page.locator('li[data-code="PLN"]').click();
    await page.waitForTimeout(1000);
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot();
    await page.getByRole('button', { name: 'Done' }).last().click();
-   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right');
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('Polish Zloty');
    await expect.soft(page.locator('.product-card-wrapper').first()).toContainText('PLN');
-   await expect.soft(page.locator('.sel-cute.sel-currencies.sel-wheel-disclosure')).toHaveScreenshot();
+   await expect.soft(page.locator('.sel-cute.sel-currencies.sel-wheel-disclosure.sel-fixed.sel-top-right')).toHaveScreenshot();
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(65, 0, 1)');
    await expect(page.locator('.sel-wheel-actionsWrapper')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
 
@@ -111,12 +109,11 @@ test('7 Country (Currency), Modal, Minimal, Wild West, Fixed position, Position 
    await selectorPage.checkFontSettings('21px', '700', 'Arial Black', "\"Arial Black\"");
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot();
    await page.locator('li[data-code="PL"]').click()
-   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-bottom-right');
    const selectorExists = await page.waitForSelector('.sel-iconWrapper', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('PL (zł)');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
-   await expect.soft(page.locator('.sel-disclosure.sel-minimal.sel-view-names.sel-countries.sel-modal-disclosure')).toHaveScreenshot();
+   await expect.soft(page.locator('.sel-disclosure.sel-minimal.sel-view-names.sel-countries.sel-modal-disclosure.sel-fixed.sel-bottom-right')).toHaveScreenshot();
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(56, 58, 21)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(255, 239, 215)');
 
@@ -141,11 +138,10 @@ test('8 Country (Currency), Inline, Material, Winter, Fixed position, Position -
    await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-style', 'italic');
    await selectorPage.checkFontSettings('31.59px', '400', 'Comic Sans', "\"Comic Sans\"");
    await page.locator('li[data-code="PL"]').click();
-   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-bottom-left');
    expect(await page.locator('.sel-item.sel-current').first().getAttribute('data-code')).toEqual('PL');
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('Poland (PLN)');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
-   await expect.soft(page.locator('.sel-disclosure.sel-material.sel-view-all.sel-countries.sel-firstChild.sel-inline-disclosure')).toHaveScreenshot();
+   await expect.soft(page.locator('.sel-disclosure.sel-material.sel-view-all.sel-countries.sel-firstChild.sel-inline-disclosure.sel-fixed.sel-bottom-left')).toHaveScreenshot();
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgba(64, 104, 130, 0.8)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(177, 208, 221)');
 });
@@ -167,12 +163,11 @@ test('9 Country (Currency) S Language, Layered, Basic, Cold, Embedded position, 
    await page.locator('li[data-code="uk"]').click();
    expect(await page.locator('.sel-item.sel-current').first().getAttribute('data-code')).toEqual('PL');
    expect(await page.locator('.sel-item.sel-current').last().getAttribute('data-code')).toEqual('uk');
-   await expect(page.locator('selector-root')).toHaveClass('sel-embedded sel-header-right');
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('Poland (PLN zł)');
    await expect(page.locator('.sel-item.sel-current').last()).toHaveText('Українська');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
    await expect(page.locator('header')).toContainText('додому');
-   await expect.soft(page.locator('.sel-basic.sel-view-lang_names_country_all.sel-languages_countries.sel-layered-disclosure').first()).toHaveScreenshot({ maxDiffPixels: 65, maxDiffPixelRatio: 0.05 });
+   await expect.soft(page.locator('.sel-basic.sel-view-lang_names_country_all.sel-languages_countries.sel-layered-disclosure.sel-embedded.sel-header-right').first()).toHaveScreenshot({ maxDiffPixels: 65, maxDiffPixelRatio: 0.05 });
    await expect.soft(page.locator('.sel-item.sel-current').first()).toHaveScreenshot({ maxDiffPixels: 65, maxDiffPixelRatio: 0.05 });
    await expect.soft(page.locator('.sel-item.sel-current').last()).toHaveScreenshot({ maxDiffPixels: 65, maxDiffPixelRatio: 0.05 });
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgba(41, 49, 95, 0.8)');
@@ -204,10 +199,9 @@ test('10 Language S Currency, Popup, Dark Indigo, Embedded position, Position - 
    await selectorPage.checkFontSettings('19px', '700', 'Courier New', "\"Courier New\"");
    await page.locator('li[data-code="PLN"]').click();
    await expect(page.locator('header')).toContainText('Home');
-   await expect(page.locator('selector-root')).toHaveClass('sel-embedded sel-header-left');
    await expect(page.locator('.sel-secondChild.sel-bothChild.sel-currencies').locator('.sel-title').first()).toHaveText('Polish Zloty (zł)');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
-   await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-languages_currencies.sel-popup-disclosure')).toHaveScreenshot();
+   await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-languages_currencies.sel-popup-disclosure.sel-embedded.sel-header-left')).toHaveScreenshot();
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(11, 223, 237)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(51, 49, 59)');
 
@@ -235,11 +229,10 @@ test('11 Country S Language, Cascade, Black & white, Embedded position, Position
    await page.locator('.sel-countries.sel-firstChild').click()
    await expect.soft(page.locator('.sel-itemsList').first()).toHaveScreenshot();
    await page.locator('li[data-code="PL"]').click()
-   await expect(page.locator('selector-root')).toHaveClass('sel-embedded sel-header-center');
    await expect(page.locator('.sel-secondChild .sel-title').first()).toContainText('English');
    await expect(page.locator('header')).toContainText('Home')
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
-   await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-country_icons_lang_names.sel-languages_countries.sel-cascade-disclosure')).toHaveScreenshot();
+   await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-country_icons_lang_names.sel-languages_countries.sel-cascade-disclosure.sel-embedded.sel-header-center')).toHaveScreenshot();
    await expect(page.locator('.sel-secondChild .sel-title').first()).toHaveCSS('color', 'rgb(245, 245, 245)');
    await expect(page.locator('li.sel-item').first()).toHaveCSS('background-color', 'rgb(18, 18, 18)');
 });
@@ -256,21 +249,23 @@ test('12 Currency, Sidebar, Jungle, Embedded position, Position - footer right',
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-currencies.sel-sidebar-disclosure').click();
-   await page.locator('li[data-code="USD"]').hover();
+   await page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-currencies.sel-sidebar-disclosure.sel-embedded.sel-footer-right .sel-disclosure-btn').click();
+   await expect(async () => {
+      await page.locator('li[data-code="USD"]').hover({timeout: 2000});
+  }).toPass();
    await selectorPage.checkFontSettings('16px', '700', 'Times', "\"Times\"");
    await page.locator('li[data-code="USD"]').click();
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot();
    await page.getByRole('button', { name: 'Apply' }).last().click();
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('USD');
-   await expect(page.locator('selector-root')).toHaveClass('sel-embedded sel-footer-right');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
-   await expect.soft(page.locator('selector-root')).toHaveScreenshot();
+   await expect.soft(page.locator('.sel-disclosure')).toHaveScreenshot();
    await expect(page.locator('div.sel-icon-curr').first()).toHaveCSS('border-color', 'rgb(59, 16, 17)');
    await expect(page.locator('li.sel-current')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0.8)');
    await expect(page.locator('.sel-disclosure-btn')).toHaveCSS('background-color', 'rgb(81, 146, 89)');
 
 });
+
 
 test('13 Language, Scale, Desert, Embedded position, Position - footer left', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Language');
@@ -327,6 +322,8 @@ test('15 Country & Language, dropdown, Sunny, search', async ({ page, selectorPa
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
+   await expect.soft(page.locator('.sel-basic.sel-view-all.sel-languages_countries.sel-drop-down-disclosure.sel-fixed.sel-top-right'))
+   .toHaveScreenshot();
    await page.locator('.sel-firstChild.sel-countries').click();
    await page.locator('.sel-firstChild').locator('.sel-search-input').fill('pol');
    await page.locator('.sel-itemsList .sel-item').first().hover();
@@ -338,7 +335,6 @@ test('15 Country & Language, dropdown, Sunny, search', async ({ page, selectorPa
    await page.locator('.sel-secondChild').locator('.sel-search-input').fill('eng');
    await expect.soft(page.locator('.sel-itemsContainer.sel-view-all').last()).toHaveScreenshot();
    await page.locator('.sel-itemsList .sel-item').last().click();
-   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right');
    await expect(page.locator('.sel-firstChild .sel-title').first()).toContainText('PL');
    await expect(page.locator('.sel-secondChild .sel-title').first()).toContainText('EN');
    await expect(page.locator('header')).toContainText('Home')
@@ -350,7 +346,7 @@ test('15 Country & Language, dropdown, Sunny, search', async ({ page, selectorPa
 
 
 /// ТУТ БАГ
-test.skip('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSelector }) => {
+test('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country');
    await selectorPage.selectType('Wheel');
    await selectorPage.selectColor('Beet')
@@ -359,17 +355,14 @@ test.skip('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSe
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await expect.soft(page.locator('selector-root')).toHaveScreenshot();
-   await page.locator('.sel-basic.sel-countries.sel-wheel-disclosure').click();
-
+   await expect.soft(page.locator('.sel-wheel-disclosure.sel-fixed.sel-top-right')).toHaveScreenshot();
+   await page.locator('.sel-basic.sel-countries.sel-wheel-disclosure.sel-fixed.sel-top-right').click();
    await page.locator('.sel-search-input').fill('pol');
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot();
    await page.locator('.sel-wheel-content .sel-itemsList .sel-item').hover();
-
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgba(255, 255, 255, 0.8)');
    await page.locator('.sel-itemsList .sel-item').first().click();
    await page.getByRole('button', { name: 'Done' }).last().click();
-
    await expect(async () => {
       await expect(page.locator('.sel-item.sel-current').first()).toContainText('Poland');
    }).toPass();
@@ -392,7 +385,7 @@ test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selector
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-languages_currencies.sel-modal-disclosure').first()).toHaveScreenshot();
+   await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-languages_currencies.sel-modal-disclosure.sel-fixed.sel-top-right').first()).toHaveScreenshot();
    await page.locator('.sel-disclosure.sel-basic.sel-languages_currencies.sel-modal-disclosure').click();
    await page.locator('.sel-languages.sel-firstChild').getByRole('textbox').fill('sfdsfsfdsfsdfsdf');
    await expect.soft(page.locator('.sel-modal-content').first()).toHaveScreenshot();
@@ -406,7 +399,6 @@ test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selector
    await page.locator('.sel-currencies.sel-secondChild').getByRole('textbox').fill('pol');
    await expect.soft(page.locator('.sel-modal-content').first()).toHaveScreenshot();
    await page.locator('.sel-itemsList .sel-item').last().click();
-   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right');
    await expect(page.locator('.sel-firstChild .sel-title').first()).toContainText('English');
    await expect(page.locator('.sel-secondChild .sel-title').first()).toContainText('Polish Zloty');
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('English');
@@ -456,9 +448,9 @@ test('19 Country (Currency) & Language, Sidebar, Search', async ({ page, selecto
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await expect.soft(page.locator('selector-root')).toHaveScreenshot();
+   await expect.soft(page.locator('.sel-disclosure')).toHaveScreenshot();
    await page.locator('.sel-disclosure.sel-basic.sel-view-icons.sel-languages_countries.sel-sidebar-disclosure')
-      .locator('.sel-firstChild').click();
+   .locator('.sel-firstChild').click();
    await page.locator('.sel-firstChild .sel-search-input').fill('sdfdsfdsfs');
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot();
    await page.locator('.sel-firstChild .sel-search-input').clear();
@@ -484,7 +476,7 @@ test('20 Change selector color by paste', async ({ page, selectorPage, openSelec
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().hover();
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(40, 47, 255)');
    await expect(page.locator('.sel-item:hover .sel-title').first()).toHaveCSS('font-style', 'italic');
@@ -505,7 +497,7 @@ test('21 Change selector color by sliders', async ({ page, selectorPage, openSel
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().hover();
    await expect.soft(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(158, 78, 34)');
    await selectorPage.checkFontSettings('18px', '700', 'Lucida Sans Unicode', "\"Lucida Sans Unicode\"");
@@ -526,18 +518,18 @@ test('22 Visibility - Include Custom urls', async ({ page, selectorPage, openSel
 
    //    let isSelectorVisible = false;
    // try {
-   //     await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 });
+   //     await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 });
    //     isSelectorVisible = true;
    // } catch (error) {
    // }
 
    // expect(isSelectorVisible).toBe(true); 
 
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
+   const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 
    await page.goto('https://qafm30-11.myshopify.com/pages/contact');
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().hover();
    await selectorPage.checkFontSettings('17px', '400', 'Georgia', "\"Georgia\"");
    await page.locator('.sel-itemsList .sel-item').first().click();
@@ -549,11 +541,11 @@ test('23 Visibility - Include Custom urls', async ({ page, selectorPage, openSel
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
    await page.goto('https://qafm30-11.myshopify.com/pages/contact');
    await expect(async () => {
-      await expect(page.locator('selector-root')).not.toBeVisible();
+      await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass();
 
 });
@@ -567,14 +559,14 @@ test('24 Visibility - exclude Custom urls', async ({ page, selectorPage, openSel
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().hover();
    await selectorPage.checkFontSettings('24px', '400', 'Impact', "\"Impact\"");
    await page.locator('.sel-itemsList .sel-item').first().click();
 
    await page.goto('https://qafm30-11.myshopify.com/pages/contact');
    await page.waitForLoadState('load');
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
+   const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 
 });
@@ -586,10 +578,10 @@ test('25 Visibility - exclude Custom urls', async ({ page, selectorPage, openSel
    await selectorPage.openStore();
 
    await expect(async () => {
-      await expect(page.locator('selector-root')).not.toBeVisible();
+      await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass();
    await page.goto('https://qafm30-11.myshopify.com/pages/contact');
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
 
 });
@@ -604,11 +596,11 @@ test('26 Visibility - Include Params', async ({ page, selectorPage, openSelector
 
    await page.waitForLoadState('load');
 
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
+   const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 
    await page.goto('https://qafm30-11.myshopify.com/collections/all?filter.v.price.gte=&filter.v.price.lte=&sort_by=price-ascending');
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().hover();
    await selectorPage.checkFontSettings('25px', '400', 'Garamond', "\"Garamond\"");
    await page.locator('.sel-itemsList .sel-item').first().click();
@@ -619,11 +611,11 @@ test('26 Visibility - exclude Params', async ({ page, selectorPage, openSelector
    await selectorPage.setVisibilityParams('Params', 'exclude', 'sort_by=price-ascending');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
    await page.goto('https://qafm30-11.myshopify.com/collections/all?filter.v.price.gte=&filter.v.price.lte=&sort_by=price-ascending');
    await page.waitForLoadState('load');
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
+   const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 });
 
@@ -634,10 +626,10 @@ test('28 Visibility - Include Languages', async ({ page, selectorPage, openSelec
    await selectorPage.openStore();
 
    await page.goto('https://qafm30-11.myshopify.com/en')
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
    await expect(async () => {
-      await expect(page.locator('selector-root')).not.toBeVisible();
+      await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass();
 });
 
@@ -647,10 +639,10 @@ test('29 Visibility - exclude Languages', async ({ page, selectorPage, openSelec
    await selectorPage.openStore();
 
    await page.goto('https://qafm30-11.myshopify.com/en')
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('li[data-code="uk"]').click()
    await page.waitForLoadState('load');
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
+   const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 });
 
@@ -661,10 +653,10 @@ test('30 Visibility - Include Countries', async ({ page, selectorPage, openSelec
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
    await page.waitForLoadState('load');
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
+   const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 });
 
@@ -674,10 +666,10 @@ test('31 Visibility - exclude Countries', async ({ page, selectorPage, openSelec
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('li[data-code="PL"]').click()
    await page.waitForLoadState('load');
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
+   const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 });
 
@@ -686,15 +678,15 @@ test('32 Visibility - Extra small  (0 - 489px)', async ({ page, selectorPage, op
    await selectorPage.saveSelector();
    await selectorPage.openStore();
    await expect(async () => {
-      await expect(page.locator('selector-root')).not.toBeVisible();
+      await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass();
    await page.setViewportSize({ width: 490, height: 800 });
    await expect(async () => {
-      await expect(page.locator('selector-root')).not.toBeVisible();
+      await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass();
    await page.setViewportSize({ width: 489, height: 800 });
 
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
 
@@ -703,15 +695,15 @@ test('33 Visibility - Small (490 - 767px)', async ({ page, selectorPage, openSel
    await selectorPage.saveSelector();
    await selectorPage.openStore();
    await expect(async () => {
-      await expect(page.locator('selector-root')).not.toBeVisible();
+      await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass();
 
    await page.setViewportSize({ width: 479, height: 800 });
    await expect(async () => {
-      await expect(page.locator('selector-root')).not.toBeVisible();
+      await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass();
    await page.setViewportSize({ width: 490, height: 800 });
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
 
@@ -720,15 +712,15 @@ test('34 Visibility - Medium (768 - 1039px)', async ({ page, selectorPage, openS
    await selectorPage.saveSelector();
    await selectorPage.openStore();
    await expect(async () => {
-      await expect(page.locator('selector-root')).not.toBeVisible();
+      await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass();
 
    await page.setViewportSize({ width: 767, height: 1038 });
    await expect(async () => {
-      await expect(page.locator('selector-root')).not.toBeVisible();
+      await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass();
    await page.setViewportSize({ width: 768, height: 1039 });
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
 
@@ -737,9 +729,9 @@ test('35 Visibility - Large (1040 - 1439px)', async ({ page, selectorPage, openS
    await selectorPage.setVisibilitySize('Large (1040 - 1439px)');
    await selectorPage.saveSelector();
    await selectorPage.openStore();
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
+   const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    await page.setViewportSize({ width: 1039, height: 1438 });
    await page.waitForTimeout(500);
    expect(selectorExists).toBeFalsy();
@@ -757,12 +749,12 @@ test('36 Visibility - Extra large (1440 - ∞px)', async ({ page, selectorPage, 
 
    await page.setViewportSize({ width: 1439, height: 1039 });
    await page.waitForTimeout(500);
-   const selectorExists = await page.waitForSelector('selector-root', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
+   const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
    await page.setViewportSize({ width: 1440, height: 1039 });
    await expect(async () => {
       await page.reload()
-      await page.locator('selector-root').click({ timeout: 2000 });
+      await page.locator('.sel-disclosure').click({ timeout: 2000 });
    }).toPass();
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
@@ -774,7 +766,7 @@ test('37 Custom CSS, Disable styles isolation', async ({ openSelector, page, sel
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.locator('selector-root').click();
+   await page.locator('.sel-disclosure').click();
    await expect(page.locator('.sel-itemsContainer .sel-title').first()).toHaveCSS('color', 'rgb(0, 128, 0)');
    await expect(page.locator('.sel-itemsContainer .sel-title').first()).toHaveCSS('font-size', '55px');
    await page.locator('li[data-code="en"]').click()

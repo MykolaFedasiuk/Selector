@@ -1,6 +1,4 @@
 import { Page, expect } from "@playwright/test";
-import { truncate } from "fs";
-import { Context } from "vm";
 
 
 export class SelectorPage {
@@ -80,14 +78,19 @@ export class SelectorPage {
                 this.page.frameLocator("#AppFrameMain iframe")
                     .locator('.Polaris-Button', { hasText: 'Activate embeds' }).click({ timeout: 10000 })
             ]);
-
             await newPage.waitForLoadState();
-            await newPage.frameLocator("iframe[title='Online Store']")
-                .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selectors' })
-                .getByRole('button').nth(1).click();
-            await newPage.frameLocator("iframe[title='Online Store']")
-                .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selector - Staging' })
-                .getByRole('button').nth(1).click();
+            await newPage.waitForTimeout(5000)
+            await expect(async () => {
+                await newPage.frameLocator("iframe[title='Online Store']")
+                    .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selectors' })
+                    .getByRole('button').nth(1).click({ timeout: 2000 });
+            }).toPass();
+
+            await expect(async () => {
+                await newPage.frameLocator("iframe[title='Online Store']")
+                    .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selector - Staging' })
+                    .getByRole('button').nth(1).click({ timeout: 2000 });
+            }).toPass();
             await newPage.frameLocator("iframe[title='Online Store']").getByRole('button', { name: 'Save' }).click();
             await newPage.waitForTimeout(5000)
             await this.page.bringToFront()
@@ -240,7 +243,10 @@ export class SelectorPage {
     };
 
     async openStore() {
-        await this.page.goto('https://qafm30-11.myshopify.com/');
+        
+        await expect(async () => {
+            await this.page.goto('https://qafm30-11.myshopify.com/', { waitUntil: 'load', timeout: 5000 });
+        }).toPass();
         await this.page.getByLabel('Enter store password').fill('123');
         await this.page.getByRole('button', { name: 'Enter' }).click();
     };
