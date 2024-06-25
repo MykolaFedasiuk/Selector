@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/fixturePages';
 
-
+////////////
 test('38 Display when necessary, Language, Banner, Basic, Position - top center', async ({ openBanner, page, selectorPage, bannerPage }) => {
    await selectorPage.selectType('Banner');
    await selectorPage.changeSizeSlider(50);
@@ -16,7 +16,9 @@ test('38 Display when necessary, Language, Banner, Basic, Position - top center'
    await selectorPage.openStore();
 
    await expect.soft(page.locator('.adt-main')).toHaveScreenshot();
+   ////???
    await expect(page.locator('.adt-top-static')).toBeVisible();
+ ///
    await expect(page.locator('.adt-disclosure-btn')).toHaveAttribute('data-code', 'en');
    await page.locator('.adt-disclosure-btn').click();
    await page.locator('li[data-code="uk"]').hover();
@@ -122,7 +124,7 @@ test('40 Display once, Language & Currency, Popup, Wild West, Position - top lef
 
 });
 
-
+//////добввити тест на позицію
 test('41 Display for everyone, Country & Language, Popup, Winter, Position - top right', async ({ openBanner, page, selectorPage, bannerPage }) => {
    await selectorPage.selectType('Popup');
    await selectorPage.selectColor('Winter');
@@ -484,7 +486,7 @@ test('49 Display for everyone, Language, Page, Beet, Position - bottom left', as
   }).toPass();
 });
 
-
+/// ??????????
 test('50 Remember choice, Currency, Popup, Chocolate, Position - bottom right', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.selectType('Popup');

@@ -632,7 +632,7 @@ test('28 Visibility - Include Languages', async ({ page, selectorPage, openSelec
       await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass();
 });
-
+////??????
 test('29 Visibility - exclude Languages', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.setVisibilityParams('Languages', 'exclude', 'ukrainian');
    await selectorPage.saveSelector();
@@ -642,6 +642,7 @@ test('29 Visibility - exclude Languages', async ({ page, selectorPage, openSelec
    await page.locator('.sel-disclosure').click();
    await page.locator('li[data-code="uk"]').click()
    await page.waitForLoadState('load');
+   /// добавити сюда вейт????
    const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 });

@@ -243,7 +243,7 @@ export class SelectorPage {
     };
 
     async openStore() {
-        
+
         await expect(async () => {
             await this.page.goto('https://qafm30-11.myshopify.com/', { waitUntil: 'load', timeout: 5000 });
         }).toPass();
@@ -638,6 +638,72 @@ export class SelectorPage {
 
     };
 
+    async delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async withRetry(action, retries = 3, backoff = 3000) {
+        for (let i = 0; i < retries; i++) {
+            try {
+                await action();
+                return;
+            } catch (error) {
+                if (error.message.includes('Too Many Requests')) {
+                    await this.page.waitForTimeout(5000)
+                    await this.page.reload();
+                }
+
+                await this.delay(backoff);
+                backoff *= 2;
+            }
+        }
+    };
+
+    async goToUrl(url: string) {
+        await this.withRetry(async () => {
+            await expect(async () => {
+                await this.page.goto(url, { waitUntil: 'load', timeout: 5000 });
+            }).toPass();
+        });
+    };
+
+    async selectCountry(country: string) {
+        await this.withRetry(async () => {
+            await this.page.locator('[aria-describedby="HeaderCountryLabel"]').click();
+            await this.page.locator('.disclosure__item', { hasText: country }).nth(1).click();
+            await this.page.waitForTimeout(2000);
+        });
+
+    };
+
+    async selectLanguage(language: string) {
+        await this.withRetry(async () => {
+            await this.page.locator('[aria-describedby="HeaderLanguageLabel"]').click();
+            await this.page.locator('.disclosure__item', { hasText: language }).nth(1).click();
+            await this.page.waitForTimeout(2000);
+        });
+    };
+
+    async verifyText(text1: string, text2: string) {
+        await this.withRetry(async () => {
+            await expect(async () => {
+                await this.page.waitForTimeout(2000);
+                await expect(this.page.locator('.product-card-wrapper').first()).toContainText(text1);
+                await expect(this.page.locator('header')).toContainText(text2);
+            }).toPass();
+        });
+    };
+
+    async verifyTextWithReload(text1: string, text2: string) {
+        await this.withRetry(async () => {
+            await expect(async () => {
+                await this.page.reload();
+                await this.page.waitForTimeout(2000);
+                await expect(this.page.locator('.product-card-wrapper').first()).toContainText(text1);
+                await expect(this.page.locator('header')).toContainText(text2);
+            }).toPass();
+        });
+    };
 
 
 

@@ -1,0 +1,36 @@
+stages:
+  - test
+
+variables:
+  PLAYWRIGHT_BROWSERS_PATH: "/usr/local/share/.cache/ms-playwright"
+
+cache:
+  paths:
+    - /usr/local/share/.cache/ms-playwright
+
+before_script:
+  - export $(cat .env.${NODE_ENV} | xargs)
+
+test_prod:
+  stage: test
+  image: mcr.microsoft.com/playwright:focal
+  variables:
+    NODE_ENV: "prod"
+  script:
+    - npm ci
+    - npx playwright install
+    - npx playwright test --config=playwright.config.ts
+  only:
+    - prod
+
+test_stage:
+  stage: test
+  image: mcr.microsoft.com/playwright:focal
+  variables:
+    NODE_ENV: "stage"
+  script:
+    - npm ci
+    - npx playwright install
+    - npx playwright test --config=playwright.config.ts
+  only:
+    - stage
