@@ -5,5 +5,8 @@
     "@types/node": "^20.11.30",
     "dotenv": "^16.4.5"
   },
-  "scripts": {}
+  "scripts": {
+    "prodHeaded": "ENVIRONMENT=prod npx playwright test --headed",
+    "prod": "ENVIRONMENT=prod npx playwright test --headed"
+    }
 }

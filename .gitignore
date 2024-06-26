@@ -6,3 +6,4 @@ node_modules/
 .auth
 # Ignore environment files
 .env
+.env.prod
