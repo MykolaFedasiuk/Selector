@@ -1099,7 +1099,7 @@ test('69 replace images, Popup', async ({ openBanner, page, selectorPage, banner
    await expect(page.locator('.adt-disclosure-btn[data-resource="languages"]')).toHaveAttribute('data-code', 'en');
    await page.locator('.adt-disclosure-btn[data-resource="countries"]').click();
    await page.waitForTimeout(500);
-   await expect(page.locator('div.adt-top-left')).toBeVisible();
+   await expect(page.locator('.div.adt-top-left')).toBeVisible();
    await expect.soft(page.locator('.adt-itemsList').first()).toHaveScreenshot({ maxDiffPixels: 65 });
    await page.locator('.adt-close').click();
    await expect(async () => {
@@ -1156,7 +1156,7 @@ test('71 change images, Modal', async ({ openBanner, page, selectorPage, bannerP
    await expect.soft(page.locator('.adt-main')).toHaveScreenshot({ maxDiffPixels: 65 });
    await expect(page.locator('.adt-disclosure-btn[data-resource="countries"]')).toHaveAttribute('data-code', 'UA');
    await expect(page.locator('.adt-disclosure-btn[data-resource="languages"]')).toHaveAttribute('data-code', 'en');
-   // await page.locator('.adt-close').click();
+   await page.locator('.adt-close').click();
    await expect(async () => {
       await expect(page.locator('.adt-main')).not.toBeVisible();
    }).toPass({timeout: 15000});

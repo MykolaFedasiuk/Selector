@@ -1,10 +1,21 @@
 import { defineConfig, devices } from '@playwright/test';
+import { config } from "dotenv";
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-require('dotenv').config();
+//prod ==> .env.prod
+if (process.env.ENVIRONMENT) {
+  console.log('ENVIRONMENT: ', process.env.ENVIRONMENT);
+  config({
+    path: `.env.${process.env.ENVIRONMENT}`,
+    override: true
+  });
+} else {
+  config();
+}
+
+
+
+
+// require('dotenv').config();
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -36,9 +47,10 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
 
-      {name: 'setup', testMatch: 'auth.setup.ts',
-       use: { ...devices['Desktop Firefox']},
-      },
+    {
+      name: 'setup', testMatch: 'auth.setup.ts',
+      use: { ...devices['Desktop Firefox'] },
+    },
 
 
     // {
@@ -49,7 +61,7 @@ export default defineConfig({
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'], storageState: '.auth/user.json'},
+      use: { ...devices['Desktop Firefox'], storageState: '.auth/user.json' },
       dependencies: ['setup']
     },
 
