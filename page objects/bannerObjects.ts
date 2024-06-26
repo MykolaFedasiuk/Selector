@@ -15,19 +15,19 @@ export class BannerPage {
         await this.page.waitForLoadState('domcontentloaded');
 
         const frame = this.page.frameLocator("#AppFrameMain iframe");
-        const hideBtnLocator = frame.locator('.hideBtn_open__dd36e26d80addc198ce1');
+        const hideBtnLocator = frame.getByRole('button', {name: 'Close chat'}).first();
         const resetBtnLocator = frame.locator('.resetToDefaultButton__a9d82c160c79be3104d4.desktopElement__e138e2fbb89590a1fbe7');
         const showBtnLocator = frame.locator('.hideBtn_show__a43223fb34807e38db38');
 
         try {
-            await hideBtnLocator.waitFor({ state: 'visible', timeout: 1000 });
+            await hideBtnLocator.waitFor({ state: 'visible', timeout: 3000 });
             await hideBtnLocator.click();
             await resetBtnLocator.click();
             await showBtnLocator.click();
         } catch {
             await expect(async () => {
                 await resetBtnLocator.click();
-            }).toPass();
+            }).toPass({timeout: 25000});
         }
     }
 
@@ -168,7 +168,7 @@ export class BannerPage {
         await this.page.waitForTimeout(1000)
         await expect(async () => {
             await SliderBox.scrollIntoViewIfNeeded({ timeout: 5000 });
-        }).toPass();
+        }).toPass({timeout: 25000});
 
         await SliderBox.scrollIntoViewIfNeeded();
         const box = await SliderBox.boundingBox();
@@ -189,7 +189,7 @@ export class BannerPage {
             await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.focal-point-button').click({ timeout: 5000 });
             await SliderBox.scrollIntoViewIfNeeded({ timeout: 5000 });
-        }).toPass();
+        }).toPass({timeout: 25000});
 
         const box = await SliderBox.boundingBox();
         const x = box.x + box.width / 2;

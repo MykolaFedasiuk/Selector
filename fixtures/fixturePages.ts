@@ -35,7 +35,7 @@ export const test = base.extend<{selectorPage: SelectorPage, bannerPage: BannerP
       await selectorPage.openApp();
       await selectorPage.deleteSelectors();
       await bannerPage.openBanner();
-      await use('');    
+      await use('');
      },
 
      redirects: async({selectorPage}, use) => {

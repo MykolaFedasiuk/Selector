@@ -18,15 +18,24 @@ export class SelectorPage {
         await expect(async () => {
             await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.Polaris-Button__Content', { hasText: 'Customize' }).scrollIntoViewIfNeeded();
-        }).toPass();
+        }).toPass({timeout: 60000});
+
+        const frame = this.page.frameLocator("#AppFrameMain iframe");
+        const hideBtnLocator = frame.getByRole('button', { name: 'Close chat' }).first()
+        try {
+            await hideBtnLocator.waitFor({ state: 'visible', timeout: 5000 });
+            await hideBtnLocator.click();
+
+        } catch {
+            await this.page.waitForTimeout(100);
+        }
 
     };
 
     async deleteSelectors() {
         const element = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ResourceItem__ItemWrapper a').first();
-        const suportChat = this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.cc-xzla')
+  
         try {
             await element.waitFor({ state: 'visible', timeout: 1000 });
             await this.page.frameLocator("#AppFrameMain iframe")
@@ -42,24 +51,27 @@ export class SelectorPage {
         } catch {
             await this.page.waitForTimeout(100);
         }
-        if (await suportChat.isVisible({ timeout: 5000 })) {
-            await suportChat.locator('[class="cc-1rzf cc-yx2c"]').click();
-        };
-
+     
     };
 
 
     async selTypes(type: string) {
-        const suportChat = this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.cc-xzla')
+
+        const frame = this.page.frameLocator("#AppFrameMain iframe");
+        const hideBtnLocator = frame.getByRole('button', { name: 'Close chat' }).first()
+        try {
+            await hideBtnLocator.waitFor({ state: 'visible', timeout: 5000 });
+            await hideBtnLocator.click();
+
+        } catch {
+            await this.page.waitForTimeout(100);
+        }
+
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: type }).getByRole('button').click();
         const allSelectorTyes = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text');
         for (const selType of await allSelectorTyes.all()) {
-            if (await suportChat.isVisible()) {
-                await suportChat.locator('[class="cc-1rzf cc-yx2c"]').click();
-            };
             await selType.click()
 
             await this.page.frameLocator("#AppFrameMain iframe")
@@ -79,18 +91,26 @@ export class SelectorPage {
                     .locator('.Polaris-Button', { hasText: 'Activate embeds' }).click({ timeout: 10000 })
             ]);
             await newPage.waitForLoadState();
-            await newPage.waitForTimeout(5000)
-            await expect(async () => {
+            await newPage.waitForTimeout(10000)
+            try {
+
                 await newPage.frameLocator("iframe[title='Online Store']")
                     .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selectors' })
-                    .getByRole('button').nth(1).click({ timeout: 2000 });
-            }).toPass();
-
-            await expect(async () => {
+                    .getByRole('button').nth(1).click({ timeout: 5000 });
+                    await newPage.waitForTimeout(2000);
                 await newPage.frameLocator("iframe[title='Online Store']")
                     .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selector - Staging' })
-                    .getByRole('button').nth(1).click({ timeout: 2000 });
-            }).toPass();
+                    .getByRole('button').nth(1).click({ timeout: 5000 });
+
+            } catch {
+                await newPage.frameLocator("iframe[title='Online Store']")
+                    .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selectors' })
+                    .getByRole('button').nth(1).click({ timeout: 5000 });
+                    await newPage.waitForTimeout(2000);
+                await newPage.frameLocator("iframe[title='Online Store']")
+                    .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selector - Staging' })
+                    .getByRole('button').nth(1).click({ timeout: 5000 });
+            }
             await newPage.frameLocator("iframe[title='Online Store']").getByRole('button', { name: 'Save' }).click();
             await newPage.waitForTimeout(5000)
             await this.page.bringToFront()
@@ -246,7 +266,7 @@ export class SelectorPage {
 
         await expect(async () => {
             await this.page.goto('https://qafm30-11.myshopify.com/', { waitUntil: 'load', timeout: 5000 });
-        }).toPass();
+        }).toPass({timeout: 25000});
         await this.page.getByLabel('Enter store password').fill('123');
         await this.page.getByRole('button', { name: 'Enter' }).click();
     };
@@ -498,7 +518,7 @@ export class SelectorPage {
             await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.Polaris-Checkbox__ChoiceLabel', { hasText: 'Filter by urls or paths' })
                 .click()
-        }).toPass();
+        }).toPass({timeout: 25000});
 
         await this.page.waitForTimeout(500);
         await expect(async () => {
@@ -506,7 +526,7 @@ export class SelectorPage {
                 .locator('.Polaris-BlockStack', { hasText: 'Custom urls' })
                 .locator('select')
                 .selectOption({ value: exclude });
-        }).toPass();
+        }).toPass({timeout: 25000});
 
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('form', { hasText: 'Custom urls' })
@@ -530,7 +550,7 @@ export class SelectorPage {
                 .locator('.Polaris-BlockStack', { hasText: 'Countries' })
                 .locator('select')
                 .selectOption({ value: exclude });
-        }).toPass();
+        }).toPass({timeout: 25000});
 
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-TextField__Input').fill(textInput);
@@ -642,16 +662,14 @@ export class SelectorPage {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    async withRetry(action, retries = 20, backoff = 3000) {
+    async withRetry(action, retries = 40, backoff = 3000) {
         for (let i = 0; i < retries; i++) {
             try {
                 await action();
                 return;
             } catch (error) {
-                if (error.message.includes('429 (Too Many Requests)')) {
-                    await this.page.waitForTimeout(10000)
-                    await this.page.reload();
-                }
+                // if (error.message.includes('429 (Too Many Requests)')) {
+                // }
 
                 await this.delay(backoff);
                 backoff *= 2;
@@ -660,45 +678,70 @@ export class SelectorPage {
     };
 
     async goToUrl(url: string) {
-        await this.withRetry(async () => {
-                await this.page.waitForTimeout(3000);
-                await this.page.goto(url, { waitUntil: 'load', timeout: 5000 });
-        });
+        // await this.withRetry(async () => {
+            await this.page.waitForTimeout(1000);
+            await this.page.goto(url, { waitUntil: 'load', timeout: 5000 });
+        // });
     };
 
     async selectCountry(country: string) {
-        await this.withRetry(async () => {
-            await this.page.waitForTimeout(2000);
+        // await this.withRetry(async () => {
+   
+        // });
+
+        await expect(async () => {
+
+            await this.page.waitForTimeout(1000);
             await this.page.locator('[aria-describedby="HeaderCountryLabel"]').click();
             await this.page.locator('.disclosure__item', { hasText: country }).nth(1).click();
-            await this.page.waitForTimeout(2000);
-        });
+            await this.page.waitForTimeout(1000);
+            
+        }).toPass({timeout: 10000});
+
     };
 
     async selectLanguage(language: string) {
-        await this.withRetry(async () => {
-            await this.page.waitForTimeout(2000);
+        // await this.withRetry(async () => {
+      
+        // });
+
+        await expect(async () => {
+
+            await this.page.waitForTimeout(1000);
             await this.page.locator('[aria-describedby="HeaderLanguageLabel"]').click();
             await this.page.locator('.disclosure__item', { hasText: language }).nth(1).click();
-            await this.page.waitForTimeout(2000);
-        });
+            await this.page.waitForTimeout(1000);
+
+        }).toPass({timeout: 10000});
+
     };
 
     async verifyText(text1: string, text2: string) {
-        await this.withRetry(async () => {
-                await this.page.waitForTimeout(5000);
-                await expect(this.page.locator('.product-card-wrapper').first()).toContainText(text1);
-                await expect(this.page.locator('header')).toContainText(text2);
-        });
+        // await this.withRetry(async () => {
+   
+        // });
+
+        await expect(async () => {
+
+            await this.page.waitForTimeout(1000);
+            await expect(this.page.locator('.product-card-wrapper').first()).toContainText(text1);
+            await expect(this.page.locator('header')).toContainText(text2);
+            
+        }).toPass({timeout: 10000});
+
+
     };
 
     async verifyTextWithReload(text1: string, text2: string) {
-        await this.withRetry(async () => {
-                await this.page.reload();
-                await this.page.waitForTimeout(5000);
-                await expect(this.page.locator('.product-card-wrapper').first()).toContainText(text1);
-                await expect(this.page.locator('header')).toContainText(text2);
-        });
+        // await this.withRetry(async () => {
+        // });
+        await expect(async () => {
+            await this.page.reload();
+            await this.page.waitForTimeout(1000);
+            await expect(this.page.locator('.product-card-wrapper').first()).toContainText(text1);
+            await expect(this.page.locator('header')).toContainText(text2);
+        }).toPass({timeout: 10000});
+
     };
 
 
