@@ -165,6 +165,10 @@ export class BannerPage {
         const SliderBox = this.page.frameLocator("#AppFrameMain iframe").locator('.Polaris-Modal-Dialog__Container')
             .locator('.Polaris-BlockStack', { hasText: slider })
             .locator('div', { hasText: slider }).locator('.Polaris-RangeSlider-SingleThumb__Input');
+        await this.page.waitForTimeout(1000)
+        await expect(async () => {
+            await SliderBox.scrollIntoViewIfNeeded({ timeout: 5000 });
+        }).toPass();
 
         await SliderBox.scrollIntoViewIfNeeded();
         const box = await SliderBox.boundingBox();
@@ -180,10 +184,11 @@ export class BannerPage {
     async focalPoint() {
 
         const SliderBox = this.page.frameLocator("#AppFrameMain iframe").locator('.focal-pointer')
+        await this.page.waitForTimeout(1000)
         await expect(async () => {
             await this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.focal-point-button').click({timeout: 5000});
-            await SliderBox.scrollIntoViewIfNeeded({timeout: 5000});
+                .locator('.focal-point-button').click({ timeout: 5000 });
+            await SliderBox.scrollIntoViewIfNeeded({ timeout: 5000 });
         }).toPass();
 
         const box = await SliderBox.boundingBox();
@@ -198,7 +203,8 @@ export class BannerPage {
 
     async closeImageEditor() {
 
-        await this.page.frameLocator("#AppFrameMain iframe").locator('button', { hasText: 'Done' }).click()
+        await this.page.frameLocator("#AppFrameMain iframe").locator('button', { hasText: 'Done' }).click()        
+        await this.page.waitForTimeout(2000)
     };
 
     async replaceImage(image: string) {
