@@ -1095,12 +1095,13 @@ test('69 replace images, Popup', async ({ openBanner, page, selectorPage, banner
 
    await page.waitForTimeout(1000)
    await expect.soft(page.locator('.adt-container')).toHaveScreenshot({ maxDiffPixels: 65 });
+   await expect(page.locator('div.adt-top-left')).toBeVisible();
    await expect(page.locator('.adt-disclosure-btn[data-resource="countries"]')).toHaveAttribute('data-code', 'UA');
    await expect(page.locator('.adt-disclosure-btn[data-resource="languages"]')).toHaveAttribute('data-code', 'en');
    await page.locator('.adt-disclosure-btn[data-resource="countries"]').click();
    await page.waitForTimeout(500);
-   await expect(page.locator('.div.adt-top-left')).toBeVisible();
    await expect.soft(page.locator('.adt-itemsList').first()).toHaveScreenshot({ maxDiffPixels: 65 });
+   await page.waitForTimeout(500);
    await page.locator('.adt-close').click();
    await expect(async () => {
       await expect(page.locator('.adt-main')).not.toBeVisible();

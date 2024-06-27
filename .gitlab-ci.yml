@@ -8,29 +8,30 @@ cache:
   paths:
     - /usr/local/share/.cache/ms-playwright
 
-before_script:
-  - export $(cat .env.${NODE_ENV} | xargs)
-
 test_prod:
   stage: test
   image: mcr.microsoft.com/playwright:focal
   variables:
-    NODE_ENV: "prod"
+    ENVIRONMENT: "prod"
+  before_script:
+    - export $(cat .env.prod | xargs)
   script:
     - npm ci
     - npx playwright install
-    - npx playwright test --config=playwright.config.ts
+    - ENVIRONMENT=prod npx playwright test --config=playwright.config.ts
   only:
-    - prod
+    - master # or the branch/tag that represents production
 
 test_stage:
   stage: test
   image: mcr.microsoft.com/playwright:focal
   variables:
-    NODE_ENV: "stage"
+    ENVIRONMENT: ""
+  before_script:
+    - export $(cat .env | xargs)
   script:
     - npm ci
     - npx playwright install
     - npx playwright test --config=playwright.config.ts
   only:
-    - stage
+    - develop # or the branch/tag that represents staging
