@@ -49,13 +49,14 @@ test('5 Currency, Dropdown, Fixed position, Position - top left', async ({ page,
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-currencies.sel-drop-down-disclosure.sel-fixed.sel-top-left').click();
+   await page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-currencies.sel-drop-down-disclosure').click();
    await page.locator('li[data-code="USD"]').hover({ timeout: 5000 });
    await expect(page.locator('.sel-item:hover').first()).toHaveCSS('color', 'rgb(32, 34, 35)');
    await selectorPage.checkFontSettings('7.92px', '400', 'Arial', "\"Arial\"");
    await page.locator('li[data-code="USD"]').click();
    await expect(page.locator('.sel-title').first()).toHaveText('USD ($)');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
+   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-left needsclick');
    await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-currencies')).toHaveScreenshot();
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(32, 34, 35)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(255, 255, 255)');
@@ -80,9 +81,10 @@ test('6 Currency, Wheel, Cute, Arctic, Fixed position, Position - top right', as
    await page.waitForTimeout(1000);
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot();
    await page.getByRole('button', { name: 'Done' }).last().click();
-   await expect(page.locator('.sel-item.sel-current').first()).toContainText('Polish');
+   await expect.soft(page.locator('.sel-item.sel-current').first()).toHaveText('Polish Zloty');
    await expect.soft(page.locator('.product-card-wrapper').first()).toContainText('PLN');
-   await expect.soft(page.locator('.sel-cute.sel-currencies.sel-wheel-disclosure.sel-fixed.sel-top-right')).toHaveScreenshot();
+   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right needsclick');
+   await expect.soft(page.locator('.sel-cute.sel-currencies.sel-wheel-disclosure')).toHaveScreenshot();
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(65, 0, 1)');
    await expect(page.locator('.sel-wheel-actionsWrapper')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
 
@@ -114,7 +116,8 @@ test('7 Country (Currency), Modal, Minimal, Wild West, Fixed position, Position 
    expect(selectorExists).toBeFalsy();
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('PL (zł)');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
-   await expect.soft(page.locator('.sel-disclosure.sel-minimal.sel-view-names.sel-countries.sel-modal-disclosure.sel-fixed.sel-bottom-right')).toHaveScreenshot();
+   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-bottom-right needsclick');
+   await expect.soft(page.locator('.sel-disclosure.sel-minimal.sel-view-names.sel-countries.sel-modal-disclosure')).toHaveScreenshot();
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(56, 58, 21)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(255, 239, 215)');
 
@@ -142,12 +145,13 @@ test('8 Country (Currency), Inline, Material, Winter, Fixed position, Position -
    expect(await page.locator('.sel-item.sel-current').first().getAttribute('data-code')).toEqual('PL');
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('Poland (PLN)');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
-   await expect.soft(page.locator('.sel-disclosure.sel-material.sel-view-all.sel-countries.sel-firstChild.sel-inline-disclosure.sel-fixed.sel-bottom-left')).toHaveScreenshot();
+   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-bottom-left needsclick');
+   await expect.soft(page.locator('.sel-disclosure.sel-material.sel-view-all.sel-countries.sel-firstChild.sel-inline-disclosure')).toHaveScreenshot();
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgba(64, 104, 130, 0.8)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(177, 208, 221)');
 });
 
-///??????
+
 test('9 Country (Currency) S Language, Layered, Basic, Cold, Embedded position, Position - header right', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country (Currency) & Language');
    await selectorPage.selectType('Layered');
@@ -168,7 +172,8 @@ test('9 Country (Currency) S Language, Layered, Basic, Cold, Embedded position, 
    await expect(page.locator('.sel-item.sel-current').last()).toHaveText('Українська');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
    await expect(page.locator('header')).toContainText('додому');
-   await expect.soft(page.locator('.sel-basic.sel-view-lang_names_country_all.sel-languages_countries.sel-layered-disclosure.sel-embedded.sel-header-right').first()).toHaveScreenshot({ maxDiffPixels: 65, maxDiffPixelRatio: 0.05 });
+   await expect(page.locator('selector-root')).toHaveClass('sel-embedded sel-header-right needsclick');
+   await expect.soft(page.locator('.sel-basic.sel-view-lang_names_country_all.sel-languages_countries.sel-layered-disclosure').first()).toHaveScreenshot({ maxDiffPixels: 65, maxDiffPixelRatio: 0.05 });
    await expect.soft(page.locator('.sel-item.sel-current').first()).toHaveScreenshot({ maxDiffPixels: 65, maxDiffPixelRatio: 0.05 });
    await expect.soft(page.locator('.sel-item.sel-current').last()).toHaveScreenshot({ maxDiffPixels: 65, maxDiffPixelRatio: 0.05 });
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgba(41, 49, 95, 0.8)');
@@ -177,7 +182,6 @@ test('9 Country (Currency) S Language, Layered, Basic, Cold, Embedded position, 
 });
 
 
-///??
 test('10 Language S Currency, Popup, Dark Indigo, Embedded position, Position - header left', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Language & Currency');
    await selectorPage.selectType('Popup');
@@ -202,7 +206,8 @@ test('10 Language S Currency, Popup, Dark Indigo, Embedded position, Position - 
    await expect(page.locator('header')).toContainText('Home');
    await expect(page.locator('.sel-secondChild.sel-bothChild.sel-currencies').locator('.sel-title').first()).toHaveText('Polish Zloty (zł)');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
-   await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-languages_currencies.sel-popup-disclosure.sel-embedded.sel-header-left')).toHaveScreenshot();
+   await expect(page.locator('selector-root')).toHaveClass('sel-embedded sel-header-left needsclick');
+   await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-languages_currencies.sel-popup-disclosure')).toHaveScreenshot();
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(11, 223, 237)');
    await expect(page.locator('.sel-itemsContainer').first()).toHaveCSS('background-color', 'rgb(51, 49, 59)');
 
@@ -233,7 +238,8 @@ test('11 Country S Language, Cascade, Black & white, Embedded position, Position
    await expect(page.locator('.sel-secondChild .sel-title').first()).toContainText('English');
    await expect(page.locator('header')).toContainText('Home')
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
-   await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-country_icons_lang_names.sel-languages_countries.sel-cascade-disclosure.sel-embedded.sel-header-center')).toHaveScreenshot();
+   await expect(page.locator('selector-root')).toHaveClass('sel-embedded sel-header-center needsclick');
+   await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-country_icons_lang_names.sel-languages_countries.sel-cascade-disclosure')).toHaveScreenshot();
    await expect(page.locator('.sel-secondChild .sel-title').first()).toHaveCSS('color', 'rgb(245, 245, 245)');
    await expect(page.locator('li.sel-item').first()).toHaveCSS('background-color', 'rgb(18, 18, 18)');
 });
@@ -250,7 +256,8 @@ test('12 Currency, Sidebar, Jungle, Embedded position, Position - footer right',
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-currencies.sel-sidebar-disclosure.sel-embedded.sel-footer-right .sel-disclosure-btn').click();
+   await page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-currencies.sel-sidebar-disclosure .sel-disclosure-btn').click();
+   
    await expect(async () => {
       await page.locator('li[data-code="USD"]').hover({ timeout: 2000 });
    }).toPass({timeout: 25000});
@@ -260,6 +267,7 @@ test('12 Currency, Sidebar, Jungle, Embedded position, Position - footer right',
    await page.getByRole('button', { name: 'Apply' }).last().click();
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('USD');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
+   await expect(page.locator('selector-root')).toHaveClass('sel-embedded sel-footer-right needsclick');
    await expect.soft(page.locator('.sel-disclosure')).toHaveScreenshot();
    await expect(page.locator('div.sel-icon-curr').first()).toHaveCSS('border-color', 'rgb(59, 16, 17)');
    await expect(page.locator('li.sel-current')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0.8)');
@@ -279,6 +287,7 @@ test('13 Language, Scale, Desert, Embedded position, Position - footer left', as
 
    await page.locator('.sel-item-container').first().hover();
    await page.locator('li[data-code="en"]').first().hover();
+   await expect(page.locator('selector-root')).toHaveClass('sel-embedded sel-footer-left needsclick');
    await expect.soft(page.locator('.sel-basic.sel-view-icons.sel-languages.sel-scale-disclosure')).toHaveScreenshot();
    await page.locator('li[data-code="en"]').click();
    await expect(page.locator('header')).toContainText('Home');
@@ -300,6 +309,7 @@ test('14 Country, Tape-Line, North, Embedded position, Position - footer center'
    await selectorPage.openStore();
 
    await page.locator('.sel-item.sel-current').first().hover();
+   await expect(page.locator('selector-root')).toHaveClass('sel-embedded sel-footer-center needsclick');
    await expect.soft(page.locator('.sel-basic.sel-view-names.sel-countries.sel-meter-disclosure')).toHaveScreenshot();
    await page.locator('li[data-code="US"]').first().click();
    await expect(page.locator('.sel-item.sel-current').first()).toHaveText('US');
@@ -323,8 +333,9 @@ test('15 Country & Language, dropdown, Sunny, search', async ({ page, selectorPa
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await expect.soft(page.locator('.sel-basic.sel-view-all.sel-languages_countries.sel-drop-down-disclosure.sel-fixed.sel-top-right'))
+   await expect.soft(page.locator('.sel-basic.sel-view-all.sel-languages_countries.sel-drop-down-disclosure'))
       .toHaveScreenshot();
+      await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right needsclick');
    await page.locator('.sel-firstChild.sel-countries').click();
    await page.locator('.sel-firstChild').locator('.sel-search-input').fill('pol');
    await page.locator('.sel-itemsList .sel-item').first().hover();
@@ -356,7 +367,8 @@ test('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSelecto
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await expect.soft(page.locator('.sel-wheel-disclosure.sel-fixed.sel-top-right')).toHaveScreenshot();
+   await expect.soft(page.locator('.sel-wheel-disclosure')).toHaveScreenshot();
+   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right needsclick');
    await page.locator('.sel-basic.sel-countries.sel-wheel-disclosure.sel-fixed.sel-top-right').click();
    await page.locator('.sel-search-input').fill('pol');
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot();
@@ -386,7 +398,8 @@ test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selector
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-languages_currencies.sel-modal-disclosure.sel-fixed.sel-top-right').first()).toHaveScreenshot();
+   await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-languages_currencies.sel-modal-disclosure').first()).toHaveScreenshot();
+   await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right needsclick');
    await page.locator('.sel-disclosure.sel-basic.sel-languages_currencies.sel-modal-disclosure').click();
    await page.locator('.sel-languages.sel-firstChild').getByRole('textbox').fill('sfdsfsfdsfsdfsdf');
    await expect.soft(page.locator('.sel-modal-content').first()).toHaveScreenshot();
@@ -694,11 +707,13 @@ test('32 Visibility - Extra small  (0 - 489px)', async ({ page, selectorPage, op
    await expect(async () => {
       await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass({timeout: 25000});
-   await page.setViewportSize({ width: 489, height: 800 });
-
-   await page.locator('.sel-disclosure').click();
-   await page.locator('.sel-itemsList .sel-item').first().click();
+   await expect(async () => {
+      await page.setViewportSize({ width: 489, height: 800 });
+      await page.locator('.sel-disclosure').click({timeout: 5000});
+      await page.locator('.sel-itemsList .sel-item').first().click({timeout: 5000});
+   }).toPass({timeout: 25000});
 });
+
 
 test('33 Visibility - Small (490 - 767px)', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.setVisibilitySize('Small (490 - 767px)');
@@ -712,10 +727,13 @@ test('33 Visibility - Small (490 - 767px)', async ({ page, selectorPage, openSel
    await expect(async () => {
       await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass({timeout: 25000});
-   await page.setViewportSize({ width: 490, height: 800 });
-   await page.locator('.sel-disclosure').click();
-   await page.locator('.sel-itemsList .sel-item').first().click();
+   await expect(async () => {
+      await page.setViewportSize({ width: 490, height: 800 });
+      await page.locator('.sel-disclosure').click({timeout: 5000});
+      await page.locator('.sel-itemsList .sel-item').first().click({timeout: 5000});
+   }).toPass({timeout: 25000});
 });
+
 
 test('34 Visibility - Medium (768 - 1039px)', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.setVisibilitySize('Medium (768 - 1039px)');
@@ -734,7 +752,7 @@ test('34 Visibility - Medium (768 - 1039px)', async ({ page, selectorPage, openS
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
 
-///????
+
 test('35 Visibility - Large (1040 - 1439px)', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.setVisibilitySize('Large (1040 - 1439px)');
    await selectorPage.saveSelector();
