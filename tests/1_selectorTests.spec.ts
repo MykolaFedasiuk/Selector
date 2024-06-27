@@ -365,7 +365,6 @@ test('15 Country & Language, dropdown, Sunny, search', async ({ page, selectorPa
 });
 
 
-/// ТУТ БАГ
 test('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Country');
    await selectorPage.selectType('Wheel');

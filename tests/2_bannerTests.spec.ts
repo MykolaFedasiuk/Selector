@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { test } from '../fixtures/fixturePages';
 
 
-
+///???
 test('38 Display when necessary, Language, Banner, Basic, Position - top center', async ({ openBanner, page, selectorPage, bannerPage }) => {
    await selectorPage.selectType('Banner');
    await selectorPage.changeSizeSlider(50);
@@ -485,7 +485,7 @@ test('49 Display for everyone, Language, Page, Beet, Position - bottom left', as
   }).toPass({timeout: 15000});
 });
 
-
+///??????????????
 test('50 Remember choice, Currency, Popup, Chocolate, Position - bottom right', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.selectType('Popup');
@@ -706,7 +706,7 @@ test('55 Popup cant be closed, Show flag, borders', async ({ openBanner, page, s
    await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');;
 
 });
-///???
+///???????????????????????sceeen
 test('56 Box banner cant be closed', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.selectType('Box');
@@ -765,7 +765,7 @@ test('57 Modal cant be closed, Show flag', async ({ openBanner, page, selectorPa
    await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');;
 
 });
-///???
+
 test('58 Page banner cant be closed, Show flag', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.selectType('Page');
@@ -803,7 +803,7 @@ test('58 Page banner cant be closed, Show flag', async ({ openBanner, page, sele
 
 });
 
-
+///змінити значення слайдерів?
 test('59 CustomCSS, Disablestylesisolation', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await bannerPage.borderradius('Border radius', '22')
@@ -888,7 +888,7 @@ test('60 Visibility - Include Custom urls', async ({ openBanner, page, selectorP
 
 });
 
-///????
+
 test('61 Visibility - Include Custom urls', async ({ openBanner, page, selectorPage, bannerPage }) => {
    await selectorPage.setVisibilityParams('Custom urls', 'include', 'https://qafm30-11.myshopify.com');
    await selectorPage.saveSelector();
@@ -956,7 +956,7 @@ test('63 Visibility - exclude Custom urls', async ({ openBanner, page, selectorP
    await expect(page.locator('header')).toContainText('додому');
 });
 
-///???
+
 test('64 Visibility - Include Countries', async ({ openBanner, page, selectorPage, bannerPage }) => {
    await selectorPage.setVisibilityParams('Countries', 'include', 'ukraine');
    await bannerPage.borderradiusMixed('Border radius', '22', '7', '15', '25')

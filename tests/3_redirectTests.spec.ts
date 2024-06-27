@@ -372,7 +372,7 @@ test('88 Redirect both, Forced redirect, exclude Filter by urls or paths, /conta
 
 });
 
-
+// 
 test('89 Redirect both, Forced redirect, exclude Filter by urls or paths, /collections.*', async ({ page, selectorPage, redirects, afterRedirects }) => {
 
     await selectorPage.redirectBehavior('Forced redirect');

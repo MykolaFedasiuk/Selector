@@ -662,14 +662,16 @@ export class SelectorPage {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    async withRetry(action, retries = 40, backoff = 3000) {
+    async withRetry(action, retries = 6, backoff = 1000) {
         for (let i = 0; i < retries; i++) {
             try {
                 await action();
                 return;
             } catch (error) {
-                // if (error.message.includes('429 (Too Many Requests)')) {
-                // }
+
+                if (i === retries - 1) {
+                    throw new Error('More than 5 tries');
+                }
 
                 await this.delay(backoff);
                 backoff *= 2;
@@ -678,70 +680,43 @@ export class SelectorPage {
     };
 
     async goToUrl(url: string) {
-        // await this.withRetry(async () => {
             await this.page.waitForTimeout(1000);
             await this.page.goto(url, { waitUntil: 'load', timeout: 5000 });
-        // });
     };
 
     async selectCountry(country: string) {
-        // await this.withRetry(async () => {
-   
-        // });
-
         await expect(async () => {
-
             await this.page.waitForTimeout(1000);
             await this.page.locator('[aria-describedby="HeaderCountryLabel"]').click();
             await this.page.locator('.disclosure__item', { hasText: country }).nth(1).click();
             await this.page.waitForTimeout(1000);
-            
         }).toPass({timeout: 10000});
-
     };
 
     async selectLanguage(language: string) {
-        // await this.withRetry(async () => {
-      
-        // });
-
         await expect(async () => {
-
             await this.page.waitForTimeout(1000);
             await this.page.locator('[aria-describedby="HeaderLanguageLabel"]').click();
             await this.page.locator('.disclosure__item', { hasText: language }).nth(1).click();
             await this.page.waitForTimeout(1000);
-
         }).toPass({timeout: 10000});
-
     };
 
     async verifyText(text1: string, text2: string) {
-        // await this.withRetry(async () => {
-   
-        // });
-
         await expect(async () => {
-
             await this.page.waitForTimeout(1000);
             await expect(this.page.locator('.product-card-wrapper').first()).toContainText(text1);
             await expect(this.page.locator('header')).toContainText(text2);
-            
         }).toPass({timeout: 10000});
-
-
     };
 
     async verifyTextWithReload(text1: string, text2: string) {
-        // await this.withRetry(async () => {
-        // });
         await expect(async () => {
             await this.page.reload();
             await this.page.waitForTimeout(1000);
             await expect(this.page.locator('.product-card-wrapper').first()).toContainText(text1);
             await expect(this.page.locator('header')).toContainText(text2);
         }).toPass({timeout: 10000});
-
     };
 
 
