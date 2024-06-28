@@ -535,7 +535,7 @@ test('21 Change selector color by sliders', async ({ page, selectorPage, openSel
 test('22 Visibility - Include Custom urls', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.setVisibilityParams('Custom urls', 'include', '/pages/contact');
    await selectorPage.fontSettings(0, 'Georgia', 'normal', 40);
-   await selectorPage.fontSettings(1, 'Georgia', 'normal', 50)
+   await selectorPage.fontSettings(1, 'Georgia', 'normal', 50);
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
@@ -553,7 +553,7 @@ test('22 Visibility - Include Custom urls', async ({ page, selectorPage, openSel
    const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
 
-   await page.goto('https://qafm30-11.myshopify.com/pages/contact');
+   await page.goto(`${process.env.StoreURl}/pages/contact`)
    await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().hover();
    await selectorPage.checkFontSettings('17px', '400', 'Georgia', "\"Georgia\"");
@@ -563,13 +563,13 @@ test('22 Visibility - Include Custom urls', async ({ page, selectorPage, openSel
 
 
 test('23 Visibility - Include Custom urls', async ({ page, selectorPage, openSelector }) => {
-   await selectorPage.setVisibilityParams('Custom urls', 'include', 'https://qafm30-11.myshopify.com');
+   await selectorPage.setVisibilityParams('Custom urls', 'include', `${process.env.StoreURl}`);
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
    await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
-   await page.goto('https://qafm30-11.myshopify.com/pages/contact');
+   await page.goto(`${process.env.StoreURl}/pages/contact`);
    await expect(async () => {
       await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass({timeout: 25000});
@@ -590,7 +590,7 @@ test('24 Visibility - exclude Custom urls', async ({ page, selectorPage, openSel
    await selectorPage.checkFontSettings('24px', '400', 'Impact', "\"Impact\"");
    await page.locator('.sel-itemsList .sel-item').first().click();
 
-   await page.goto('https://qafm30-11.myshopify.com/pages/contact');
+   await page.goto(`${process.env.StoreURl}/pages/contact`)
    await page.waitForLoadState('load');
    const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(selectorExists).toBeFalsy();
@@ -606,7 +606,7 @@ test('25 Visibility - exclude Custom urls', async ({ page, selectorPage, openSel
    await expect(async () => {
       await expect(page.locator('.sel-disclosure')).not.toBeVisible();
    }).toPass({timeout: 25000});
-   await page.goto('https://qafm30-11.myshopify.com/pages/contact');
+   await page.goto(`${process.env.StoreURl}/pages/contact`)
    await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
 
@@ -625,8 +625,7 @@ test('26 Visibility - Include Params', async ({ page, selectorPage, openSelector
    await expect(async () => {
       expect(selectorExists).toBeFalsy();
    }).toPass({ timeout: 5000 });
-
-   await page.goto('https://qafm30-11.myshopify.com/collections/all?filter.v.price.gte=&filter.v.price.lte=&sort_by=price-ascending');
+   await page.goto(`${process.env.StoreURl}/collections/all?filter.v.price.gte=&filter.v.price.lte=&sort_by=price-ascending`)
    await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().hover();
    await selectorPage.checkFontSettings('25px', '400', 'Garamond', "\"Garamond\"");
@@ -639,8 +638,8 @@ test('26 Visibility - exclude Params', async ({ page, selectorPage, openSelector
    await selectorPage.saveSelector();
    await selectorPage.openStore();
    await page.locator('.sel-disclosure').click();
-   await page.locator('.sel-itemsList .sel-item').first().click();
-   await page.goto('https://qafm30-11.myshopify.com/collections/all?filter.v.price.gte=&filter.v.price.lte=&sort_by=price-ascending');
+   await page.locator('.sel-itemsList .sel-item').first().click(); 
+   await page.goto(`${process.env.StoreURl}/collections/all?filter.v.price.gte=&filter.v.price.lte=&sort_by=price-ascending`)
    await page.waitForLoadState('load');
    const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    await expect(async () => {
@@ -654,7 +653,7 @@ test('28 Visibility - Include Languages', async ({ page, selectorPage, openSelec
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en')
+   await page.goto(`${process.env.StoreURl}/en`)
    await page.locator('.sel-disclosure').click();
    await page.locator('.sel-itemsList .sel-item').first().click();
    await expect(async () => {
@@ -668,7 +667,7 @@ test('29 Visibility - exclude Languages', async ({ page, selectorPage, openSelec
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en')
+   await page.goto(`${process.env.StoreURl}/en`)
    await page.locator('.sel-disclosure').click();
    await page.waitForTimeout(500);
    await page.locator('li[data-code="uk"]').click()

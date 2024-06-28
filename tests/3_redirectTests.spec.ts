@@ -10,7 +10,7 @@ test('73 Redirect markets, Redirect when necessary', async ({ page, selectorPage
     await selectorPage.openStore();
 
     await selectorPage.withRetry(async () => {
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('UAH', 'додому');
         await selectorPage.delay(2000);
@@ -19,7 +19,7 @@ test('73 Redirect markets, Redirect when necessary', async ({ page, selectorPage
         await selectorPage.selectLanguage('English');
         await selectorPage.delay(2000);
         await selectorPage.verifyText('PLN', 'Home');
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await selectorPage.verifyText('UAH', 'додому');
     });
 
@@ -34,7 +34,7 @@ test('74 Redirect markets, Forced redirect', async ({ page, selectorPage, redire
     await selectorPage.openStore();
 
     await selectorPage.withRetry(async () => {
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('UAH', 'Hogar');
         expect(page.url()).toContain('?22=33');
@@ -61,7 +61,7 @@ test('75 Redirect markets, Redirect once, Exclude Poland', async ({ page, select
 
     await selectorPage.withRetry(async () => {
     
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('UAH', 'додому');
         await selectorPage.delay(2000);
@@ -84,7 +84,7 @@ test('76 Redirect language, Redirect when necessary', async ({ page, selectorPag
     await selectorPage.openStore();
 
     await selectorPage.withRetry(async () => {
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('USD', 'Home');
         await selectorPage.delay(2000);
@@ -94,7 +94,7 @@ test('76 Redirect language, Redirect when necessary', async ({ page, selectorPag
         await selectorPage.delay(2000);
         await selectorPage.verifyText('PLN', 'додому');
         await selectorPage.delay(2000);
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('USD', 'Home');
         expect(page.url()).toContain('?22=33');
@@ -114,7 +114,7 @@ test('77 Redirect language, Forced redirect, include Filter by urls or paths, ht
             await selectorPage.delay(2000);
             await selectorPage.verifyText('UAH', 'Home');
             await selectorPage.delay(2000);
-            await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es');
+            await selectorPage.goToUrl(`${process.env.StoreURl}/es`);
             await selectorPage.verifyText('UAH', 'Hogar');
         });
 
@@ -152,7 +152,7 @@ test('79 Redirect both, Redirect when necessary', async ({ page, selectorPage, r
     await selectorPage.openStore();
 
     await selectorPage.withRetry(async () => {
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('UAH', 'Home');
         await selectorPage.delay(2000);
@@ -163,7 +163,7 @@ test('79 Redirect both, Redirect when necessary', async ({ page, selectorPage, r
         await selectorPage.delay(2000);
         await selectorPage.verifyTextWithReload('PLN', 'додому');
         await selectorPage.delay(2000);
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('UAH', 'Home');
 
@@ -182,7 +182,7 @@ test('80 Redirect both, Forced redirect', async ({ page, selectorPage, redirects
     await selectorPage.openStore();
    
     await selectorPage.withRetry(async () => {
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('UAH', 'Home');
         expect(page.url()).toContain('?22=33');
@@ -207,7 +207,7 @@ test('81 Redirect markets, Redirect when necessary, Include Ukraine', async ({ p
     await selectorPage.openStore();
 
     await selectorPage.withRetry(async () => {
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('UAH', 'Hogar');
         await selectorPage.delay(2000);
@@ -215,7 +215,7 @@ test('81 Redirect markets, Redirect when necessary, Include Ukraine', async ({ p
         await selectorPage.delay(2000);
         await selectorPage.selectLanguage('Українська');
         await page.waitForLoadState('load');
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-ja');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-ja`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('UAH', 'Hogar');
     
@@ -232,7 +232,7 @@ test('82 Redirect markets + default language, Forced redirect, Include Ukraine',
     await selectorPage.openStore();
 
     await selectorPage.withRetry(async () => {
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('UAH', 'додому');
         await selectorPage.delay(2000);
@@ -257,7 +257,7 @@ test('83 Redirect markets + default language, Forced redirect, Include Poland', 
     await selectorPage.openStore();
 
     await selectorPage.withRetry(async () => {
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await page.waitForLoadState('load');
         await selectorPage.delay(2000);
         await selectorPage.verifyText('USD', 'Hogar');
@@ -277,7 +277,7 @@ test('84 Redirect markets+ default language, Forced redirect, Exclude Ukraine', 
 
     await selectorPage.withRetry(async () => {
     
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es-en`);
         await page.waitForLoadState('load');
         await selectorPage.delay(2000);
         await selectorPage.verifyText('USD', 'Hogar');
@@ -296,14 +296,14 @@ test('85 Redirect both, Forced redirect, include Filter by urls or paths, /conta
     
     await selectorPage.withRetry(async () => {
     
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/uk-en');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/uk-en`);
         await expect(async () => {
             await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
             await expect(page.locator('header')).toContainText('додому');
         }).toPass();
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/uk-en/pages/contact');
+        await selectorPage.goToUrl(`${process.env.storeurl}/pages/contact`);
         await expect(async () => {
-            expect(page.url()).toContain('https://qafm30-11.myshopify.com/uk-en/pages/contact');
+            expect(page.url()).toContain(`${process.env.storeurl}/pages/contact`);
             await expect(page.locator('header')).toContainText('Home');
         }).toPass();
     });
@@ -321,11 +321,11 @@ test('86 Redirect both, Forced redirect, include Filter by urls or paths, /colle
 
     await selectorPage.withRetry(async () => {
     
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/uk-en');
+        await selectorPage.goToUrl(`${process.env.storeurl}/uk-en`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('USD', 'додому');
         await selectorPage.delay(2000);
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/uk-en/collections/all');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/uk-en/collections/all`);
         await selectorPage.verifyText('UAH', 'Home');
     });
 
@@ -344,7 +344,7 @@ test('87 Redirect language, Forced redirect, exclude Filter by urls or paths, ht
         await selectorPage.delay(2000);
         await selectorPage.verifyText('UAH', 'додому');
         await selectorPage.delay(2000);
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/es');
+        await selectorPage.goToUrl(`${process.env.StoreURl}/es`);
         await selectorPage.verifyText('UAH', 'Home');
     
     });
@@ -361,11 +361,11 @@ test('88 Redirect both, Forced redirect, exclude Filter by urls or paths, /conta
     await selectorPage.openStore();
 
     await selectorPage.withRetry(async () => {
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/uk-en');
+        await selectorPage.goToUrl(`${process.env.storeurl}/uk-en`);
         await selectorPage.verifyText('UAH', 'Home');
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/uk-en/pages/contact');
+        await selectorPage.goToUrl(`${process.env.storeurl}/pages/contact`);
         await expect(async () => {
-            expect(page.url()).toContain('https://qafm30-11.myshopify.com/uk-en/pages/contact');
+            expect(page.url()).toContain(`${process.env.storeurl}/pages/contact`);
             await expect(page.locator('header')).toContainText('додому');
         }).toPass();
     });
@@ -382,9 +382,9 @@ test('89 Redirect both, Forced redirect, exclude Filter by urls or paths, /colle
     await selectorPage.openStore();
 
     await selectorPage.withRetry(async () => {
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/uk-en');
+        await selectorPage.goToUrl(`${process.env.storeurl}/uk-en`);
         await selectorPage.verifyText('UAH', 'Home');
-        await selectorPage.goToUrl('https://qafm30-11.myshopify.com/uk-en/collections/all');
+        await selectorPage.goToUrl(`${process.env.storeurl}/uk-en/collections/all`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('USD', 'додому');
     });

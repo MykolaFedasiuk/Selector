@@ -28,7 +28,7 @@ test('38 Display when necessary, Language, Banner, Basic, Position - top center'
    await expect(page.locator('header')).toContainText('додому');
    const bannerExists = await page.waitForSelector('.adt-main', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(bannerExists).toBeFalsy();
-   await page.goto('https://qafm30-11.myshopify.com');
+   await page.goto(`${process.env.StoreURl}`);
    await expect(page.locator('.adt-disclosure-btn')).toHaveAttribute('data-code', 'en');
    await expect(page.locator('.adt-description')).toHaveCSS('color', 'rgb(32, 34, 35)');
    await expect(page.locator('div.adt-backdrop')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
@@ -52,7 +52,7 @@ test('39 Remember choice, Currency, Banner, Arctic, Position - bottom center', a
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-main')).toHaveScreenshot({ maxDiffPixels: 65 });
    await expect(page.locator('div.adt-bottom-center')).toBeVisible();
    await expect(page.locator('.adt-disclosure-btn')).toHaveAttribute('data-code', 'UAH');
@@ -72,7 +72,7 @@ test('39 Remember choice, Currency, Banner, Arctic, Position - bottom center', a
    await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
    const bannerExists = await page.waitForSelector('.adt-main', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(bannerExists).toBeFalsy();
-   await page.goto('https://qafm30-11.myshopify.com');
+   await page.goto(`${process.env.StoreURl}`);
    await page.waitForLoadState('load');
    expect(bannerExists).toBeFalsy();
    await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
@@ -94,7 +94,7 @@ test('40 Display once, Language & Currency, Popup, Wild West, Position - top lef
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-main')).toHaveScreenshot({ maxDiffPixels: 65 });
    await expect(page.locator('div.adt-top-left')).toBeVisible();
    await expect(page.locator('.adt-description')).toHaveCSS('color', 'rgb(56, 58, 21)');
@@ -115,7 +115,7 @@ test('40 Display once, Language & Currency, Popup, Wild West, Position - top lef
    await expect(page.locator('header')).toContainText('додому');
    const bannerExists = await page.waitForSelector('.adt-main', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    expect(bannerExists).toBeFalsy();
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await page.waitForLoadState('load');
    expect(bannerExists).toBeFalsy();
    await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
@@ -156,7 +156,7 @@ test('41 Display for everyone, Country & Language, Popup, Winter, Position - top
    await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
    await expect(page.locator('header')).toContainText('додому');
    await expect(page.locator('.adt-main')).not.toBeVisible();
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await page.waitForLoadState('load');
    await page.waitForTimeout(500);
    await expect(page.locator('.adt-main')).not.toBeVisible();
@@ -178,7 +178,7 @@ test('42 Display when necessary, Country (Currency), Box, Dark Indigo', async ({
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('div.adt-center-center')).toHaveScreenshot();
    await expect(page.locator('.adt-item').first()).toHaveAttribute('data-code', 'UA');
    await page.locator('li[data-code="PL"]').hover();
@@ -188,7 +188,7 @@ test('42 Display when necessary, Country (Currency), Box, Dark Indigo', async ({
    await page.locator('li[data-code="PL"]').click();
    await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
    await expect(page.locator('.adt-container')).not.toBeVisible();
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect(page.locator('.adt-description')).toHaveCSS('color', 'rgb(11, 223, 237)');
    await expect(page.locator('.adt-container')).toHaveCSS('background-color', 'rgb(51, 49, 59)');
    await page.locator('.adt-close').click();
@@ -199,7 +199,7 @@ test('42 Display when necessary, Country (Currency), Box, Dark Indigo', async ({
    await page.locator('[aria-describedby="HeaderLanguageLabel"]').click()
    await page.locator('.disclosure__item', { hasText: 'Українська' }).nth(1).click();
    await page.waitForLoadState('load');
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect(page.locator('.adt-item').first()).toHaveAttribute('data-code', 'UA');
 
 });
@@ -228,7 +228,7 @@ test('43 Remember choice, Language, Box, Black & white', async ({ openBanner, pa
    await page.locator('li[data-code="uk"]').click();
    await expect(page.locator('header')).toContainText('додому');
    await expect(page.locator('.adt-container')).not.toBeVisible();
-   await page.goto('https://qafm30-11.myshopify.com/');
+   await page.goto(`${process.env.StoreURl}`);
    await page.waitForLoadState('load');
    await page.waitForTimeout(500);
    await expect(page.locator('.adt-container')).not.toBeVisible();
@@ -250,7 +250,7 @@ test('44 Display once, Country & Language, Modal, Cold', async ({ openBanner, pa
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-main')).toHaveScreenshot({ maxDiffPixels: 65 });
    await expect(page.locator('div.adt-center-center')).toBeVisible();
    await expect(page.locator('.adt-description')).toHaveCSS('color', 'rgb(41, 49, 95)');
@@ -269,7 +269,7 @@ test('44 Display once, Country & Language, Modal, Cold', async ({ openBanner, pa
    await page.locator('.adt-changeBtn').click();
    await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
    await expect(page.locator('header')).toContainText('додому');
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect(async () => {
       await expect(page.locator('.adt-main')).not.toBeVisible();
       await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
@@ -311,7 +311,7 @@ test('45 Display for everyone, Country (Currency) & Language, Modal, Jungle', as
    await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
    await expect(page.locator('header')).toContainText('додому');
    await expect(page.locator('.adt-main')).not.toBeVisible();
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect(async () => {
       await expect(page.locator('.adt-main')).not.toBeVisible();
       await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');;
@@ -348,7 +348,7 @@ test('46 Display when necessary, Language & Currency, Page, Desert, Position - c
    await page.locator('.adt-changeBtn').click();
    await expect(page.locator('header')).toContainText('додому');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
-   await page.goto('https://qafm30-11.myshopify.com');
+   await page.goto(`${process.env.StoreURl}`);
    await expect(page.locator('.adt-disclosure-btn[data-resource="currencies"]')).toHaveAttribute('data-code', 'UAH');
    await expect(page.locator('.adt-disclosure-btn[data-resource="languages"]')).toHaveAttribute('data-code', 'en');
    await expect(page.locator('.adt-description')).toHaveCSS('color', 'rgb(142, 151, 117)');
@@ -374,7 +374,7 @@ test('47 Remember choice, Country & Language, Page, North, Position - center cen
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-main')).toHaveScreenshot({ maxDiffPixels: 65 });
    await expect(page.locator('div.adt-center-center')).toBeVisible();
    await expect(page.locator('.adt-description')).toHaveCSS('color', 'rgb(54, 106, 135)');
@@ -393,7 +393,7 @@ test('47 Remember choice, Country & Language, Page, North, Position - center cen
    await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
    await expect(page.locator('header')).toContainText('додому');
    await expect(page.locator('.adt-main')).not.toBeVisible();
-   await page.goto('https://qafm30-11.myshopify.com/');
+   await page.goto(`${process.env.StoreURl}`);
    await page.waitForLoadState('load');
    await page.waitForTimeout(500);
    await expect(page.locator('.adt-main')).not.toBeVisible();
@@ -418,7 +418,7 @@ test('48 Display once, Country (Currency) & Language, Page, Sunny, Position - ce
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-main')).toHaveScreenshot({ maxDiffPixels: 65 });
    await expect(page.locator('div.adt-center-right')).toBeVisible();
    await expect(page.locator('.adt-description')).toHaveCSS('color', 'rgb(10, 1, 1)');
@@ -438,7 +438,7 @@ test('48 Display once, Country (Currency) & Language, Page, Sunny, Position - ce
    await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
    await expect(page.locator('header')).toContainText('додому');
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect(async () => {
       await expect(page.locator('.adt-main')).not.toBeVisible();
       await expect(page.locator('.product-card-wrapper').first()).toContainText('USD');
@@ -478,7 +478,7 @@ test('49 Display for everyone, Language, Page, Beet, Position - bottom left', as
    await page.locator('.adt-changeBtn').click();
    await expect(page.locator('header')).toContainText('додому');
    await expect(page.locator('.adt-main')).not.toBeVisible();
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect(async () => {
       await expect(page.locator('.adt-main')).not.toBeVisible();
       await expect(page.locator('header')).toContainText('Home');   
@@ -501,7 +501,7 @@ test('50 Remember choice, Currency, Popup, Chocolate, Position - bottom right', 
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-main')).toHaveScreenshot({ maxDiffPixels: 65 });
    await expect(page.locator('div.adt-bottom-right')).toBeVisible();
    await expect(page.locator('.adt-disclosure-btn')).toHaveAttribute('data-code', 'UAH');
@@ -520,7 +520,7 @@ test('50 Remember choice, Currency, Popup, Chocolate, Position - bottom right', 
       await expect(page.locator('.adt-main')).not.toBeVisible();
       await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
    }).toPass({timeout: 15000});
-   await page.goto('https://qafm30-11.myshopify.com');
+   await page.goto(`${process.env.StoreURl}`);
    await expect(async () => {
       await expect(page.locator('.adt-main')).not.toBeVisible();
       await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
@@ -544,7 +544,7 @@ test('51 Display when necessary, Country, Popup, Turquoise, Position - center ce
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-main')).toHaveScreenshot();
    await expect(page.locator('div.adt-center-center')).toBeVisible();
    await expect(page.locator('.adt-disclosure-btn')).toHaveAttribute('data-code', 'UA');
@@ -557,7 +557,7 @@ test('51 Display when necessary, Country, Popup, Turquoise, Position - center ce
    await page.locator('li[data-code="PL"]').click();
    await page.locator('.adt-changeBtn').click();
    await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
-   await page.goto('https://qafm30-11.myshopify.com/en-ja');
+   await page.goto(`${process.env.StoreURl}/en-ja`);
    await expect(page.locator('.adt-disclosure-btn')).toHaveAttribute('data-code', 'UA');
    await page.locator('.adt-close').click();
    await expect(async () => {
@@ -577,7 +577,7 @@ test('52 change bunner color by paste,', async ({ openBanner, page, selectorPage
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-main')).toHaveScreenshot({ maxDiffPixels: 65 });
    await expect(page.locator('.adt-description')).toHaveCSS('color', 'rgb(255, 40, 47)');
    await expect(page.locator('div.adt-backdrop')).toHaveCSS('background-color', 'rgb(108, 255, 40)');
@@ -611,7 +611,7 @@ test('53 change bunner color by sliders,', async ({ openBanner, page, selectorPa
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-main')).toHaveScreenshot({ maxDiffPixels: 65 });
    await expect(page.locator('div.adt-center-center')).toBeVisible();
    await expect.soft(page.locator('.adt-description')).toHaveCSS('color', 'rgb(174, 210, 38)');
@@ -626,7 +626,7 @@ test('53 change bunner color by sliders,', async ({ openBanner, page, selectorPa
    await expect(async () => {
       await expect(page.locator('.adt-main')).not.toBeVisible();
    }).toPass({timeout: 15000});
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect(async () => {
       await expect(page.locator('.adt-main')).not.toBeVisible();
    }).toPass({timeout: 15000});
@@ -653,7 +653,7 @@ test('54 Banner cant be closed, Show flag, borders', async ({ openBanner, page, 
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-container')).toHaveScreenshot({ maxDiffPixels: 65 });
    await bannerPage.checkMainBorderSettings('.adt-container', 'solid', 'rgb(255, 40, 47)', '22px',
       '22px', '22px', '22px', '22px', '22px', '22px');
@@ -690,7 +690,7 @@ test('55 Popup cant be closed, Show flag, borders', async ({ openBanner, page, s
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-container')).toHaveScreenshot({ maxDiffPixels: 65 });
    await bannerPage.checkMainBorderSettings('.adt-container', 'dashed', 'rgba(107, 115, 69, 0.184)', '22px',
       '22px', '22px', '22px', '22px', '22px', '22px');
@@ -750,7 +750,7 @@ test('57 Modal cant be closed, Show flag', async ({ openBanner, page, selectorPa
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-container')).toHaveScreenshot({ maxDiffPixels: 65 });
    await bannerPage.checkMainBorderSettings('.adt-container', 'double', 'rgb(255, 40, 47)', '22px',
       '22px', '22px', '22px', '22px', '22px', '22px');
@@ -787,7 +787,7 @@ test('58 Page banner cant be closed, Show flag', async ({ openBanner, page, sele
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-container')).toHaveScreenshot({ maxDiffPixels: 65 });
    await bannerPage.checkMainBorderSettings('.adt-container', 'groove', 'rgba(107, 115, 69, 0.184)', '22px',
       '22px', '22px', '22px', '22px', '22px', '22px');
@@ -824,7 +824,7 @@ test('59 CustomCSS, Disablestylesisolation', async ({ openBanner, page, selector
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-container')).toHaveScreenshot({ maxDiffPixels: 65 });
    await bannerPage.checkMainBorderSettings('.adt-container', 'inset', 'rgba(107, 115, 69, 0.184)', '22px',
       '22px', '22px', '22px', '22px', '22px', '22px');
@@ -846,7 +846,7 @@ test('59 CustomCSS, Disablestylesisolation', async ({ openBanner, page, selector
    await page.waitForLoadState('load');
    await expect(page.locator('header')).toContainText('додому');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
-   await page.goto('https://qafm30-11.myshopify.com');
+   await page.goto(`${process.env.StoreURl}`);
    await expect(page.locator('.adt-disclosure-btn[data-resource="countries"]')).toHaveAttribute('data-code', 'UA');
    await expect(page.locator('.adt-disclosure-btn[data-resource="languages"]')).toHaveAttribute('data-code', 'en');
    await page.locator('.adt-changeBtn').click();
@@ -874,7 +874,7 @@ test('60 Visibility - Include Custom urls', async ({ openBanner, page, selectorP
    await page.waitForLoadState('load');
    await page.waitForTimeout(500);
    await expect(page.locator('.adt-container')).not.toBeVisible();
-   await page.goto('https://qafm30-11.myshopify.com/pages/contact');
+   await page.goto(`${process.env.StoreURl}/pages/contact`);
    await expect.soft(page.locator('.adt-container')).toHaveScreenshot({ maxDiffPixels: 65 });
    await bannerPage.checkMainBorderSettings('.adt-container', 'outset', 'rgb(255, 40, 47)', '22px',
       '22px', '22px', '22px', '22px', '22px', '22px');
@@ -899,7 +899,7 @@ test('61 Visibility - Include Custom urls', async ({ openBanner, page, selectorP
    await page.locator('li[data-code="uk"]').click();
    await page.locator('.adt-changeBtn').click();
    await expect(page.locator('header')).toContainText('додому');
-   await page.goto('https://qafm30-11.myshopify.com/pages/contact');
+   await page.goto(`${process.env.StoreURl}/pages/contact`);
    await expect(async () => {
       await expect(page.locator('.adt-main')).not.toBeVisible();
   }).toPass({timeout: 15000});
@@ -934,7 +934,7 @@ test('62 Visibility - exclude Custom urls', async ({ openBanner, page, selectorP
    await page.locator('li[data-code="uk"]').click();
    await page.locator('.adt-changeBtn').click();
    await expect(page.locator('header')).toContainText('додому');
-   await page.goto('https://qafm30-11.myshopify.com/pages/contact');
+   await page.goto(`${process.env.StoreURl}/pages/contact`);
    await expect(async () => {
       await expect(page.locator('.adt-main')).not.toBeVisible();
    }).toPass({timeout: 15000});
@@ -950,7 +950,7 @@ test('63 Visibility - exclude Custom urls', async ({ openBanner, page, selectorP
    await expect(async () => {
       await expect(page.locator('.adt-main')).not.toBeVisible();
    }).toPass({timeout: 15000});
-   await page.goto('https://qafm30-11.myshopify.com/pages/contact');
+   await page.goto(`${process.env.StoreURl}/pages/contact`);
    await page.locator('.adt-disclosure-btn[data-resource="languages"]').click();
    await page.locator('li[data-code="uk"]').click();
    await page.locator('.adt-changeBtn').click();
@@ -1153,7 +1153,7 @@ test('71 change images, Modal', async ({ openBanner, page, selectorPage, bannerP
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await page.waitForLoadState('load');
    await expect.soft(page.locator('.adt-main')).toHaveScreenshot({ maxDiffPixels: 65 });
    await expect(page.locator('.adt-disclosure-btn[data-resource="countries"]')).toHaveAttribute('data-code', 'UA');
@@ -1193,7 +1193,7 @@ test('72 change images, Page', async ({ openBanner, page, selectorPage, bannerPa
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
-   await page.goto('https://qafm30-11.myshopify.com/en-en');
+   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect.soft(page.locator('.adt-modal-overlay.overlay-page-type')).toHaveScreenshot({ maxDiffPixels: 65 });
    await expect(page.locator('.adt-disclosure-btn[data-resource="countries"]')).toHaveAttribute('data-code', 'UA');
    await expect(page.locator('.adt-disclosure-btn[data-resource="languages"]')).toHaveAttribute('data-code', 'en');

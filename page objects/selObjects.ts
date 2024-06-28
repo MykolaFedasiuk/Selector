@@ -264,7 +264,7 @@ export class SelectorPage {
     async openStore() {
 
         await expect(async () => {
-            await this.page.goto('https://qafm30-11.myshopify.com/', { waitUntil: 'load', timeout: 5000 });
+            await this.page.goto(process.env.StoreURl, { waitUntil: 'load', timeout: 5000 });
         }).toPass({timeout: 25000});
         await this.page.getByLabel('Enter store password').fill('123');
         await this.page.getByRole('button', { name: 'Enter' }).click();
