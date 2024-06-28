@@ -804,7 +804,7 @@ test('58 Page banner cant be closed, Show flag', async ({ openBanner, page, sele
 
 });
 
-///змінити значення слайдерів?
+
 test('59 CustomCSS, Disablestylesisolation', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await bannerPage.borderradius('Border radius', '22')
