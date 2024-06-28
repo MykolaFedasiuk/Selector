@@ -61,6 +61,13 @@ export default defineConfig({
       dependencies: ['setup']
     },
 
+
+    {
+      name: 'firefoxPROD',
+      use: { ...devices['Desktop Firefox'], storageState: '.auth/user.json' },
+      dependencies: ['setup']
+    },
+
     // {
     //   name: 'webkit',
     //   use: { ...devices['Desktop Safari'], storageState: '.auth/user.json'},

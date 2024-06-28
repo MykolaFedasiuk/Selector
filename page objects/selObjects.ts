@@ -19,18 +19,30 @@ export class SelectorPage {
             await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.Polaris-Button__Content', { hasText: 'Customize' }).scrollIntoViewIfNeeded();
         }).toPass({timeout: 60000});
-
-        const frame = this.page.frameLocator("#AppFrameMain iframe");
-        const hideBtnLocator = frame.getByRole('button', { name: 'Close chat' }).first()
-        try {
-            await hideBtnLocator.waitFor({ state: 'visible', timeout: 5000 });
-            await hideBtnLocator.click();
-
-        } catch {
-            await this.page.waitForTimeout(100);
-        }
-
     };
+
+    // async deleteSupportChat() {
+    //     const iframeElement = await this.page.$("#AppFrameMain iframe");
+    //         const iframe = await iframeElement.contentFrame();
+    //         await iframe.evaluate(() => {
+    //             const element = document.querySelector('.cc-1m2mf');
+    //             if (element) {
+    //                 element.remove();
+    //             }
+    //         });
+    
+    //         await iframe.evaluate(() => {
+    //             const element = document.querySelector('#crisp-chatbox');
+    //             if (element) {
+    //                 element.remove();
+    //             }
+    //         });
+
+    //         const element1 = await this.page.$('.cc-1m2mf');
+    //         expect(element1).toBeNull();
+    //         const element2 = await this.page.$('#crisp-chatbox');
+    //         expect(element2).toBeNull();
+    // };
 
     async deleteSelectors() {
         const element = this.page.frameLocator("#AppFrameMain iframe")
@@ -56,27 +68,14 @@ export class SelectorPage {
 
 
     async selTypes(type: string) {
-
-        const frame = this.page.frameLocator("#AppFrameMain iframe");
-        const hideBtnLocator = frame.getByRole('button', { name: 'Close chat' }).first()
-        try {
-            await hideBtnLocator.waitFor({ state: 'visible', timeout: 5000 });
-            await hideBtnLocator.click();
-
-        } catch {
-            await this.page.waitForTimeout(100);
-        }
-
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: type }).getByRole('button').click();
         const allSelectorTyes = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text');
         for (const selType of await allSelectorTyes.all()) {
             await selType.click()
-
             await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.custom-drop-down', { hasText: type }).getByRole('button').click();
-
         }
 
     };
@@ -126,9 +125,9 @@ export class SelectorPage {
     async createSelector() {
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Button__Content', { hasText: 'Create selector' }).click();
-        await this.page.frameLocator("#AppFrameMain iframe")
+            await this.page.frameLocator("#AppFrameMain iframe")
             .locator('[class="container__aa6ed1916c93fc44b35f drop-down"]').locator('.header__c9ffa2ffd1581821c7eb').first().click();
-        await this.page.frameLocator("#AppFrameMain iframe")
+            await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.positionCheckboxContainer__b0c9e7e54d9e4684f2ff').nth(1).click();
 
     };
@@ -136,16 +135,17 @@ export class SelectorPage {
     async selectResourse(resourse: String) {
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: 'Resource' }).locator('button').click();
-
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-Box button').filter({ has: this.page.frameLocator("#AppFrameMain iframe").locator(`:text-is("${resourse}")`) })
             .click();
     };
 
     async selectType(type: string) {
+           
+       await this.page.waitForTimeout(10000)
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: 'Type' }).getByRole('button').click();
-        await this.page.frameLocator("#AppFrameMain iframe")
+            await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text', { hasText: type }).click();
     };
 
@@ -211,15 +211,15 @@ export class SelectorPage {
     async display2(display2: number) {
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down').nth(4).getByRole('button').first().click();
-        await this.page.frameLocator("#AppFrameMain iframe")
+            await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text', { has: this.page.frameLocator("#AppFrameMain iframe").locator('[role="button"]') }).nth(display2).click();
 
     };
 
     async displayCurrencyIcon(display3: number) {
         await this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.custom-drop-down', { hasText: 'Currency icon' }).getByRole('button').first().click();
-        await this.page.frameLocator("#AppFrameMain iframe")
+            .locator('.custom-drop-down', { hasText: 'Currency icon' }).getByRole('button').first().click();        
+            await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text').nth(display3).click();
 
     };
@@ -227,13 +227,12 @@ export class SelectorPage {
     async displayCurrencyFormat(display4: number) {
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: 'Currency format' }).getByRole('button').first().click();
-        await this.page.frameLocator("#AppFrameMain iframe")
+            await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text').nth(display4).click();
 
     };
 
     async saveSelector() {
-
         if (await this.page.frameLocator("#AppFrameMain iframe").locator('.hideBtn__a9223e3607238208f77c')
             .isVisible({ timeout: 10000 })) {
             await this.page.frameLocator("#AppFrameMain iframe").locator('.hideBtn__a9223e3607238208f77c').click();

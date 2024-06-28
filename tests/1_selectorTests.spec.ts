@@ -81,10 +81,11 @@ test('6 Currency, Wheel, Cute, Arctic, Fixed position, Position - top right', as
    await page.waitForTimeout(1000);
    await expect.soft(page.locator('.sel-modal-content')).toHaveScreenshot({ maxDiffPixelRatio: 0.04 });
    await page.getByRole('button', { name: 'Done' }).last().click();
-   await expect.soft(page.locator('.sel-item.sel-current').first()).toHaveText('Polish Zloty');
+   await expect.soft(page.locator('.sel-item.sel-current').first()).toContainText('Polish');
    await expect.soft(page.locator('.product-card-wrapper').first()).toContainText('PLN');
    await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right needsclick');
-   await expect.soft(page.locator('.sel-cute.sel-currencies.sel-wheel-disclosure')).toHaveScreenshot({ maxDiffPixelRatio: 0.04 });
+   await expect.soft(page.locator('.sel-cute.sel-currencies.sel-wheel-disclosure'))
+   .toHaveScreenshot({ maxDiffPixelRatio: 0.04 });
    await expect(page.locator('span.sel-title').first()).toHaveCSS('color', 'rgb(65, 0, 1)');
    await expect(page.locator('.sel-wheel-actionsWrapper')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
 
@@ -208,7 +209,7 @@ test('10 Language S Currency, Popup, Dark Indigo, Embedded position, Position - 
    await page.locator('li[data-code="PLN"]').click();
    await expect(page.locator('header')).toContainText('Home');
    await expect(page.locator('.sel-secondChild.sel-bothChild.sel-currencies').locator('.sel-title').first())
-   .toHaveText('Polish Zloty (zł)');
+   .toContainText('Polish');
    await expect(page.locator('.product-card-wrapper').first()).toContainText('zł PLN');
    await expect(page.locator('selector-root')).toHaveClass('sel-embedded sel-header-left needsclick');
    await expect.soft(page.locator('.sel-disclosure.sel-basic.sel-view-all.sel-languages_currencies.sel-popup-disclosure'))

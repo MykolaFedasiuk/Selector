@@ -7,6 +7,6 @@
   },
   "scripts": {
     "prodHeaded": "ENVIRONMENT=prod npx playwright test --headed",
-    "prod": "ENVIRONMENT=prod npx playwright test"
+    "prod": "ENVIRONMENT=prod npx playwright --project=firefoxPROD"
     }
 }
