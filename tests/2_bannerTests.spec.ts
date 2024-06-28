@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { test } from '../fixtures/fixturePages';
 
 
-///???
+
 test('38 Display when necessary, Language, Banner, Basic, Position - top center', async ({ openBanner, page, selectorPage, bannerPage }) => {
    await selectorPage.selectType('Banner');
    await selectorPage.changeSizeSlider(50);
@@ -485,7 +485,7 @@ test('49 Display for everyone, Language, Page, Beet, Position - bottom left', as
   }).toPass({timeout: 15000});
 });
 
-///??????????????
+
 test('50 Remember choice, Currency, Popup, Chocolate, Position - bottom right', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.selectType('Popup');
@@ -706,7 +706,8 @@ test('55 Popup cant be closed, Show flag, borders', async ({ openBanner, page, s
    await expect(page.locator('.product-card-wrapper').first()).toContainText('UAH');;
 
 });
-///???????????????????????sceeen
+
+
 test('56 Box banner cant be closed', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.selectType('Box');

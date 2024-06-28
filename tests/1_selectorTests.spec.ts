@@ -63,7 +63,7 @@ test('5 Currency, Dropdown, Fixed position, Position - top left', async ({ page,
 
 });
 
-/// SCREENSHOT
+
 test('6 Currency, Wheel, Cute, Arctic, Fixed position, Position - top right', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Currency');
    await selectorPage.selectType('Wheel');
@@ -250,7 +250,7 @@ test('11 Country S Language, Cascade, Black & white, Embedded position, Position
    await expect(page.locator('li.sel-item').first()).toHaveCSS('background-color', 'rgb(18, 18, 18)');
 });
 
-//// screnshot
+
 test('12 Currency, Sidebar, Jungle, Embedded position, Position - footer right', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Currency');
    await selectorPage.selectType('Sidebar');
@@ -391,7 +391,7 @@ test('16 Country, Wheel, Beet, search', async ({ page, selectorPage, openSelecto
    await expect(page.locator('.sel-wheel-actionsWrapper')).toHaveCSS('background-color', 'rgb(120, 28, 104)');
 });
 
-///screnshot
+
 test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.selectResourse('Language & Currency');
    await selectorPage.selectType('Modal');
@@ -410,6 +410,7 @@ test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selector
    await expect(page.locator('selector-root')).toHaveClass('sel-fixed sel-top-right needsclick');
    await page.locator('.sel-disclosure.sel-basic.sel-languages_currencies.sel-modal-disclosure').click();
    await page.locator('.sel-languages.sel-firstChild').getByRole('textbox').fill('sfdsfsfdsfsdfsdf');
+   await page.waitForTimeout(100);
    await expect.soft(page.locator('.sel-modal-content').first()).toHaveScreenshot({ maxDiffPixelRatio: 0.04 });
    await page.locator('.sel-languages.sel-firstChild').getByRole('textbox').clear();
    await page.locator('.sel-languages.sel-firstChild').getByRole('textbox').fill('eng');
@@ -419,6 +420,7 @@ test('17 Language & Currency, Modal, Chocolate, search', async ({ page, selector
    await page.locator('.sel-itemsList .sel-item').first().click();
    await page.locator('.sel-disclosure.sel-basic.sel-languages_currencies.sel-modal-disclosure').click();
    await page.locator('.sel-currencies.sel-secondChild').getByRole('textbox').fill('pol');
+   await page.waitForTimeout(100);
    await expect.soft(page.locator('.sel-modal-content').first()).toHaveScreenshot({ maxDiffPixelRatio: 0.04 });
    await page.locator('.sel-itemsList .sel-item').last().click();
    await expect(page.locator('.sel-firstChild .sel-title').first()).toContainText('English');
@@ -659,7 +661,7 @@ test('28 Visibility - Include Languages', async ({ page, selectorPage, openSelec
    }).toPass({timeout: 25000});
 });
 
-///?????
+
 test('29 Visibility - exclude Languages', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.setVisibilityParams('Languages', 'exclude', 'ukrainian');
    await selectorPage.saveSelector();
@@ -668,8 +670,8 @@ test('29 Visibility - exclude Languages', async ({ page, selectorPage, openSelec
    await page.goto('https://qafm30-11.myshopify.com/en')
    await page.locator('.sel-disclosure').click();
    await page.waitForTimeout(500);
-   await page.locator('li[data-code="uk"] span').click()
-   await page.waitForLoadState('load');
+   await page.locator('li[data-code="uk"]').click()
+   await page.waitForTimeout(500)
    const selectorExists = await page.waitForSelector('.sel-disclosure', { state: 'visible', timeout: 1000 }).then(() => true).catch(() => false);
    await expect(async () => {
       expect(selectorExists).toBeFalsy();

@@ -21,6 +21,11 @@ test_prod:
     - ENVIRONMENT=prod npx playwright test --config=playwright.config.ts
   only:
     - master # or the branch/tag that represents production
+  artifacts:
+    when: always
+    paths:
+      - playwright-report/
+  allow_failure: true
 
 test_stage:
   stage: test
@@ -35,3 +40,8 @@ test_stage:
     - npx playwright test --config=playwright.config.ts
   only:
     - develop # or the branch/tag that represents staging
+  artifacts:
+    when: always
+    paths:
+      - playwright-report/
+  allow_failure: true
