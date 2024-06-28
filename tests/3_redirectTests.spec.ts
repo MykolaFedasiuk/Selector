@@ -106,7 +106,7 @@ test('77 Redirect language, Forced redirect, include Filter by urls or paths, ht
 
       await selectorPage.redirectBehavior('Forced redirect');
         await selectorPage.enableRedirection('Automatically switch the visitor\'s language according to the browser\'s preferred language');
-        await selectorPage.filterByPaths('include', 'https://qafm30-11.myshopify.com');
+        await selectorPage.filterByPaths('include', process.env.StoreURl);
         await selectorPage.openStore();
     
         await selectorPage.withRetry(async () => {
@@ -223,6 +223,7 @@ test('81 Redirect markets, Redirect when necessary, Include Ukraine', async ({ p
 
 });
 
+
 test('82 Redirect markets + default language, Forced redirect, Include Ukraine', async ({ page, selectorPage, redirects }) => {
 
     await selectorPage.redirectBehavior('Forced redirect');
@@ -336,11 +337,11 @@ test('87 Redirect language, Forced redirect, exclude Filter by urls or paths, ht
 
     await selectorPage.redirectBehavior('Forced redirect');
     await selectorPage.enableRedirection('Automatically switch the visitor\'s language according to the browser\'s preferred language');
-    await selectorPage.filterByPaths('exclude', 'https://qafm30-11.myshopify.com');
+    await selectorPage.filterByPaths('exclude', process.env.StoreURl);
     await selectorPage.openStore();
 
     await selectorPage.withRetry(async () => {
-    
+        await selectorPage.goToUrl(`${process.env.StoreURl}`);
         await selectorPage.delay(2000);
         await selectorPage.verifyText('UAH', 'додому');
         await selectorPage.delay(2000);

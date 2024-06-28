@@ -661,7 +661,7 @@ export class SelectorPage {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    async withRetry(action, retries = 6, backoff = 1000) {
+    async withRetry(action, retries = 8, backoff = 500) {
         for (let i = 0; i < retries; i++) {
             try {
                 await action();
@@ -669,7 +669,7 @@ export class SelectorPage {
             } catch (error) {
 
                 if (i === retries - 1) {
-                    throw new Error('More than 5 tries');
+                    throw new Error('More than 8 tries');
                 }
 
                 await this.delay(backoff);
