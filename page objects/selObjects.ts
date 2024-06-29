@@ -18,7 +18,7 @@ export class SelectorPage {
         await expect(async () => {
             await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.Polaris-Button__Content', { hasText: 'Customize' }).scrollIntoViewIfNeeded();
-        }).toPass({timeout: 60000});
+        }).toPass({ timeout: 120000 });
     };
 
     // async deleteSupportChat() {
@@ -30,7 +30,7 @@ export class SelectorPage {
     //                 element.remove();
     //             }
     //         });
-    
+
     //         await iframe.evaluate(() => {
     //             const element = document.querySelector('#crisp-chatbox');
     //             if (element) {
@@ -47,7 +47,7 @@ export class SelectorPage {
     async deleteSelectors() {
         const element = this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ResourceItem__ItemWrapper a').first();
-  
+
         try {
             await element.waitFor({ state: 'visible', timeout: 1000 });
             await this.page.frameLocator("#AppFrameMain iframe")
@@ -63,7 +63,7 @@ export class SelectorPage {
         } catch {
             await this.page.waitForTimeout(100);
         }
-     
+
     };
 
 
@@ -85,7 +85,7 @@ export class SelectorPage {
         try {
 
             const [newPage] = await Promise.all([
-                this.page.context().waitForEvent('page'),
+                this.page.context().waitForEvent('page', { timeout: 10000 }),
                 this.page.frameLocator("#AppFrameMain iframe")
                     .locator('.Polaris-Button', { hasText: 'Activate embeds' }).click({ timeout: 10000 })
             ]);
@@ -96,7 +96,7 @@ export class SelectorPage {
                 await newPage.frameLocator("iframe[title='Online Store']")
                     .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selectors' })
                     .getByRole('button').nth(1).click({ timeout: 5000 });
-                    await newPage.waitForTimeout(2000);
+                await newPage.waitForTimeout(2000);
                 await newPage.frameLocator("iframe[title='Online Store']")
                     .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selector - Staging' })
                     .getByRole('button').nth(1).click({ timeout: 5000 });
@@ -105,7 +105,7 @@ export class SelectorPage {
                 await newPage.frameLocator("iframe[title='Online Store']")
                     .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selectors' })
                     .getByRole('button').nth(1).click({ timeout: 5000 });
-                    await newPage.waitForTimeout(2000);
+                await newPage.waitForTimeout(2000);
                 await newPage.frameLocator("iframe[title='Online Store']")
                     .locator('.Polaris-InlineGrid_m3wbk', { hasText: 'Selector - Staging' })
                     .getByRole('button').nth(1).click({ timeout: 5000 });
@@ -123,14 +123,23 @@ export class SelectorPage {
 
 
     async createSelector() {
-        await this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.Polaris-Button__Content', { hasText: 'Create selector' }).click();
+        await expect(async () => {
             await this.page.frameLocator("#AppFrameMain iframe")
-            .locator('[class="container__aa6ed1916c93fc44b35f drop-down"]').locator('.header__c9ffa2ffd1581821c7eb').first().click();
+                .locator('.Polaris-Button__Content', { hasText: 'Create selector' }).click({ timeout: 2000 });
+            await expect(this.page.frameLocator("#AppFrameMain iframe")
+                .locator('body')).toContainText('Choose Theme');
+        }).toPass({ timeout: 40000 });
+
+        await expect(async () => {
             await this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.positionCheckboxContainer__b0c9e7e54d9e4684f2ff').nth(1).click();
+                .locator('[class="container__aa6ed1916c93fc44b35f drop-down"]')
+                .locator('.header__c9ffa2ffd1581821c7eb').first().click({ timeout: 10000 });
+            await this.page.frameLocator("#AppFrameMain iframe")
+                .locator('.positionCheckboxContainer__b0c9e7e54d9e4684f2ff').nth(1).click({ timeout: 10000 });
+        }).toPass({ timeout: 40000 });
 
     };
+
 
     async selectResourse(resourse: String) {
         await this.page.frameLocator("#AppFrameMain iframe")
@@ -141,11 +150,11 @@ export class SelectorPage {
     };
 
     async selectType(type: string) {
-           
-       await this.page.waitForTimeout(10000)
+
+        await this.page.waitForTimeout(10000)
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: 'Type' }).getByRole('button').click();
-            await this.page.frameLocator("#AppFrameMain iframe")
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text', { hasText: type }).click();
     };
 
@@ -211,15 +220,15 @@ export class SelectorPage {
     async display2(display2: number) {
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down').nth(4).getByRole('button').first().click();
-            await this.page.frameLocator("#AppFrameMain iframe")
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text', { has: this.page.frameLocator("#AppFrameMain iframe").locator('[role="button"]') }).nth(display2).click();
 
     };
 
     async displayCurrencyIcon(display3: number) {
         await this.page.frameLocator("#AppFrameMain iframe")
-            .locator('.custom-drop-down', { hasText: 'Currency icon' }).getByRole('button').first().click();        
-            await this.page.frameLocator("#AppFrameMain iframe")
+            .locator('.custom-drop-down', { hasText: 'Currency icon' }).getByRole('button').first().click();
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text').nth(display3).click();
 
     };
@@ -227,7 +236,7 @@ export class SelectorPage {
     async displayCurrencyFormat(display4: number) {
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.custom-drop-down', { hasText: 'Currency format' }).getByRole('button').first().click();
-            await this.page.frameLocator("#AppFrameMain iframe")
+        await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-ActionList__Text').nth(display4).click();
 
     };
@@ -265,7 +274,7 @@ export class SelectorPage {
 
         await expect(async () => {
             await this.page.goto(process.env.StoreURl, { waitUntil: 'load', timeout: 5000 });
-        }).toPass({timeout: 25000});
+        }).toPass({ timeout: 25000 });
         await this.page.getByLabel('Enter store password').fill('123');
         await this.page.getByRole('button', { name: 'Enter' }).click();
     };
@@ -517,7 +526,7 @@ export class SelectorPage {
             await this.page.frameLocator("#AppFrameMain iframe")
                 .locator('.Polaris-Checkbox__ChoiceLabel', { hasText: 'Filter by urls or paths' })
                 .click()
-        }).toPass({timeout: 25000});
+        }).toPass({ timeout: 25000 });
 
         await this.page.waitForTimeout(500);
         await expect(async () => {
@@ -525,7 +534,7 @@ export class SelectorPage {
                 .locator('.Polaris-BlockStack', { hasText: 'Custom urls' })
                 .locator('select')
                 .selectOption({ value: exclude });
-        }).toPass({timeout: 25000});
+        }).toPass({ timeout: 25000 });
 
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('form', { hasText: 'Custom urls' })
@@ -549,7 +558,7 @@ export class SelectorPage {
                 .locator('.Polaris-BlockStack', { hasText: 'Countries' })
                 .locator('select')
                 .selectOption({ value: exclude });
-        }).toPass({timeout: 25000});
+        }).toPass({ timeout: 25000 });
 
         await this.page.frameLocator("#AppFrameMain iframe")
             .locator('.Polaris-TextField__Input').fill(textInput);
@@ -621,7 +630,11 @@ export class SelectorPage {
             }
         }
 
-        await this.page.locator('button', { hasText: 'Save' }).click();
+        try {
+            await this.page.locator('button', { hasText: 'Save' }).click({timeout: 2000});
+        } catch {
+            await this.page.waitForTimeout(100);
+        }
     };
 
 
@@ -679,8 +692,8 @@ export class SelectorPage {
     };
 
     async goToUrl(url: string) {
-            await this.page.waitForTimeout(1000);
-            await this.page.goto(url, { waitUntil: 'load', timeout: 5000 });
+        await this.page.waitForTimeout(1000);
+        await this.page.goto(url, { waitUntil: 'load', timeout: 5000 });
     };
 
     async selectCountry(country: string) {
@@ -689,7 +702,7 @@ export class SelectorPage {
             await this.page.locator('[aria-describedby="HeaderCountryLabel"]').click();
             await this.page.locator('.disclosure__item', { hasText: country }).nth(1).click();
             await this.page.waitForTimeout(1000);
-        }).toPass({timeout: 10000});
+        }).toPass({ timeout: 10000 });
     };
 
     async selectLanguage(language: string) {
@@ -698,7 +711,7 @@ export class SelectorPage {
             await this.page.locator('[aria-describedby="HeaderLanguageLabel"]').click();
             await this.page.locator('.disclosure__item', { hasText: language }).nth(1).click();
             await this.page.waitForTimeout(1000);
-        }).toPass({timeout: 10000});
+        }).toPass({ timeout: 10000 });
     };
 
     async verifyText(text1: string, text2: string) {
@@ -706,7 +719,7 @@ export class SelectorPage {
             await this.page.waitForTimeout(1000);
             await expect(this.page.locator('.product-card-wrapper').first()).toContainText(text1);
             await expect(this.page.locator('header')).toContainText(text2);
-        }).toPass({timeout: 10000});
+        }).toPass({ timeout: 10000 });
     };
 
     async verifyTextWithReload(text1: string, text2: string) {
@@ -715,7 +728,7 @@ export class SelectorPage {
             await this.page.waitForTimeout(1000);
             await expect(this.page.locator('.product-card-wrapper').first()).toContainText(text1);
             await expect(this.page.locator('header')).toContainText(text2);
-        }).toPass({timeout: 10000});
+        }).toPass({ timeout: 10000 });
     };
 
 

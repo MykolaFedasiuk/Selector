@@ -27,6 +27,7 @@ export const test = base.extend<{selectorPage: SelectorPage, bannerPage: BannerP
       await selectorPage.openApp();
       await selectorPage.activateEmbeds();
       await selectorPage.deleteSelectors();
+      await selectorPage.disableRedirect();
       await selectorPage.createSelector();
       await use('');    
      },
@@ -44,11 +45,11 @@ export const test = base.extend<{selectorPage: SelectorPage, bannerPage: BannerP
       await use('');    
      },
 
-     afterRedirects: async({selectorPage}, use) => {
-      await use(''); 
-      await selectorPage.openApp();
-      await selectorPage.disableBanneAndRedirect();
-     },
+    //  afterRedirects: async({selectorPage}, use) => {
+    //   await use(''); 
+    //   await selectorPage.openApp();
+    //   await selectorPage.disableBanneAndRedirect();
+    //  },
 
 });
 
