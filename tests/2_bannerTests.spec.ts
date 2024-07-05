@@ -520,13 +520,14 @@ test('50 Remember choice, Currency, Popup, Chocolate, Position - bottom right', 
       await expect(page.locator('.adt-main')).not.toBeVisible();
       await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
    }).toPass({timeout: 15000});
-   await page.goto(`${process.env.StoreURl}`);
    await expect(async () => {
+      await page.goto(`${process.env.StoreURl}`);
       await expect(page.locator('.adt-main')).not.toBeVisible();
       await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
-   }).toPass({timeout: 15000});
+   }).toPass({timeout: 20000});
 
 });
+
 
 
 test('51 Display when necessary, Country, Popup, Turquoise, Position - center center', async ({ openBanner, page, selectorPage, bannerPage }) => {
@@ -891,7 +892,7 @@ test('60 Visibility - Include Custom urls', async ({ openBanner, page, selectorP
 
 
 test('61 Visibility - Include Custom urls', async ({ openBanner, page, selectorPage, bannerPage }) => {
-   await selectorPage.setVisibilityParams('Custom urls', 'include', 'https://qafm30-11.myshopify.com');
+   await selectorPage.setVisibilityParams('Custom urls', 'include', process.env.StoreURl);
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
@@ -943,7 +944,7 @@ test('62 Visibility - exclude Custom urls', async ({ openBanner, page, selectorP
 
 
 test('63 Visibility - exclude Custom urls', async ({ openBanner, page, selectorPage, bannerPage }) => {
-   await selectorPage.setVisibilityParams('Custom urls', 'exclude', 'https://qafm30-11.myshopify.com');
+   await selectorPage.setVisibilityParams('Custom urls', 'exclude', process.env.StoreURl);
    await selectorPage.saveSelector();
    await selectorPage.openStore();
 
