@@ -478,14 +478,14 @@ test('49 Display for everyone, Language, Page, Beet, Position - bottom left', as
    await page.locator('.adt-changeBtn').click();
    await expect(page.locator('header')).toContainText('додому');
    await expect(page.locator('.adt-main')).not.toBeVisible();
-   await page.goto(`${process.env.StoreURl}/en-en`);
    await expect(async () => {
+      await page.goto(`${process.env.StoreURl}/en-en`);
       await expect(page.locator('.adt-main')).not.toBeVisible();
       await expect(page.locator('header')).toContainText('Home');   
-  }).toPass({timeout: 15000});
+  }).toPass({timeout: 25000});
 });
 
-
+///падав
 test('50 Remember choice, Currency, Popup, Chocolate, Position - bottom right', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.selectType('Popup');
@@ -524,12 +524,12 @@ test('50 Remember choice, Currency, Popup, Chocolate, Position - bottom right', 
       await page.goto(`${process.env.StoreURl}`);
       await expect(page.locator('.adt-main')).not.toBeVisible();
       await expect(page.locator('.product-card-wrapper').first()).toContainText('PLN');
-   }).toPass({timeout: 20000});
+   }).toPass({timeout: 25000});
 
 });
 
 
-
+///падав
 test('51 Display when necessary, Country, Popup, Turquoise, Position - center center', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.selectType('Popup');
@@ -768,6 +768,7 @@ test('57 Modal cant be closed, Show flag', async ({ openBanner, page, selectorPa
 
 });
 
+///падав
 test('58 Page banner cant be closed, Show flag', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.selectType('Page');

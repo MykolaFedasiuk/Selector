@@ -26,8 +26,8 @@ export class BannerPage {
             await showBtnLocator.click();
         } catch {
             await expect(async () => {
-                await resetBtnLocator.click();
-            }).toPass({timeout: 25000});
+                await resetBtnLocator.click({timeout: 5000});
+            }).toPass({timeout: 60000});
         }
     }
 

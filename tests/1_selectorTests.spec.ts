@@ -744,7 +744,7 @@ test('33 Visibility - Small (490 - 767px)', async ({ page, selectorPage, openSel
    }).toPass({timeout: 25000});
 });
 
-
+///падав
 test('34 Visibility - Medium (768 - 1039px)', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.setVisibilitySize('Medium (768 - 1039px)');
    await selectorPage.saveSelector();
@@ -762,7 +762,7 @@ test('34 Visibility - Medium (768 - 1039px)', async ({ page, selectorPage, openS
    await page.locator('.sel-itemsList .sel-item').first().click();
 });
 
-
+///падав
 test('35 Visibility - Large (1040 - 1439px)', async ({ page, selectorPage, openSelector }) => {
    await selectorPage.setVisibilitySize('Large (1040 - 1439px)');
    await selectorPage.saveSelector();

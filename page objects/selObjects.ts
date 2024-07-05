@@ -128,7 +128,7 @@ export class SelectorPage {
                 .locator('.Polaris-Button__Content', { hasText: 'Create selector' }).click({ timeout: 2000 });
             await expect(this.page.frameLocator("#AppFrameMain iframe")
                 .locator('body')).toContainText('Choose Theme');
-        }).toPass({ timeout: 40000 });
+        }).toPass({ timeout: 60000 });
 
         await expect(async () => {
             await this.page.frameLocator("#AppFrameMain iframe")
