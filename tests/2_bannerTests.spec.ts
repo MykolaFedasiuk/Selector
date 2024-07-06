@@ -806,7 +806,7 @@ test('58 Page banner cant be closed, Show flag', async ({ openBanner, page, sele
 
 });
 
-
+///?????????????
 test('59 CustomCSS, Disablestylesisolation', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await bannerPage.borderradius('Border radius', '22')
@@ -856,7 +856,7 @@ test('59 CustomCSS, Disablestylesisolation', async ({ openBanner, page, selector
 
 });
 
-
+///???????????
 test('60 Visibility - Include Custom urls', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.setVisibilityParams('Custom urls', 'include', '/pages/contact');
@@ -908,7 +908,7 @@ test('61 Visibility - Include Custom urls', async ({ openBanner, page, selectorP
 
 });
 
-
+///???????
 test('62 Visibility - exclude Custom urls', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.setVisibilityParams('Custom urls', 'exclude', '/pages/contact');
@@ -959,7 +959,7 @@ test('63 Visibility - exclude Custom urls', async ({ openBanner, page, selectorP
    await expect(page.locator('header')).toContainText('додому');
 });
 
-
+///?????????
 test('64 Visibility - Include Countries', async ({ openBanner, page, selectorPage, bannerPage }) => {
    await selectorPage.setVisibilityParams('Countries', 'include', 'ukraine');
    await bannerPage.borderradiusMixed('Border radius', '22', '7', '15', '25')
@@ -1001,7 +1001,7 @@ test('65 Visibility - Include Countries', async ({ openBanner, page, selectorPag
 
 });
 
-
+///????????
 test('66 Visibility - exclude Countries', async ({ openBanner, page, selectorPage, bannerPage }) => {
    await selectorPage.setVisibilityParams('Countries', 'exclude', 'poland');
    await bannerPage.borderradiusMixed('Border radius', '22', '7', '15', '25')
@@ -1167,7 +1167,7 @@ test('71 change images, Modal', async ({ openBanner, page, selectorPage, bannerP
 
 });
 
-
+///??????
 test('72 change images, Page', async ({ openBanner, page, selectorPage, bannerPage }) => {
 
    await selectorPage.selectType('Page');
